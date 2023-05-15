@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/style_mainfeed.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+
+    <script defer src="myscripts.js"></script>
+    <title>Need Styling</title>
+  </head>
+  
+  <body>
+    <div class="wrapper">
+      <div class="posts-container">
+        <% feed.forEach( message => { %> 
+            <div class="post">
+              <a href="/profile/<%=message.bucket.user.id%>">
+              <img src="<%=message.bucket.user.profileImg %>" style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;"  class="user-picture user-avatar"></a>
+              <div class="post-content" style="padding: 10px">
+                <p class="message.bucket.user.username"><%= message.bucket.user.username %></p>
+                <p class="bucket-info">
+                  <%= message.bucket.title %>
+                  <span class="<%= message.bucket.completed ? 'Completed': 'InProgress' %>"><%= message.bucket.completed ? 'Completed': 'In Progress' %></span>
+                </p>
+                <p class="post-message"><%= message.content %></p>
+              </div>
+              <div class="post-actions">
+                <button type="button" class="like-button" onclick="toggleLike(event)">
+                  <i class="far fa-heart"></i>
+                </button>  
+                <a href="/profile/comment/<%=message.id%>" class="comment-button">
+                  <i class="far fa-comment-alt"></i>
+                </a>
+              </div>
+            </div>
+     <% }) %>
+
+      </div>
+      <div class="navbar">
+        <a href="/feeds/home">
+          <img
+            src="../styles/images/home_icon_noBackground.png"
+            alt="Home"
+            width="40"
+            height="40"
+          />
+        </a>
+        <a href="/search/">
+          <img
+            src="../styles/images/search_icon_noBackground.png"
+            alt="Search"
+            width="40"
+            height="40"
+          />
+        </a>
+        <div class="circle">
+          <a href="/feeds/buckets?show=inprogress">
+            <img
+              src="../styles/images/bucket_icon_noBackground.png"
+              alt="Bucket"
+              width="50"
+              height="50"
+            />
+          </a>
+        </div>
+        <a href="/notes">
+          <img
+            src="../styles/images/note_icon_noBackground.png"
+            alt="Notes"
+            width="40"
+            height="40"
+          />
+        </a>
+        <a href="/profile/<%=user_id%>">
+          <img
+            src="../styles/images/profile_icon_noBackground.png"
+            alt="Profile"
+            width="40"
+            height="40"
+          />
+        </a>
+      </div>
+    </div>
+
+    <script>
+      function toggleLike(event) {
+        const likeButton = event.target.closest('.like-button');
+        const heartIcon = likeButton.querySelector('i');
+        heartIcon.classList.toggle('far');
+        heartIcon.classList.toggle('fas');
+      }
+
+
+
+
+      
+    </script>
+  </body>
+</html>

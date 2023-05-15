@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const {
+  getAllMessagesByBucketId,
   createNewBucket,
   completeBucketlist,
-  getUserFeed,
+  getAllMessages,
   deleteBucketlist,
-  getMainFeed,
   showBuckets,
   getTasks,
   getAllTags,
@@ -17,11 +17,10 @@ const {
 const { ensureAuthenticated } = require("../middleware");
 const { bucket } = require('../prisma/client');
 router.use(ensureAuthenticated);
-
-//☝️: Problem: Only showing some followings. 
+ 
 router.get("/home", async (req, res) => {
   const user_id = req.user.id;
-  const feed = await getMainFeed(user_id);
+  const feed = await getAllMessages(user_id);
   res.render("mainfeed", { feed, user_id });
   //
 }); 
@@ -44,7 +43,6 @@ router.post("/createBucket", async (req, res) => {
   const tag_id = parseInt(tag);
   const NewBucketList = await createNewBucket(dueDate, newBucket, userId, tag_id);
   if(NewBucketList){
-    
       res.redirect("/feeds/buckets?show=inprogress");
   } else {
     res.redirect("/feeds/createBucket");
@@ -134,8 +132,6 @@ router.get("/createMessage", (req, res) => {
 router.get("/bucket/:id", async (req, res) => {
   let numOfCompleted = 0;
   const user_id = req.user.id;
-  
-  const bucket_id = req.params.id;
   const tasks = await getTasks(parseInt(req.params.id));
   const bucketTitle = (await getBucketTitleByBucketId(parseInt(req.params.id))).title;
 

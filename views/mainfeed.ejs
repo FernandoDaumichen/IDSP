@@ -5,57 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/style_mainfeed.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    />
 
     <script defer src="myscripts.js"></script>
     <title>Main Feed</title>
   </head>
-  
+
   <body>
     <div class="wrapper">
       <div class="posts-container">
-
-        <% feed.user.buckets.forEach( bucket => { %> 
-          <% bucket.messages.forEach( message => { %>
-            <div class="post">
-              <a href="/profile/<%=user_id%>">
-              <img src="<%=feed.user.profileImg %>" style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;"  class="user-picture user-avatar"></a>
-              <div class="post-content" style="padding: 10px">
-               
-                <p class="feed.user.username"><%= feed.user.username %></p>
-                <p class="bucket-info">
-                  <%= bucket.title %>
-                  <span class="<%= bucket.completed ? 'Completed': 'InProgress' %>"><%= bucket.completed ? 'Completed': 'In Progress' %></span>
-                </p>
-                <p class="post-message"><%= message.content %></p>
-              </div>
-            </div>
-      <% }) %>
-     <% }) %>
-     
-        <% feed.following.forEach(user => { %> 
-          <% user.buckets.forEach( bucket => { %> 
-            <% bucket.messages.forEach( message => { %>
-              <div class="post">
-                <a href="/profile/<%=user.id%>">
-                <img src="<%=user.profileImg %>"style="z-index: 0;  width: 6.5vh; height: auto;"  class="user-picture user-avatar"></a>
-                <div class="post-content" style="padding: 10px">
-                 
-                  <p class="username"><%= user.username %></p>
-                  <p class="bucket-info">
-                    <%= bucket.title %>
-                    <span class="<%= bucket.completed ? 'Completed': 'InProgress' %>"><%= bucket.completed ? 'Completed': 'In Progress' %></span>
-                  </p>
-                  <p class="post-message"><%= message.content %></p>
-                  
-                </div>
-              </div>
+        <% feed.forEach( message => { %>
+        <div class="post">
+          <a href="/profile/<%=message.bucket.user.id%>">
+            <img
+              src="<%=message.bucket.user.profileImg %>"
+              style="z-index: 0; margin-top: 3vh; width: 6.5vh; height: auto"
+              class="user-picture user-avatar"
+          /></a>
+          <div class="post-content" style="padding: 10px">
+            <p class="message.bucket.user.username">
+              <%= message.bucket.user.username %>
+            </p>
+            <p class="bucket-info">
+              <%= message.bucket.title %>
+              <span
+                class="<%= message.bucket.completed ? 'Completed': 'InProgress' %>"
+                ><%= message.bucket.completed ? 'Completed': 'In Progress'
+                %></span
+              >
+            </p>
+            <p class="post-message"><%= message.content %></p>
+          </div>
+          <div class="post-actions">
+            <button
+              type="button"
+              class="like-button"
+              onclick="toggleLike(event)"
+            >
+              <i class="far fa-heart"></i>
+            </button>
+            <a href="/profile/comment/<%=message.id%>" class="comment-button">
+              <i class="far fa-comment-alt"></i>
+            </a>
+          </div>
+        </div>
         <% }) %>
-       <% }) %>
-      <% }) %>
-
-     
-
       </div>
       <div class="navbar">
         <a href="/feeds/home">
@@ -105,12 +102,11 @@
 
     <script>
       function toggleLike(event) {
-    const likeButton = event.target.closest('.like-button');
-    const heartIcon = likeButton.querySelector('i');
-    heartIcon.classList.toggle('far');
-    heartIcon.classList.toggle('fas');
-  }
-      
+        const likeButton = event.target.closest(".like-button");
+        const heartIcon = likeButton.querySelector("i");
+        heartIcon.classList.toggle("far");
+        heartIcon.classList.toggle("fas");
+      }
     </script>
   </body>
 </html>

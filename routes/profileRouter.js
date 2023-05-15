@@ -7,7 +7,7 @@ const {
   addNewMessage,
   showBuckets,
   getUserByUserId,
-  getAllMessage,
+  getAllMessageOfOneUser,
   getAllComments,
   getMessagesByMessageId,
   commentMessage,
@@ -20,10 +20,10 @@ const { ensureAuthenticated } = require("../middleware");
 router.use(ensureAuthenticated);
 
 router.get("/:user_id", async (req, res) => {
-  const loggedin_user_id = req.user.id;
+  const loggedin_user_id = req.params.user_id;
   const userId = req.params.user_id;
   const user_id = Number(userId);
-  const data = await getAllMessage(user_id);
+  const data = await getAllMessageOfOneUser(user_id);
   const user = await getUserByUserId(user_id);
   const totalBucketTitle = await showBuckets("all", user_id);
   res.render("profile", { loggedin_user_id, data, user_id, user, totalBucketTitle });
@@ -74,7 +74,6 @@ router.get("/comment/:messageId", async ( req, res ) => {
   const comments = await getAllComments(message_id);
   const message = await getMessagesByMessageId(message_id);
   const bucketTitle = await getBucketTitleByMessageId(message_id);
-  console.log(bucketTitle);
 
   const modifiedComments = await Promise.all(comments.map(async (comment) =>  { 
     const commentor = await getUserByUserId(comment.userId);
@@ -88,7 +87,6 @@ router.get("/comment/:messageId", async ( req, res ) => {
     userProfile: commentorProfile,
     createdAt: comment.createdAt,
   }}));
-  console.log(modifiedComments);
   res.render("comment", {comments: modifiedComments, message, bucketTitle});
 });
 
