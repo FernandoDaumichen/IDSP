@@ -66,13 +66,11 @@ h1 {
   text-align: center;
 }
 
-strong{
-    color: #000000;
-}
+
 h2 {
   font-family: 'Open Sans', sans-serif;
   padding-top: 3vh;
-  font-size: 1.8rem;
+  font-size: 1rem;
   font-weight: 400;
   color: #000000;
   margin-top: 0;
@@ -83,7 +81,7 @@ h3 {
   font-family: 'Open Sans', sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
-  color: #000000;
+  color: #8083ff;
   margin-top: 0;
   text-align: center;
   font-style: italic;
@@ -150,15 +148,16 @@ div{
 </style>
 <body>
     <div class="wrapper">
-        <div class="background-container">
+       
             <button class="arrow-left" onclick="goBack()" style="z-index: 10px;">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
                 <path fill="#8083ff"
                   d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
               </svg>
             </button>
-    <h1><strong> Bucket Title:</strong> <%=bucketTitle%></h1>
-    </div>
+            <h1>Post</h1>
+    <h2><%=bucketTitle%></h2>
+   
     <h2><%=message.content%></h2>
 
     <% comments.forEach(comment => { %>
@@ -170,7 +169,7 @@ div{
     <% }) %>
 
     <form action = "/profile/comment/<%=message.id%>" method = "POST">
-        <h3> Leave new comment! </h3>
+        <h3> Comments </h3>
             <textarea style="outline: none; resize: none" type="text" name="newComment"
             placeholder="Cheer your Friend!" class="create_post"></textarea>
           <button type="submit">Add Comment</button>

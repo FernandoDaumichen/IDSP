@@ -74,7 +74,8 @@
 }
 
 a[href="/feeds/buckets?show=inprogress"] img {
-  margin-top: 10px;
+  width: 5vh;
+  height: 5vh;
 }
 
 .post {
