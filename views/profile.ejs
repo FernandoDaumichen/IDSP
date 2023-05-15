@@ -16,71 +16,154 @@
   <!-- Change index to 99 and change opacity to 1 using DOM -->
   <!-- <div style="background-color: #ededed;z-index: 0;position: absolute;bottom: 0;height: 80vh;transition: all 0.3s cubic-bezier(0.47, 0, 0.75, 0.72);width: 100%;opacity: 0;">hello</div> -->
   <div class="flex-container">
-    <div class="wrapper">
-      <div class="background-container">
-        <form action="/profile/settings" class="settings-form" method="GET">
-          <button>
-            <div class="setting">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="45px" height="40px">
-                <rect x="4" y="6.5" width="16" height="1" fill="#000000" />
-                <circle cx="12" cy="7.25" r="3" fill="white" />
-                <circle cx="12" cy="7.25" r="3" stroke="#000000" fill="none" />
-                <rect x="12" y="15.5" width="16" height="1" fill="#000000" />
-                <circle cx="19" cy="16.25" r="3" fill="#000000" />
-              </svg>
-            </div>
-          </button>
-        </form>
-        <div class="profilephoto">
-          <img src=<%=user.profileImg%> style="z-index: 0; margin-top: 15px; width: 12vh;
-          height: auto;" class="user-avatar">
-
-        </div>
-        <p class="username">@<%= user.username %>
-        </p>
-        <p class="netBucket">
-          <%=totalBucketTitle.length%> goals
-        </p>
-        <button class="add-friends-button">
-          <i class="fas fa-user-plus"></i>
-        </button>
-        <% if (loggedin_user_id===user_id) { %>
-          <form action="/profile/edit/<%=user_id%>" class="edit-form">
-            <button type="submit" class="edit-button">Edit Profile</button>
-          </form>
-          <% } %>
-            <div class="buttons">
-              <button style="width: 100px;">All</button>
-              <button style="width: 100px;">Media</button>
-              <button style="width: 100px;">Posts</button>
-            </div>
+  <div class="wrapper">
+    <div class="background-container">
+      <form action="/profile/settings" class="settings-form" method="GET">
+        <button>
+      <div class="setting">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="45px" height="40px">
+          <rect x="4" y="6.5" width="16" height="1" fill="#000000" />
+          <circle cx="12" cy="7.25" r="3" fill="white" />
+          <circle cx="12" cy="7.25" r="3" stroke="#000000" fill="none" />
+          <rect x="12" y="15.5" width="16" height="1" fill="#000000" />
+          <circle cx="19" cy="16.25" r="3" fill="#000000" />
+        </svg>
       </div>
-      <% if (loggedin_user_id===user_id) { %>
-        <form class="user-info" action="/profile/<%=user_id%>" method="POST">
-          <div class="posts-container">
-            <div class="createInput">
-              <div class="user-input-wrapper">
-                <div class="wrapwrap" style="display: flex; align-items: flex-start">
-                  <img src=<%=user.profileImg%> class="user-avatar">
-                  <div>
-                    <select name="bucket_id">
-                      <option value="">Please choose your bucket</option>
-                      <% totalBucketTitle.forEach(element=> { %>
-                        <option value="<%=element.id%>">
-                          <%=element.title%>
-                        </option>
-                        <% }) %>
-                    </select>
-                  </div>
-                </div>
-                <textarea style="outline: none; resize: none" type="text" name="newMessage"
-                  placeholder="What's on your mind?" class="create_post"></textarea>
-                </div>
-                <button type="submit" class="add-button">
-                  <img src="../styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
-                </button>
-            </div>
+    </button>
+    </form>
+      <div class="profilephoto">    
+        <img src=<%=user.profileImg%> style="z-index: 0; margin-top: 15px;    width: 12vh;
+        height: auto;" class="user-avatar">
+        
+      </div>
+      <p class="username">@<%= user.username %>
+      </p>
+      <p class="netBucket">
+        <%=totalBucketTitle.length%> goals
+      </p>
+      <button class="add-friends-button">
+        <i class="fas fa-user-plus"></i>
+      </button>
+      <% if (loginuser_id === user_id) { %>
+        <form action="/profile/edit/<%=user_id%>" class="edit-form">
+          <button type="submit" class="edit-button">Edit Profile</button>
         </form>
+      <% } %>
+      <div class="buttons">
+        <button style="width: 100px;">All</button>
+        <button style="width: 100px;">Media</button>
+        <button style="width: 100px;">Posts</button>
+      </div>
+    </div>
+          <% if (loginuser_id === user_id) { %>
+            <form class="user-info" action="/profile/<%=user_id%>" method="POST">
+              <div class="posts-container">
+                <div class="user-input-wrapper">
+                  <div class="wrapwrap" style="display: flex; align-items: flex-start">
+                    <img src= <%=user.profileImg%> class="user-avatar">
+                    <div>
+                      <select name="bucket_id">
+                        <option value="">Please choose your bucket</option>
+                        <% totalBucketTitle.forEach(element=> { %>
+                          <option value="<%=element.id%>">
+                            <%=element.title%>
+                          </option>
+                          <% }) %>
+                      </select>
+                    </div>
+                  </div>
+            <div class="createInput">
+              <textarea style="outline: none; resize: none" type="text" name="newMessage"
+                placeholder="What's on your mind?" class="create_post"></textarea>
+              <button type="submit" class="add-button">
+                <img src="../styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
+              </button>
+            </div>        
+          </div>
+        </form>
+          <% } %>
+
+    <% data.forEach(post=> { %>
+      <div class="post">
+       <img src=<%=user.profileImg%> style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;" class="user-picture user-avatar">
+        <div class="post-content" style="padding: 10px;">
+          <p class="username-inside">
+            <%=user.username%>
+          </p>
+          <p class="bucket-info">
+            <%= post.bucket.title %> <span class="<%= post.bucket.completed ? 'Completed': 'InProgress' %>"><%= post.bucket.completed ? 'Completed': 'In Progress' %></span>
+          </p>
+          <p class="post-message">
+            <%= post.content %>
+          </p>
+          <div class="post-actions">
+            <button type="button" class="like-button" onclick="toggleLike(event)">
+              <i class="far fa-heart"></i>
+            </button>  
+            <a href="/profile/comment/<%=post.id%>" class="comment-button">
+              <i class="far fa-comment-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+      <br>
+      <br>
+  </div>
+  <div class="navbar">
+    <a href="/feeds/home">
+      <img
+        src="../styles/images/home_icon_noBackground.png"
+        alt="Home"
+        width="40"
+        height="40"
+      />
+    </a>
+    <a href="/search/">
+      <img
+        src="../styles/images/search_icon_noBackground.png"
+        alt="Search"
+        width="40"
+        height="40"
+      />
+    </a>
+    <div class="circle">
+      <a href="/feeds/buckets?show=inprogress">
+        <img
+          src="../styles/images/bucket_icon_noBackground.png"
+          alt="Bucket"
+          width="50"
+          height="50"
+        />
+      </a>
+    </div>
+    <a href="/feeds/buckets?show=completed">
+      <img
+        src="../styles/images/note_icon_noBackground.png"
+        alt="Notes"
+        width="40"
+        height="40"
+      />
+    </a>
+    <a href="/profile/<%=user_id%>">
+      <img
+        src="../styles/images/profile_icon_noBackground.png"
+        alt="Profile"
+        width="40"
+        height="40"
+      />
+    </a>
+  </div>
+</div>
+
+ <script>
+function toggleLike(event) {
+  const likeButton = event.target.closest('.like-button');
+  const heartIcon = likeButton.querySelector('i');
+  heartIcon.classList.toggle('far');
+  heartIcon.classList.toggle('fas');
+}
+function updateScrollHeight() {
         <% } %>
           <% data.forEach(post=> { %>
             <div class="post">

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const {
   getBucketTitleByMessageId,
-  getUserFeed,
   changeUsername,
   addNewMessage,
   showBuckets,
@@ -20,13 +19,15 @@ const { ensureAuthenticated } = require("../middleware");
 router.use(ensureAuthenticated);
 
 router.get("/:user_id", async (req, res) => {
-  const loggedin_user_id = req.params.user_id;
-  const userId = req.params.user_id;
-  const user_id = Number(userId);
+  const St_loginuser_id = req.params.user_id;
+  const loginuser_id = Number(St_loginuser_id);
+  const St_userId = req.params.user_id;
+  const user_id = Number(St_userId);
   const data = await getAllMessageOfOneUser(user_id);
   const user = await getUserByUserId(user_id);
   const totalBucketTitle = await showBuckets("all", user_id);
-  res.render("profile", { loggedin_user_id, data, user_id, user, totalBucketTitle });
+  console.log(loginuser_id, user_id);
+  res.render("profile", { loginuser_id, data, user_id, user, totalBucketTitle });
 });
 
 router.post("/:user_id", async (req, res) => {

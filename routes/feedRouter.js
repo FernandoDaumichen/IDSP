@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllMessagesByBucketId,
   createNewBucket,
   completeBucketlist,
   getAllMessages,
@@ -13,11 +12,12 @@ const {
   getBucketTitleByBucketId,
   updateTask
 } = require("../fake-db");
-
 const { ensureAuthenticated } = require("../middleware");
 const { bucket } = require('../prisma/client');
 router.use(ensureAuthenticated);
  
+// Mainfeed Router
+// ☝️ To do: Like button working and implement logic. 
 router.get("/home", async (req, res) => {
   const user_id = req.user.id;
   const feed = await getAllMessages(user_id);
