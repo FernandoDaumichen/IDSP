@@ -25,6 +25,7 @@ router.get("/:user_id", async (req, res) => {
   const St_userId = req.params.user_id;
   const user_id = Number(St_userId);
   const data = await getAllMessageOfOneUser(user_id);
+  // console.log(data);
   const user = await getUserByUserId(user_id);
   const totalBucketTitle = await showBuckets("all", user_id);
   res.render("profile", { loginuser_id, data, user_id, user, totalBucketTitle });
@@ -87,7 +88,6 @@ router.get("/comment/:messageId", async ( req, res ) => {
     message_createdAt: message.createdAt,
     message_userInfo: message_creator_info,
   };
-  
 
   const modifiedComments = await Promise.all(comments.map(async (comment) =>  { 
     const commentor = await getUserByUserId(comment.userId);
@@ -101,8 +101,6 @@ router.get("/comment/:messageId", async ( req, res ) => {
     userProfile: commentorProfile,
     createdAt: comment.createdAt,
   }}));
-
-  console.log(message);
   res.render("comment", {comments: modifiedComments, message: modifiedMessage, bucketTitle});
 });
 

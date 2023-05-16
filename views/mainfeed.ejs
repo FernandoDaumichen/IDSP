@@ -41,13 +41,18 @@
           </div>
           <div class="post-actions">
             <input type="hidden" name="messageId" value="<%= message.id %>" />
-            <button
-              type="button"
-              class="like-button"
-              onclick="toggleLike(event)"
-            >
-              <i class="far fa-heart"></i>
-            </button>
+            
+            <% if (message.likes.filter(like => like.userId === user_id).length > 0) { %>
+              <button type="button" class="like-button" onclick="toggleLike(event)">
+                <i class="far fa-heart fas"></i>
+              </button>
+            <% } else { %>
+              <button type="button" class="like-button" onclick="toggleLike(event)">
+                <i class="far fa-heart"></i>
+              </button>
+            <% } %>
+
+
             <a href="/profile/comment/<%=message.id%>" class="comment-button">
               <i class="far fa-comment-alt"></i>
             </a>
@@ -103,66 +108,35 @@
     </div>
 
     <script>
+
+    const post = async (url, data) => {
+     const res = await fetch(url, {
+        body: JSON.stringify(data),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+       });
+      return await res.json().catch((err) => console.log(err));
+      };
+
+    async function likeUnlikeMessage(status, messageId) {
+      const something = await post("/feeds/likeMessage", { status, messageId });
+      if (something.message) {alert(something.message);}
+    };
+
       async function toggleLike(event) {
         const likeButton = event.target.closest(".like-button");
         const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
         const messageId = inputElement.value;
-
-
         const heartIcon = likeButton.querySelector("i");
-        // const messageId = ;
 
-        // if (heartIcon.classList.contains("fas")) {
-
-
-        //   const res = await fetch("/feeds/likeUnlike", { body: JSON.stringify({  }), method: "POST", headers: { "Content-Type": "application/json"} });
-        // const { success, taskId } = await res.json();
-        // // Call the function to dislike the post
-        // dislikePost();
-        // heartIcon.classList.remove("fas");
-        // heartIcon.classList.add("far");
-        // } else {
-        // // Call the function to like the post
-        // likePost();
-        // heartIcon.classList.remove("far");
-        // heartIcon.classList.add("fas");
-        // }
-
-        heartIcon.classList.toggle("far");
-        heartIcon.classList.toggle("fas");
-        
-  
-
+        if (heartIcon.classList.contains("fas")) {
+          heartIcon.classList.remove("fas");
+          await likeUnlikeMessage("unlike", messageId);
+        } else {
+          heartIcon.classList.add("fas");
+          await likeUnlikeMessage("like", messageId);
+  }
 }
-
-function likePost() {
-  // Function to modify the like table in your database when the post is liked
-  // You can make an AJAX request or use any other method to communicate with your server and update the database accordingly
-  // Example AJAX request using jQuery:
-  $.ajax({
-    url: "/like-post", // Replace with your server-side endpoint
-    method: "POST",
-    data: {
-      postId: "123" // Replace with the actual post ID
-    },
-    success: function(response) {
-      // Handle the success response from the server if needed
-    },
-    error: function(error) {
-      // Handle the error response from the server if needed
-    }
-  });
-}
-
-function dislikePost() {
-  // Function to modify the like table in your database when the post is disliked
-  // Similar to the likePost() function, you need to implement the server-side logic to handle disliking the post
-}
-
-
-
-
-
     </script>
   </body>
 </html>

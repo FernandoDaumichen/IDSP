@@ -30,29 +30,74 @@
           </svg>
         </div>
       </button>
-      </form>
-        <div class="profilephoto">    
-          <img src=<%=user.profileImg%> style="z-index: 0; margin-top: 15px;    width: 12vh;
-          height: auto;" class="user-avatar">
-          
-        </div>
-        <p class="username">@<%= user.username %>
-        </p>
-        <p class="netBucket">
-          <%=totalBucketTitle.length%> goals
-        </p>
-        <button class="add-friends-button">
-          <i class="fas fa-user-plus"></i>
-        </button>
-        <% if (loginuser_id === user_id) { %>
-          <form action="/profile/edit/<%=user_id%>" class="edit-form">
-            <button type="submit" class="edit-button">Edit Profile</button>
-          </form>
-        <% } %>
-        <div class="buttons">
-          <button style="width: 100px;">All</button>
-          <button style="width: 100px;">Media</button>
-          <button style="width: 100px;">Posts</button>
+      <% if (loginuser_id === user_id) { %>
+        <form action="/profile/edit/<%=user_id%>" class="edit-form">
+          <button type="submit" class="edit-button">Edit Profile</button>
+        </form>
+      <% } %>
+      <div class="buttons">
+        <button style="width: 100px;">All</button>
+        <button style="width: 100px;">Media</button>
+        <button style="width: 100px;">Posts</button>
+      </div>
+    </div>
+          <% if (loginuser_id === user_id) { %>
+            <form class="user-info" action="/profile/<%=user_id%>" method="POST">
+              <div class="posts-container">
+                <div class="user-input-wrapper">
+                  <div class="wrapwrap" style="display: flex; align-items: flex-start">
+                    <img src= <%=user.profileImg%> class="user-avatar">
+                    <div>
+                      <select name="bucket_id">
+                        <option value="">Please choose your bucket</option>
+                        <% totalBucketTitle.forEach(element=> { %>
+                          <option value="<%=element.id%>">
+                            <%=element.title%>
+                          </option>
+                          <% }) %>
+                      </select>
+                    </div>
+                  </div>
+            <div class="createInput">
+              <textarea style="outline: none; resize: none" type="text" name="newMessage"
+                placeholder="What's on your mind?" class="create_post"></textarea>
+              <button type="submit" class="add-button">
+                <img src="../styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
+              </button>
+            </div>        
+          </div>
+        </form>
+          <% } %>
+
+    <% data.forEach(post=> { %>
+      <div class="post">
+       <img src=<%=user.profileImg%> style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;" class="user-picture user-avatar">
+        <div class="post-content" style="padding: 10px;">
+          <p class="username-inside">
+            <%=user.username%>
+          </p>
+          <p class="bucket-info">
+            <%= post.bucket.title %> <span class="<%= post.bucket.completed ? 'Completed': 'InProgress' %>"><%= post.bucket.completed ? 'Completed': 'In Progress' %></span>
+          </p>
+          <p class="post-message">
+            <%= post.content %>
+          </p>
+          <div class="post-actions">
+            <input type="hidden" name="messageId" value="<%= post.id %>" />
+            
+            <% if (post.likes.filter(like => like.userId === user_id).length > 0) { %>
+              <button type="button" class="like-button" onclick="toggleLike(event)">
+                <i class="far fa-heart fas"></i>
+              </button>
+            <% } else { %>
+              <button type="button" class="like-button" onclick="toggleLike(event)">
+                <i class="far fa-heart"></i>
+              </button>
+            <% } %>
+            <a href="/profile/comment/<%=post.id%>" class="comment-button">
+              <i class="far fa-comment-alt"></i>
+            </a>
+          </div>
         </div>
       </div>
             <% if (loginuser_id === user_id) { %>
@@ -157,12 +202,36 @@
 </div>
 
  <script>
-function toggleLike(event) {
-  const likeButton = event.target.closest('.like-button');
-  const heartIcon = likeButton.querySelector('i');
-  heartIcon.classList.toggle('far');
-  heartIcon.classList.toggle('fas');
+
+const post = async (url, data) => {
+     const res = await fetch(url, {
+        body: JSON.stringify(data),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+       });
+      return await res.json().catch((err) => console.log(err));
+      };
+
+    async function likeUnlikeMessage(status, messageId) {
+      const something = await post("/feeds/likeMessage", { status, messageId });
+      if (something.message) {alert(something.message);}
+    };
+
+      async function toggleLike(event) {
+        const likeButton = event.target.closest(".like-button");
+        const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
+        const messageId = inputElement.value;
+        const heartIcon = likeButton.querySelector("i");
+
+        if (heartIcon.classList.contains("fas")) {
+          heartIcon.classList.remove("fas");
+          await likeUnlikeMessage("unlike", messageId);
+        } else {
+          heartIcon.classList.add("fas");
+          await likeUnlikeMessage("like", messageId);
+  }
 }
+
 function updateScrollHeight() {
       const postsContainer = document.querySelector(".posts-container");
       postsContainer.scrollTop = postsContainer.scrollHeight;

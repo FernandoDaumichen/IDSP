@@ -11,7 +11,8 @@ const {
   createNewTasks,
   getBucketTitleByBucketId,
   updateTask,
-  likeOrUnlikeMessage,
+  likeMessage,
+  UnlikeMessage,
 } = require("../database");
 const { ensureAuthenticated } = require("../middleware");
 const { bucket } = require("../prisma/client");
@@ -22,12 +23,30 @@ router.use(ensureAuthenticated);
 router.get("/home", async (req, res) => {
   const user_id = req.user.id;
   const feed = await getAllMessages(user_id);
+  // feed.forEach(f => console.log(f.likes));
+  // console.log(feed);
   res.render("mainfeed", { feed, user_id });
   //
 });
 
-router.post("/likeUnlike", async (req, res) => {
-  likeOrUnlikeMessage()
+router.post("/likeMessage", async (req, res) => {
+  try {
+    const user_id = Number(req.user.id);
+    const { status, messageId } = req.body;
+    const message_id = Number(messageId);
+    // console.log(user_id, message_id);
+    // console.log(status);
+
+    if (status == "like") {
+      await likeMessage(user_id, message_id);
+    } else if (status == "unlike") {
+      await UnlikeMessage(user_id, message_id);
+    }
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "error! " });
+  }
 });
 
 //☝️ Problem: need to change checkbox to radio (only choosing one)!

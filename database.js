@@ -32,18 +32,45 @@ const getBucketTitleByMessageId = async (messageId) => {
 };
 
 //❗: need to work, incomplete (also talk about how likes going to work)
-const likeOrUnlikeMessage = async (status, userId, messageId) => {
-  if (status === "like") {
+const likeMessage = async (userId, messageId) => {
+  try {
     await prisma.like.create({
       data: {
         user: { connect: { id: userId } },
         message: { connect: { id: messageId } },
       },
     });
-  } else if (status === "unlike") {
-    await prisma.like.delete({
-      where: { userId: userId, messageId: messageId },
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getLikeIdByUserIdMessageId = async (user_id, message_id) => {
+  try {
+    const like = await prisma.like.findFirst({
+      where: { 
+        userId: user_id,
+        messageId: message_id,
+      },
     });
+    return like ? like.id : null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const UnlikeMessage = async (userId, messageId) => {
+  const likeId = await getLikeIdByUserIdMessageId(userId,messageId);
+  
+  try {
+    await prisma.like.delete({
+      where: {
+        id: likeId,
+      },
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -256,7 +283,7 @@ const getUserFollowing = async (user_id) => {
 
 //👍: Get all messages of the user
 const getAllMessageOfOneUser = async (user_id) => {
-  const allMessage = await prisma.message.findMany({
+  const allMessages = await prisma.message.findMany({
     where: {
       bucket: {
         user: {
@@ -282,12 +309,18 @@ const getAllMessageOfOneUser = async (user_id) => {
           user: { select: { id: true, username: true, profileImg: true } },
         },
       },
-      // bucketId: { select: { user: { select: { profileImg: true } } }
     },
   });
 
-  return allMessage;
+  return allMessages ;
 };
+
+// const main = async() => {
+//    allMessages = await getAllMessageOfOneUser(1);
+//   console.log(allMessages);
+// }
+
+// main()
 
 //👍: Get all messages of the user and following's (mainfeed)
 const getAllMessages = async (user_id) => {
@@ -391,7 +424,8 @@ module.exports = {
   changeUsername,
   deleteBucketlist,
   createNewBucket,
-  likeOrUnlikeMessage,
+  likeMessage,
+  UnlikeMessage,
   addNewMessage,
   getBucketTitleByBucketId,
   getTasks,
