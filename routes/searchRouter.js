@@ -9,7 +9,7 @@ const {
   getMessagesofCertainBucket,
   getBucketIdByBucketTitle,
   getUserIdByBucketId,
-} = require("../fake-db");
+} = require("../database");
 const querystring = require("querystring");
 
 const { bucket } = require("../prisma/client");

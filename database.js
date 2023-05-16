@@ -32,16 +32,17 @@ const getBucketTitleByMessageId = async (messageId) => {
 };
 
 //❗: need to work, incomplete (also talk about how likes going to work)
-const likeOrUnlikeMessage = async (message_id, status) => {
+const likeOrUnlikeMessage = async (status, userId, messageId) => {
   if (status === "like") {
-    await prisma.message.update({
-      where: { id: message_id },
-      data: { likes: { increment: 1 } },
+    await prisma.like.create({
+      data: {
+        user: { connect: { id: userId } },
+        message: { connect: { id: messageId } },
+      },
     });
   } else if (status === "unlike") {
-    await prisma.message.update({
-      where: { id: message_id },
-      data: { likes: { decrement: 1 } },
+    await prisma.like.delete({
+      where: { userId: userId, messageId: messageId },
     });
   }
 };

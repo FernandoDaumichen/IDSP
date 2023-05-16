@@ -10,7 +10,7 @@ const {
   getAllComments,
   getMessagesByMessageId,
   commentMessage,
-} = require("../fake-db");
+} = require("../database");
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -19,14 +19,14 @@ const { ensureAuthenticated } = require("../middleware");
 router.use(ensureAuthenticated);
 
 router.get("/:user_id", async (req, res) => {
-  const St_loginuser_id = req.params.user_id;
+  const St_loginuser_id = req.user.id;
   const loginuser_id = Number(St_loginuser_id);
   const St_userId = req.params.user_id;
   const user_id = Number(St_userId);
+  console.log(loginuser_id, user_id);
   const data = await getAllMessageOfOneUser(user_id);
   const user = await getUserByUserId(user_id);
   const totalBucketTitle = await showBuckets("all", user_id);
-  console.log(loginuser_id, user_id);
   res.render("profile", { loginuser_id, data, user_id, user, totalBucketTitle });
 });
 

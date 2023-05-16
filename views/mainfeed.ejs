@@ -40,6 +40,7 @@
             <p class="post-message"><%= message.content %></p>
           </div>
           <div class="post-actions">
+            <input type="hidden" name="messageId" value="<%= message.id %>" />
             <button
               type="button"
               class="like-button"
@@ -102,12 +103,66 @@
     </div>
 
     <script>
-      function toggleLike(event) {
+      async function toggleLike(event) {
         const likeButton = event.target.closest(".like-button");
+        const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
+        const messageId = inputElement.value;
+        console.log(messageId);
+
         const heartIcon = likeButton.querySelector("i");
+        // const messageId = ;
+
+        // if (heartIcon.classList.contains("fas")) {
+
+
+        //   const res = await fetch("/feeds/likeUnlike", { body: JSON.stringify({  }), method: "POST", headers: { "Content-Type": "application/json"} });
+        // const { success, taskId } = await res.json();
+        // // Call the function to dislike the post
+        // dislikePost();
+        // heartIcon.classList.remove("fas");
+        // heartIcon.classList.add("far");
+        // } else {
+        // // Call the function to like the post
+        // likePost();
+        // heartIcon.classList.remove("far");
+        // heartIcon.classList.add("fas");
+        // }
+
         heartIcon.classList.toggle("far");
         heartIcon.classList.toggle("fas");
-      }
+        
+  
+
+}
+
+function likePost() {
+  // Function to modify the like table in your database when the post is liked
+  // You can make an AJAX request or use any other method to communicate with your server and update the database accordingly
+  // Example AJAX request using jQuery:
+  $.ajax({
+    url: "/like-post", // Replace with your server-side endpoint
+    method: "POST",
+    data: {
+      postId: "123" // Replace with the actual post ID
+    },
+    success: function(response) {
+      // Handle the success response from the server if needed
+    },
+    error: function(error) {
+      // Handle the error response from the server if needed
+    }
+  });
+}
+
+function dislikePost() {
+  // Function to modify the like table in your database when the post is disliked
+  // Similar to the likePost() function, you need to implement the server-side logic to handle disliking the post
+}
+
+
+
+
+
     </script>
   </body>
 </html>

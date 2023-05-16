@@ -1,7 +1,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
-const database = require("./fake-db");
+const database = require("./database");
 
 const localLogin = new LocalStrategy(async (username, password, done) => {
   const user = await database.getUserByUsernameAndPassword(username, password);

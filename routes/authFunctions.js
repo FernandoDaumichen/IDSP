@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("../passport-middleware");
 const { forwardAuthenticated } = require("../middleware");
-const { createUser } = require("../fake-db");
+const { createUser } = require("../database");
 const prisma = require("../prisma/client");
 
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
