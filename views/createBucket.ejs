@@ -71,7 +71,7 @@
 
   </div>
   <script>
-    const form = document.querySelector("form");
+   const form = document.querySelector("#createNewBucketForm");
 
 
     function goBack() {
@@ -86,26 +86,6 @@
       prioritySelect.style.color = window.getComputedStyle(selectedOption).color; 
     });
 
-    form.addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  let bucket = document.getElementById('bucket');
-  let plusOne = document.getElementById('plusOne');
-
-  // Show the bucket and +1
-  bucket.style.display = 'block';
-  plusOne.style.display = 'block';
-
-  // Start the +1 animation
-  plusOne.style.animation = 'falling 2s';
-
-  // After 2 seconds, hide the bucket and +1 and reset the +1 animation
-  setTimeout(function() {
-    bucket.style.display = 'none';
-    plusOne.style.display = 'none';
-    plusOne.style.animation = '';
-  }, 2000);
-});
 
   </script>
 </body>
