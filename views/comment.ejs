@@ -1,184 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="../styles/style_comment.css">
-    <title>Comment 💬</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link type="text/css" rel="stylesheet" href="../styles/style_comment.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+  <title>Comment 💬</title>
 </head>
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
 
-.wrapper {
-  /* max-width: 375px; limit the maximum width */
-  height: 100vh;
-  width: 100%;
-  background: #fffefe;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* border-radius: 30px; */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: hidden;
-  overflow-y: auto;
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  
-}
+  .wrapper {
+    /* max-width: 375px; limit the maximum width */
+    height: 100vh;
+    width: 100%;
+    background: #fffefe;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    /* border-radius: 30px; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
 
-.background-container {
-  background-color: #ffffff;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  padding-top: 5vh;
-  padding-bottom: 5px;
-  box-sizing: border-box;
-  border-radius: 0 20px 20px;
-  /* height: 37vh; */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
+  }
 
-.arrow-left {
-  position: absolute;
-  top: 3vh;
-  left: 3vh;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  z-index: 10px;
-}
+  .background-container {
+    background-color: #ffffff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    padding-top: 5vh;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    border-radius: 0 20px 20px;
+    /* height: 37vh; */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 
-h1 {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #8083ff;
-  margin-bottom: 0;
-  text-align: center;
-}
+  .arrow-left {
+    position: absolute;
+    top: 3vh;
+    left: 3vh;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    z-index: 10px;
+  }
+
+  h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #8083ff;
+    margin-bottom: 0;
+    text-align: center;
+  }
 
 
-h2 {
+  h2 {
+    font-family: 'Open Sans', sans-serif;
+    padding-top: 3vh;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #000000;
+    margin-top: 0;
+    text-align: center;
+  }
+
+.content {
   font-family: 'Open Sans', sans-serif;
-  padding-top: 3vh;
   font-size: 1rem;
   font-weight: 400;
   color: #000000;
   margin-top: 0;
-  text-align: center;
-}
-
-h3 {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #8083ff;
-  margin-top: 0;
-  text-align: center;
-  font-style: italic;
-  font-style: oblique;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 3vh;
-}
-
-textarea {
-  width: 80%;
-  height: 10vh;
-  border: 1px solid #8083ff;
+  text-align: center
+  }
+  ;
+  
+  .message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+    background-color:#f7f7f7;
+  }
+  #message {
+    background-color: #f7f7f7;
   border-radius: 10px;
-  padding: 6vh;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #000000;
-  margin-top: 0;
-  text-align: center;
-  resize: none;
-  outline: none;
-}
+  position: relative;
+  padding: 2vh;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
+  margin-left: 8%;
+  max-width: 80%;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+  }
 
-textarea::placeholder {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #8083ff;
-  margin-top: 0;
-  text-align: center;
-}
-
-[type="submit"] {
-  width: 80%;
-  height: 5vh;
-  border: none;
-  border-radius: 10px;
-  background-color: #8083ff;
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-top: 3vh;
-  cursor: pointer;
-  outline: none;
-}
-
-div{
+  textarea {
+    width: 80%;
+    height: 10vh;
+    border: 1px solid #8083ff;
+    border-radius: 10px;
+    padding: 6vh;
     font-family: 'Open Sans', sans-serif;
     font-size: 1.2rem;
     font-weight: 400;
     color: #000000;
     margin-top: 0;
     text-align: center;
-    margin-bottom: 1vh;
-    }
+    resize: none;
+    outline: none;
+  }
+
+  textarea::placeholder {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #8083ff;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  [type="submit"] {
+    width: 80%;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    background-color: #8083ff;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 3vh;
+    cursor: pointer;
+    outline: none;
+  }
+
+
+
+  .post-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.comment-button,
+.like-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0 5px;
+  outline: none;
+  transition: transform 0.3s ease;
+}
+
+.comment-button, .like-button {
+  transition: transform 0.3s ease;
+}
+
+.comment-button:hover, .like-button:hover {
+  transform: scale(1.1);
+}
+
 </style>
+
 <body>
-    <div class="wrapper">
-       
-            <button class="arrow-left" onclick="goBack()" style="z-index: 10px;">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
-                <path fill="#8083ff"
-                  d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
-              </svg>
-            </button>
-            <h1>Post</h1>
-    <h2><%=bucketTitle%></h2>
-   
-    <h2><%=message.content%></h2>
+  <div class="wrapper">
 
-    <% comments.forEach(comment => { %>
-        <div>
-            <%=comment.comment%> -- by --  <%=comment.username%>
-            <!-- <%=comment.userProfile%> --> 
+    <button class="arrow-left" onclick="goBack()" style="z-index: 10px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
+        <path fill="#8083ff"
+          d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
+      </svg>
+    </button>
+    <h1>Post</h1>
+    <h2>
+      <%=bucketTitle%>
+    </h2>
+
+
+    <!-- <form action = "/profile/comment/<%=message.id%>" method = "POST">
+      <h3> Comments </h3>
+      <textarea style="outline: none; resize: none" type="text" name="newComment"
+      placeholder="Cheer your Friend!" class="create_post"></textarea>
+      <button type="submit">Add Comment</button>
+    </form> -->
+    <div class="message" id="message">
+      <p class="content">
+        <%=message.content%>
+      </p>
+      <div class="post-actions">
+        <button type="button" class="like-button" onclick="toggleLike(event)">
+          <i class="far fa-heart"></i>
+        </button>
+        <a  class="comment-button">
+          <i class="far fa-comment-alt"></i>
+        </a>
+      </div>
+    </div>
+    <% comments.forEach(comment=> { %>
+      <div>
+        <%=comment.comment%> -- by -- <%=comment.username%>
+            <!-- <%=comment.userProfile%> -->
             <!-- Above is the profile url -->
-        </div>
-    <% }) %>
-
-    <form action = "/profile/comment/<%=message.id%>" method = "POST">
-        <h3> Comments </h3>
-            <textarea style="outline: none; resize: none" type="text" name="newComment"
-            placeholder="Cheer your Friend!" class="create_post"></textarea>
-          <button type="submit">Add Comment</button>
-    </form>
-</div>
+      </div>
+      <% }) %>
+  </div>
 </body>
 <script>
-    function goBack() {
-        window.history.back();
+  function goBack() {
+    window.history.back();
+  }
+
+
+function toggleLike(event) {
+  const likeButton = event.target.closest('.like-button');
+  const heartIcon = likeButton.querySelector('i');
+  heartIcon.classList.toggle('far');
+  heartIcon.classList.toggle('fas');
+}
+function updateScrollHeight() {
+      const postsContainer = document.querySelector(".posts-container");
+      postsContainer.scrollTop = postsContainer.scrollHeight;
     }
+
 </script>
+
 </html>
