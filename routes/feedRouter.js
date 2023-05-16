@@ -22,7 +22,6 @@ router.use(ensureAuthenticated);
 router.get("/home", async (req, res) => {
   const user_id = req.user.id;
   const feed = await getAllMessages(user_id);
-  console.log(feed);
   res.render("mainfeed", { feed, user_id });
   //
 });

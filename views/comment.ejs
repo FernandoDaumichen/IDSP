@@ -226,6 +226,24 @@
       </div>
       <% }) %>
   </div>
+    <h2><%=message.content%></h2>
+    <img src=<%=message.message_userInfo.profileImg%>>
+
+
+    <% comments.forEach(comment => { %>
+        <div>
+            <%=comment.comment%> -- by --  <%=comment.username%>
+            <img src=<%=comment.userProfile%>>
+        </div>
+    <% }) %>
+
+    <form action = "/profile/comment/<%=message.id%>" method = "POST">
+        <h3> Leave new comment! </h3>
+            <textarea style="outline: none; resize: none" type="text" name="newComment"
+            placeholder="Cheer your Friend!" class="create_post"></textarea>
+          <button type="submit">Add Comment</button>
+    </form>
+</div>
 </body>
 <script>
   function goBack() {
