@@ -14,6 +14,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   overflow: hidden;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
 }
 
 .background-container {
@@ -217,6 +219,7 @@ textarea::placeholder {
 
 p {
   text-align: center;
+  font-size: 2.4vh;
 }
 
 
@@ -228,6 +231,7 @@ p {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   margin-top: 18vh;
+  
 }
 /* 
 .tag-grid {
@@ -244,8 +248,8 @@ input[type="checkbox"] {
   appearance: none;
   border: 0.2vh solid #8083ff;
   border-radius: 50%;
-  width: 2vh;
-  height: 2vh;
+  width: 4vh;
+  height: 4vh;
   outline: none;
 }
 
@@ -259,7 +263,7 @@ label{
   font-family: 'Quicksand', sans-serif;
   font-style: normal;
   font-weight: 800;
-  font-size: 2.5vh;
+  font-size: 3.5vh;
   text-align: center;
   color: #232328;
 
@@ -268,4 +272,60 @@ label{
 .tag-container {
   display: flex;
   align-items: center; 
+  border: #8083ff solid 0.2vh;
+  border-radius: 1vh;
+  padding: 1vh 1vh;
+  margin-bottom: 1vh;
 }
+
+/* Hide the default checkbox */
+input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  position: relative;
+  height: 4vh;
+  width: 4vh;
+  border: 0.2vh solid #8083ff;
+  border-radius: 50%;
+  padding: 0vh 2vh;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+input[type="checkbox"]:checked ~ .checkmark {
+  background-color: #ffffff;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 1.2vh;
+  top: 0.6vh;
+  width: 1.5vh;
+  height: 2.5vh;
+  border: solid #8083ff;
+  border-width: 0 0.3vh 0.3vh 0;
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:checked ~ .checkmark:after {
+  display: block;
+}
+
+
+
+
+
+
+
+/* ANIMATION */
+@keyframes falling {
+  0% { top: 0; opacity: 1; }
+  100% { top: 50px; opacity: 0; }
+}
+
+
