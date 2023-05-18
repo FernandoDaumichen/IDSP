@@ -133,11 +133,11 @@ router.get("/comment/:messageId", async (req, res) => {
     const message_creator_info = await getUserByUserId(inputData);
 
     const modifiedMessage = {
-      message_id: message.id,
-      message_content: message.content,
-      message_bucketid: message.bucketId,
-      message_createdAt: message.createdAt,
-      message_userInfo: message_creator_info,
+      id: message.id,
+      content: message.content,
+      bucketid: message.bucketId,
+      createdAt: message.createdAt,
+      userInfo: message_creator_info,
     };
 
     const modifiedComments = await Promise.all(
