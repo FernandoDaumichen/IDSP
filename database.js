@@ -1,15 +1,20 @@
 const prisma = require("./prisma/client");
 
 const getAllUsers = async () => {
-  const users = await prisma.user.findMany({
-    select: { id: true, username: true, profileImg: true },
-  });
-  return users;
+  try {
+    const users = await prisma.user.findMany({
+      select: { id: true, username: true, profileImg: true },
+    });
+    return users;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const getBucketTitleByMessageId = async (messageId) => {
-  const bucketTitle = await prisma.message
-    .findUnique({
+  try {
+    const message = await prisma.message.findUnique({
       where: { id: messageId },
       select: {
         bucket: {
@@ -18,13 +23,14 @@ const getBucketTitleByMessageId = async (messageId) => {
           },
         },
       },
-    })
-    .then((message) => message.bucket.title);
-
-  return bucketTitle;
+    });
+    return message?.bucket?.title || null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
-//❗: need to work, incomplete (also talk about how likes going to work)
 const likeMessage = async (userId, messageId) => {
   try {
     await prisma.like.create({
@@ -38,12 +44,12 @@ const likeMessage = async (userId, messageId) => {
   }
 };
 
-const getLikeIdByUserIdMessageId = async (user_id, message_id) => {
+const getLikeIdByUserIdMessageId = async (userId, messageId) => {
   try {
     const like = await prisma.like.findFirst({
       where: {
-        userId: user_id,
-        messageId: message_id,
+        userId,
+        messageId,
       },
     });
     return like ? like.id : null;
@@ -54,9 +60,8 @@ const getLikeIdByUserIdMessageId = async (user_id, message_id) => {
 };
 
 const UnlikeMessage = async (userId, messageId) => {
-  const likeId = await getLikeIdByUserIdMessageId(userId, messageId);
-
   try {
+    const likeId = await getLikeIdByUserIdMessageId(userId, messageId);
     await prisma.like.delete({
       where: {
         id: likeId,
@@ -68,44 +73,67 @@ const UnlikeMessage = async (userId, messageId) => {
 };
 
 const commentMessage = async (comment, message_id, user_id) => {
-  const newComment = await prisma.comment.create({
-    data: {
-      content: comment,
-      messageId: message_id,
-      userId: user_id,
-    },
-  });
-  return newComment;
+  try {
+    const newComment = await prisma.comment.create({
+      data: {
+        content: comment,
+        messageId: message_id,
+        userId: user_id,
+      },
+    });
+    return newComment;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getBucketTitleByBucketId = async (id) => {
-  const bucketTitle = await prisma.bucket.findUnique({
-    where: { id: id },
-    select: { title: true, id: true },
-  });
-  return bucketTitle;
+  try {
+    const bucket = await prisma.bucket.findUnique({
+      where: { id: id },
+      select: { title: true, id: true },
+    });
+    return bucket;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getBucketIdByBucketTitle = async (bucket_title) => {
-  const bucketId = prisma.bucket.findFirst({
-    where: { title: bucket_title },
-    select: { id: true },
-  });
-  return bucketId;
+  try {
+    const bucket = await prisma.bucket.findFirst({
+      where: { title: bucket_title },
+      select: { id: true },
+    });
+    return bucket ? bucket.id : null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const completeBucketlist = async (bucket_id) => {
-  await prisma.bucket.update({
-    where: { id: bucket_id },
-    data: { completed: true },
-  });
+  try {
+    await prisma.bucket.update({
+      where: { id: bucket_id },
+      data: { completed: true },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const deleteBucketlist = async (bucket_id) => {
-  await prisma.bucket.delete({
-    where: { id: bucket_id },
-    include: { Task: true, messages: true },
-  });
+  try {
+    await prisma.bucket.delete({
+      where: { id: bucket_id },
+      include: { Task: true, messages: true },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const createNewTasks = async (taskMessage, bucket_id) => {
@@ -120,219 +148,290 @@ const createNewTasks = async (taskMessage, bucket_id) => {
     return newTask;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
 const updateTask = async (completion, task_id) => {
-  const task = await prisma.task.update({
-    where: {
-      id: task_id,
-    },
-    data: {
-      completed: completion,
-    },
-  });
-  return task;
+  try {
+    const task = await prisma.task.update({
+      where: {
+        id: task_id,
+      },
+      data: {
+        completed: completion,
+      },
+    });
+    return task;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getTasks = async (bucket_id) => {
-  const tasks = await prisma.bucket.findUnique({
-    where: { id: bucket_id },
-    select: { Task: true },
-  });
-  return tasks;
+  try {
+    const tasks = await prisma.bucket.findUnique({
+      where: { id: bucket_id },
+      select: { Task: true },
+    });
+    return tasks;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const changeUsername = async (userId, newUsername) => {
-  await prisma.user.update({
-    where: { id: userId },
-    data: { username: newUsername },
-  });
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data: { username: newUsername },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getUserByUserId = async (user_id) => {
-  const user = await prisma.user.findUnique({
-    where: { id: user_id },
-  });
-  return user;
-  // return users.find((user) => user.id == user_id);
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: user_id },
+    });
+    return user;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const createNewBucket = async (dueDate, newBucket, userId, tagId) => {
-  const newBucketlist = await prisma.bucket.create({
-    data: {
-      dueDate: new Date(dueDate),
-      title: newBucket,
-      user: { connect: { id: userId } },
-      tag: { connect: { id: tagId } },
-      completed: false,
-    },
-  });
-  return newBucketlist;
+  try {
+    const newBucketlist = await prisma.bucket.create({
+      data: {
+        dueDate: new Date(dueDate),
+        title: newBucket,
+        user: { connect: { id: userId } },
+        tag: { connect: { id: tagId } },
+        completed: false,
+      },
+    });
+    return newBucketlist;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getUserByUsernameAndPassword = async (username, password) => {
-  const user = await prisma.user.findUnique({
-    where: { username: username },
-  });
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username: username },
+    });
 
-  if (user) {
-    if (user.password === password) {
+    if (user && user.password === password) {
       return user;
     }
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
-  return false;
 };
 
 const createUser = async (user) => {
-  const { email, username, password } = user;
-  const existingUser = await prisma.user.findUnique({
-    where: { email: email },
-  });
-
-  if (existingUser) {
-    return false;
-  } else {
-    const newUser = await prisma.user.create({
-      data: {
-        email: email,
-        username: username,
-        password: password,
-        profileImg:
-          "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg",
-      },
+  try {
+    const { email, username, password } = user;
+    const existingUser = await prisma.user.findUnique({
+      where: { email: email },
     });
-    return newUser;
+
+    if (existingUser) {
+      return null;
+    } else {
+      const newUser = await prisma.user.create({
+        data: {
+          email: email,
+          username: username,
+          password: password,
+          profileImg:
+            "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg",
+        },
+      });
+      return newUser;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
 
 const getAllComments = async (message_id) => {
-  const comments = await prisma.comment.findMany({
-    where: {
-      messageId: message_id,
-    },
-  });
-  return comments;
+  try {
+    const comments = await prisma.comment.findMany({
+      where: {
+        messageId: message_id,
+      },
+    });
+    return comments;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const getMessagesByMessageId = async (messageId) => {
-  const message = await prisma.message.findUnique({ where: { id: messageId } });
-  return message;
+  try {
+    const message = await prisma.message.findUnique({
+      where: { id: messageId },
+    });
+    return message;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const showBuckets = async (status, currentUser) => {
-  let buckets = null;
-  if (status === "all") {
-    buckets = await prisma.bucket.findMany({
-      where: { userId: currentUser },
-      select: { id: true, title: true },
-    });
-  } else if (status === "completed") {
-    buckets = await prisma.bucket.findMany({
-      where: {
-        AND: [{ userId: currentUser }, { completed: true }],
-      },
-      select: { id: true, title: true },
-    });
-  } else if (status === "inprogress") {
-    buckets = await prisma.bucket.findMany({
-      where: {
-        AND: [{ userId: currentUser }, { completed: false }],
-      },
-      select: { id: true, title: true },
-    });
+  try {
+    let buckets = null;
+    if (status === "all") {
+      buckets = await prisma.bucket.findMany({
+        where: { userId: currentUser },
+        select: { id: true, title: true },
+      });
+    } else if (status === "completed") {
+      buckets = await prisma.bucket.findMany({
+        where: {
+          AND: [{ userId: currentUser }, { completed: true }],
+        },
+        select: { id: true, title: true },
+      });
+    } else if (status === "inprogress") {
+      buckets = await prisma.bucket.findMany({
+        where: {
+          AND: [{ userId: currentUser }, { completed: false }],
+        },
+        select: { id: true, title: true },
+      });
+    }
+    return buckets;
+  } catch (error) {
+    console.log(error);
+    return [];
   }
-  return buckets;
 };
 
 const getAllTags = async () => {
-  const tag = await prisma.tag.findMany();
-  return tag;
+  try {
+    const tags = await prisma.tag.findMany();
+    return tags;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const addNewMessage = async (content, bucket_id) => {
-  const bucketId = Number(bucket_id);
-  const newMessage = await prisma.message.create({
-    data: {
-      content: content,
-      bucket: { connect: { id: bucketId } },
-      likes: 0,
-    },
-  });
-  return newMessage;
+  try {
+    const bucketId = Number(bucket_id);
+    const newMessage = await prisma.message.create({
+      data: {
+        content: content,
+        bucket: { connect: { id: bucketId } },
+        likes: 0,
+      },
+    });
+    return newMessage;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getUserFollowing = async (user_id) => {
-  const userFollowing = await prisma.user.findUnique({
-    where: { id: user_id },
-    select: {
-      following: {
-        select: { id: true, profileImg: true, username: true, buckets: true },
-      },
-    },
-  });
-  return userFollowing;
-};
-
-//👍: Get all messages of the user
-const getAllMessageOfOneUser = async (user_id) => {
-  const allMessages = await prisma.message.findMany({
-    where: {
-      bucket: {
-        user: {
-          id: user_id,
+  try {
+    const userFollowing = await prisma.user.findUnique({
+      where: { id: user_id },
+      select: {
+        following: {
+          select: { id: true, profileImg: true, username: true, buckets: true },
         },
       },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    select: {
-      id: true,
-      content: true,
-      createdAt: true,
-      likes: true,
-      comments: true,
-      bucket: {
-        select: {
-          id: true,
-          title: true,
-          tag: true,
-          completed: true,
-          user: {
-            select: {
-              id: true,
-              username: true,
-              profileImg: true,
-              following: { select: { id: true } },
+    });
+    return userFollowing;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const getAllMessageOfOneUser = async (userId) => {
+  try {
+    const user_id = Number(userId);
+
+    const allMessages = await prisma.message.findMany({
+      where: {
+        bucket: {
+          userId: user_id,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        content: true,
+        createdAt: true,
+        likes: true,
+        comments: true,
+        bucket: {
+          select: {
+            id: true,
+            title: true,
+            tag: true,
+            completed: true,
+            user: {
+              select: {
+                id: true,
+                username: true,
+                profileImg: true,
+                following: { select: { id: true } },
+              },
             },
           },
         },
       },
-    },
-  });
-
-  return allMessages;
+    });
+    return allMessages;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
-//👍: Get all messages of the user and following's (mainfeed)
 const getAllMessages = async (user_id) => {
-  //getting user message:
-  const userMessages = await getAllMessageOfOneUser(user_id);
-  const userFollowing = await getUserFollowing(user_id);
+  try {
+    const userMessages = await getAllMessageOfOneUser(user_id);
+    const userFollowing = await getUserFollowing(user_id);
 
-  //getting user following and message:
-  const followingIds = userFollowing.following.map((user) => user.id);
-  const followingMessage = await Promise.all(
-    followingIds.map(async (id) => {
-      return await getAllMessageOfOneUser(id);
-    })
-  );
+    const followingIds = userFollowing.following.map((user) => user.id);
+    const followingMessage = await Promise.all(
+      followingIds.map(async (id) => {
+        return await getAllMessageOfOneUser(id);
+      })
+    );
 
-  const combinedMessageArr = [...userMessages, ...followingMessage];
-  const unsortedResult = combinedMessageArr.filter((r) => r.length != 0).flat();
+    const combinedMessageArr = [...userMessages, ...followingMessage];
+    const unsortedResult = combinedMessageArr
+      .filter((r) => r.length !== 0)
+      .flat();
 
-  return sortPosts(unsortedResult);
+    return sortPosts(unsortedResult);
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const sortPosts = (posts) => {
@@ -341,91 +440,108 @@ const sortPosts = (posts) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
   } catch (error) {
-    throw new Error("Method not implemented.");
+    console.log(error);
+    return [];
   }
 };
 
 const messagesByTag = async (user_id, tag_id) => {
-  const messages = await getAllMessages(user_id);
-  let result = [];
-  messages.forEach((msg) => {
-    if (msg.bucket.tag.id == tag_id) {
-      result.push(msg);
-    }
-  });
-  return result;
+  try {
+    const messages = await getAllMessages(user_id);
+    const result = messages.filter((msg) => msg.bucket.tag.id === tag_id);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const getAllMessagesByBucketId = async (bucket_id) => {
-  const messages = await prisma.message.findMany({
-    where: { bucketId: bucket_id },
-    select: {
-      id: true,
-      content: true,
-      bucket: {
-        select: {
-          id: true,
-          title: true,
+  try {
+    const messages = await prisma.message.findMany({
+      where: { bucketId: bucket_id },
+      select: {
+        id: true,
+        content: true,
+        bucket: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+        likes: true,
+        createdAt: true,
+        comments: {
+          select: {
+            id: true,
+            content: true,
+            createdAt: true,
+          },
         },
       },
-      likes: true,
-      createdAt: true,
-      comments: {
-        select: {
-          id: true,
-          content: true,
-          createdAt: true,
-        },
-      },
-    },
-  });
-  return messages;
+    });
+    return messages;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const getUserIdByBucketId = async (bucket_id) => {
-  const outcome = await prisma.bucket.findUnique({
-    where: { id: bucket_id },
-    select: { userId: true },
-  });
-  return outcome;
+  try {
+    const outcome = await prisma.bucket.findUnique({
+      where: { id: bucket_id },
+      select: { userId: true },
+    });
+    return outcome;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getMessagesofCertainBucket = async (user_id, bucket_id) => {
-  const data = await prisma.message.findMany({
-    where: {
-      bucket: {
-        userId: user_id,
-        id: bucket_id,
+  try {
+    const data = await prisma.message.findMany({
+      where: {
+        bucket: {
+          userId: user_id,
+          id: bucket_id,
+        },
       },
-    },
-  });
-
-  return data;
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const addFriend = async (user_id, friend_id) => {
-  await prisma.user.update({
-    where: { id: user_id },
-    data: {
-      following: {
-        connect: { id: friend_id },
+  try {
+    await prisma.user.update({
+      where: { id: user_id },
+      data: {
+        following: {
+          connect: { id: friend_id },
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const removeFriend = async (user_id, friend_id) => {
-  await prisma.user.update({
-    where: { id: user_id },
-    data: { following: { disconnect: { id: friend_id } } },
-  });
+  try {
+    await prisma.user.update({
+      where: { id: user_id },
+      data: { following: { disconnect: { id: friend_id } } },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
-
-// const main = async () => {
-//   await removeFriend(11, 10);
-// };
-
-// main();
 
 module.exports = {
   addFriend,

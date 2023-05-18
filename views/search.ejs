@@ -85,31 +85,34 @@
         </a>
       </div>
    </div>
-
    <script>
     const searchInput = document.querySelector("[data-search]");
-
+  
     searchInput.addEventListener("input", (e) => {
+      try {
         const value = e.target.value;
-        const buttons = document.querySelectorAll('#tag-buttons a');
-        const users = document.querySelectorAll('.card');
+        const buttons = document.querySelectorAll("#tag-buttons a");
+        const users = document.querySelectorAll(".card");
         buttons.forEach((button) => {
-            users.forEach((user) => {
-                const headerDiv = user.querySelector('.header');
-                const userName = headerDiv.textContent;
-
-                if (value.toUpperCase() == button.textContent.toUpperCase()){
-                    button.classList.add("active");
-                } else if (value.toUpperCase() == userName.toUpperCase()){
-                    user.classList.add("active"); 
-                } else {
-                    button.classList.remove("active");
-                    user.classList.remove("active");
-                }
-            })
-        })
+          users.forEach((user) => {
+            const headerDiv = user.querySelector(".header");
+            const userName = headerDiv.textContent;
+  
+            if (value.toUpperCase() === button.textContent.toUpperCase()) {
+              button.classList.add("active");
+            } else if (value.toUpperCase() === userName.toUpperCase()) {
+              user.classList.add("active");
+            } else {
+              button.classList.remove("active");
+              user.classList.remove("active");
+            }
+          });
+        });
+      } catch (error) {
+        console.log(error);
+      }
     });
-    
-   </script>
+  </script>
+  
 </body>
 </html>

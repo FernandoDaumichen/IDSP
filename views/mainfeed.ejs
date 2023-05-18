@@ -108,35 +108,46 @@
     </div>
 
     <script>
-
-    const post = async (url, data) => {
-     const res = await fetch(url, {
-        body: JSON.stringify(data),
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-       });
-      return await res.json().catch((err) => console.log(err));
+      const post = async (url, data) => {
+        try {
+          const res = await fetch(url, {
+            body: JSON.stringify(data),
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          });
+          return await res.json();
+        } catch (error) {
+          console.log(error);
+          return { error: "An error occurred" };
+        }
       };
-
-    async function likeUnlikeMessage(status, messageId) {
-      const something = await post("/feeds/likeMessage", { status, messageId });
-      if (something.message) {alert(something.message);}
-    };
-
+    
+      async function likeUnlikeMessage(status, messageId) {
+        try {
+          const response = await post("/feeds/likeMessage", { status, messageId });
+          if (response.message) {
+            alert(response.message);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
       async function toggleLike(event) {
         const likeButton = event.target.closest(".like-button");
         const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
         const messageId = inputElement.value;
         const heartIcon = likeButton.querySelector("i");
-
+    
         if (heartIcon.classList.contains("fas")) {
           heartIcon.classList.remove("fas");
           await likeUnlikeMessage("unlike", messageId);
         } else {
           heartIcon.classList.add("fas");
           await likeUnlikeMessage("like", messageId);
-  }
-}
+        }
+      }
     </script>
+    
   </body>
 </html>

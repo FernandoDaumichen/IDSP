@@ -7,15 +7,18 @@ const prisma = require("../prisma/client");
 
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
 
-router.get("/signup", (req, res) => {
-  res.render("signup");
-});
+router.get("/signup", (req, res) => res.render("signup"));
 
 router.post("/signup", async (req, res) => {
-  const user = await createUser(req.body);
-  if (user) {
-    res.redirect("/auth/login");
-  } else {
+  try {
+    const user = await createUser(req.body);
+    if (user) {
+      res.redirect("/auth/login");
+    } else {
+      res.redirect("/auth/signup");
+    }
+  } catch (error) {
+    console.log(error);
     res.redirect("/auth/signup");
   }
 });

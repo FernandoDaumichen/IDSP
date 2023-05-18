@@ -206,73 +206,103 @@ progress{
   </div>
 </body>
 <script>
+function goBack() {
+  window.history.back();
+}
 
-  function goBack() {
-    window.history.back();
-  }
+function addProgressBar() {
+  const progressBar = document.getElementById("progressbar");
+  progressBar.value++;
+}
 
-  function addProgressBar(){
-        const progressBar = document.getElementById("progressbar");
-        progressBar.value++;
-      }
-      
-      function completeProgressBar(){
-        const progressBar = document.getElementById("progressbar");
-        progressBar.value = 100;
-      }
-      function minusProgressBar(){
-        const progressBar = document.getElementById("progressbar");
-        progressBar.value--;
-      }
-      async function addTaskHandler() {
-        const task = document.querySelector("input[name=taskEntry]").value;
-        const pathArr = window.location.pathname.split("/");
-        const path = pathArr[pathArr.length - 1]
-        const res = await fetch("/feeds/addTask", { body: JSON.stringify({ task, path }), method: "POST", headers: { "Content-Type": "application/json"} });
-        const { success, taskId } = await res.json();
-        if (success) {
-          completeProgressBar();
-          document.querySelector("ul").innerHTML += 
-          `
-            <li>
-              <label>
-                <input type="checkbox" name="milestoneTask" value="${taskId}" />
-                ${task}
-              </label>
-            </li>
-          `
-          addCheckboxListeners();
-        }
-        
-        minusProgressBar();
-      }
-      document.querySelector("#addTask").addEventListener("click", addTaskHandler);
+function completeProgressBar() {
+  const progressBar = document.getElementById("progressbar");
+  progressBar.value = 100;
+}
+
+function minusProgressBar() {
+  const progressBar = document.getElementById("progressbar");
+  progressBar.value--;
+}
+
+async function addTaskHandler() {
+  try {
+    const task = document.querySelector("input[name=taskEntry]").value;
+    const pathArr = window.location.pathname.split("/");
+    const path = pathArr[pathArr.length - 1];
+    const res = await fetch("/feeds/addTask", {
+      body: JSON.stringify({ task, path }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const { success, taskId } = await res.json();
+    if (success) {
+      completeProgressBar();
+      const taskList = document.querySelector("ul");
+      taskList.innerHTML += `
+        <li>
+          <label>
+            <input type="checkbox" name="milestoneTask" value="${taskId}" />
+            ${task}
+          </label>
+        </li>
+      `;
       addCheckboxListeners();
-      function addCheckboxListeners() {
-        let checkboxNodes = Array.from(document.querySelectorAll("input[name=milestoneTask]"));
-        checkboxNodes.forEach(function (checkbox) {
-          checkbox.addEventListener("change", async function (event) {
-            const taskId = event.target.value;
-            const completed = event.target.checked;
-            const res = await fetch(`/feeds/updateTask/${taskId}`, { body: JSON.stringify({ completed }), method: "POST", headers: { "Content-Type": "application/json"} });
-            addProgressBar();
-          });
+    }
+    minusProgressBar();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+document.querySelector("#addTask").addEventListener("click", addTaskHandler);
+addCheckboxListeners();
+
+function addCheckboxListeners() {
+  const checkboxNodes = Array.from(
+    document.querySelectorAll("input[name=milestoneTask]")
+  );
+  checkboxNodes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", async function (event) {
+      try {
+        const taskId = event.target.value;
+        const completed = event.target.checked;
+        const res = await fetch(`/feeds/updateTask/${taskId}`, {
+          body: JSON.stringify({ completed }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
         });
+        addProgressBar();
+      } catch (error) {
+        console.log(error);
       }
-      
-      async function completeBucketlist(){
-        const urlArr = window.location.pathname.split("/");
-        const bucket_id = urlArr[urlArr.length - 1];
-        const res = await fetch("/feeds/bucket/:id", { body: JSON.stringify({ bucket_id }), method: "POST", headers: { "Content-Type": "application/json"} });
-        const { success } = await res.json();
-        
-        if (success) {
-          completeProgressBar()
-          document.querySelector("ul").innerHTML = "Bucketlist Completed!" 
-        }
-      }
-      
-      const completeBtn = document.querySelector("#completeBucketlist");
-      completeBtn.addEventListener("click", completeBucketlist);
+    });
+  });
+}
+
+async function completeBucketlist() {
+  try {
+    const urlArr = window.location.pathname.split("/");
+    const bucket_id = urlArr[urlArr.length - 1];
+    const res = await fetch("/feeds/bucket/:id", {
+      body: JSON.stringify({ bucket_id }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const { success } = await res.json();
+
+    if (success) {
+      completeProgressBar();
+      const taskList = document.querySelector("ul");
+      taskList.innerHTML = "Bucketlist Completed!";
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const completeBtn = document.querySelector("#completeBucketlist");
+completeBtn.addEventListener("click", completeBucketlist);
+
     </script>
 </html>

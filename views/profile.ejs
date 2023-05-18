@@ -14,8 +14,10 @@
 <body>
  
   <div class="flex-container">
+  <div class="flex-container">  
   <div class="wrapper">
     <div class="background-container">
+      <% if (loginUserId === userId) { %>
       <form action="/profile/settings" class="settings-form" method="GET">
         <button>
       <div class="setting">
@@ -29,6 +31,7 @@
       </div>
     </button>
     </form>
+    <% } %>
       <div class="profilephoto">    
         <img src=<%=user.profileImg%> style="z-index: 0; margin-top: 15px;    width: 12vh;
         height: auto;" class="user-avatar">
@@ -39,15 +42,15 @@
       <p class="netBucket">
         <%=totalBucketTitle.length%> goals
       </p>
-      <% if (loginuser_id === user_id) { %>
-        <form action="/profile/edit/<%=user_id%>" class="edit-form">
+      <% if (loginUserId === userId) { %>
+        <form action="/profile/edit/<%=userId%>" class="edit-form">
           <button type="submit" class="edit-button">Edit Profile</button>
         </form>
       <% } else { %>
-        <% if (userFollowingId.includes(user_id)) { %>
-          <button type="submit" class="friend-button">Unfriend</button>
+        <% if (userFollowingId.includes(userId)) { %>
+          <button type="button" class="friend-button">Unfriend</button>
         <% } else { %>
-          <button type="submit" class="friend-button">Add Friend</button>
+          <button type="button" class="friend-button">Add Friend</button>
         <%}%>
       <%}%>
       <div class="buttons">
@@ -56,8 +59,8 @@
         <button style="width: 100px;">Posts</button>
       </div>
     </div>
-          <% if (loginuser_id === user_id) { %>
-            <form class="user-info" action="/profile/<%=user_id%>" method="POST">
+          <% if (loginUserId == userId) { %>
+            <form class="user-info" action="/profile/<%=userId%>" method="POST">
               <div class="posts-container">
                 <div class="user-input-wrapper">
                   <div class="wrapwrap" style="display: flex; align-items: flex-start">
@@ -99,8 +102,7 @@
           </p>
           <div class="post-actions">
             <input type="hidden" name="messageId" value="<%= post.id %>" />
-            
-            <% if (post.likes.filter(like => like.userId === user_id).length > 0) { %>
+            <% if (post.likes.filter(like => like.userId === loginUserId).length > 0) { %>
               <button type="button" class="like-button" onclick="toggleLike(event)">
                 <i class="far fa-heart fas"></i>
               </button>
@@ -154,7 +156,7 @@
         height="50"
       />
     </a>
-    <a href="/profile/<%=loginuser_id%>">
+    <a href="/profile/<%=loginUserId%>">
       <img
         src="../styles/images/profile_icon_noBackground2.png"
         alt="Profile"
@@ -166,66 +168,74 @@
 </div>
 
 <script>
+const friendBtn = document.querySelector(".friend-button");
+const postsContainer = document.querySelector(".posts-container");
 
-  const friendBtn = document.querySelector(".friend-button");
-
-  const post = async (url, data) => {
+const post = async (url, data) => {
+  try {
     const res = await fetch(url, {
       body: JSON.stringify(data),
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
-    return await res.json().catch((err) => console.log(err));
-  };
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+    return { error: "An error occurred" };
+  }
+};
 
-  async function likeUnlikeMessage(status, messageId) {
-      const something = await post("/feeds/likeMessage", { status, messageId });
-      if (something.message) {alert(something.message);}
-    };
-    
-  async function toggleLike(event) {
-    const likeButton = event.target.closest(".like-button");
-    const inputElement = likeButton.parentNode.querySelector(
-      'input[name="messageId"]'
-    );
-    const messageId = inputElement.value;
-    const heartIcon = likeButton.querySelector("i");
-
-    if (heartIcon.classList.contains("fas")) {
-      heartIcon.classList.remove("fas");
-      await likeUnlikeMessage("unlike", messageId);
-    } else {
-      heartIcon.classList.add("fas");
-      await likeUnlikeMessage("like", messageId);
+const likeUnlikeMessage = async (status, messageId) => {
+  try {
+    const response = await post("/feeds/likeMessage", { status, messageId });
+    if (response.message) {
+      alert(response.message);
     }
+  } catch (error) {
+    console.log(error);
   }
+};
 
-    async function friendUnfriendFunc(friendship, messageId) {
-    const friendship = friendBtn.innerHTML;
-    const pathArr = window.location.pathname.split("/");
-    const friend_id = pathArr[pathArr.length - 1];
-    const something = await post("/feeds/likeMessage", { friendship, friend_id });
-    if (something.message) {
-      alert(something.message);
+const toggleLike = async (event) => {
+  const likeButton = event.target.closest(".like-button");
+  const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
+  const messageId = inputElement.value;
+  const heartIcon = likeButton.querySelector("i");
+
+  if (heartIcon.classList.contains("fas")) {
+    heartIcon.classList.remove("fas");
+    await likeUnlikeMessage("unlike", messageId);
+  } else {
+    heartIcon.classList.add("fas");
+    await likeUnlikeMessage("like", messageId);
+  }
+};
+
+const updateScrollHeight = () => {
+  postsContainer.scrollTop = postsContainer.scrollHeight;
+};
+
+friendBtn.addEventListener("click", async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  const pathArr = window.location.pathname.split("/");
+  const friend_id = pathArr[pathArr.length - 1];
+  let friendshipValue = friendBtn.innerHTML;
+
+  try {
+    const response = await post("/profile/friendUnfriend", { friendshipValue, friend_id });
+      if (response.message === "friended") {
+        friendBtn.innerHTML = "Unfriend";
+      } else if (response.message === "unfriended") {
+        friendBtn.innerHTML = "Add Friend";
+      }
     }
+   catch (error) {
+    console.log(error);
   }
-
-  async function friendUnfriend() {
-    const something = await post("/profile/friendUnfriend", { status, messageId });
-
-  }
-
-  function updateScrollHeight() {
-    const postsContainer = document.querySelector(".posts-container");
-    postsContainer.scrollTop = postsContainer.scrollHeight;
-  }
-
-  friendBtn.addEventListener("click", () => {
-    console.log("I was hit!");
-  })
-
-
+});
 </script>
+
 
 </body>
 
