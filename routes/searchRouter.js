@@ -21,10 +21,11 @@ const { ensureAuthenticated } = require("../middleware");
 router.use(ensureAuthenticated);
 
 router.get("/", async (req, res) => {
+  const user_id = req.params.user_id;
   const data = await getUserFollowing(req.user.id);
   const followings = Object.values(data).flat();
   const tags = await getAllTags();
-  res.render("search", { data: followings, tags });
+  res.render("search", { data: followings, tags ,user_id});
 });
 
 router.post("/", async (req, res) => {

@@ -1,186 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="../styles/style_comment.css">
-    <title>Comment 💬</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link type="text/css" rel="stylesheet" href="../styles/style_comment.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+  <title>Comment 💬</title>
 </head>
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
 
-.wrapper {
-  /* max-width: 375px; limit the maximum width */
-  height: 100vh;
-  width: 100%;
-  background: #fffefe;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* border-radius: 30px; */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: hidden;
-  overflow-y: auto;
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  
-}
+  .wrapper {
+    /* max-width: 375px; limit the maximum width */
+    height: 100vh;
+    width: 100%;
+    background: #fffefe;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    /* border-radius: 30px; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
 
-.background-container {
-  background-color: #ffffff;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  padding-top: 5vh;
-  padding-bottom: 5px;
-  box-sizing: border-box;
-  border-radius: 0 20px 20px;
-  /* height: 37vh; */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
+  }
 
-.arrow-left {
-  position: absolute;
-  top: 3vh;
-  left: 3vh;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  z-index: 10px;
-}
+  .background-container {
+    background-color: #ffffff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    padding-top: 5vh;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    border-radius: 0 20px 20px;
+    /* height: 37vh; */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 
-h1 {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #8083ff;
-  margin-bottom: 0;
-  text-align: center;
-}
+  .arrow-left {
+    position: absolute;
+    top: 3vh;
+    left: 3vh;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    z-index: 10px;
+  }
 
-strong{
+  h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #8083ff;
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+
+  h2 {
+    font-family: 'Open Sans', sans-serif;
+    /* padding-top: 3vh; */
+    font-size: 1.2rem;
+    font-weight: 400;
     color: #000000;
-}
-h2 {
-  font-family: 'Open Sans', sans-serif;
-  padding-top: 3vh;
-  font-size: 1.8rem;
-  font-weight: 400;
-  color: #000000;
-  margin-top: 0;
-  text-align: center;
-}
+    margin-top: 0;
+    text-align: center;
+  }
+    
+  h3{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #8083ff;
+    margin-top: 0;
+    text-align: center;
+    font-weight: 600;
+  }
+  .content {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000000;
+    margin-top: 0;
+    /* text-align: center; */
+    display: inline-block;
+  }
 
-h3 {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #000000;
-  margin-top: 0;
-  text-align: center;
-  font-style: italic;
-  font-style: oblique;
-}
+  ;
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 3vh;
-}
+  .message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+    background-color: #f7f7f7;
+  }
 
-textarea {
-  width: 80%;
-  height: 10vh;
-  border: 1px solid #8083ff;
-  border-radius: 10px;
-  padding: 6vh;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #000000;
-  margin-top: 0;
-  text-align: center;
-  resize: none;
-  outline: none;
-}
+  #message {
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    position: relative;
+    padding: 2vh;
+    margin-bottom: 4%;
+    margin-top: 2vh;
+    margin-left: 8%;
+    width: 100%;
+    max-width: 79%;
+    /* height: 15%; */
+  }
 
-textarea::placeholder {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #8083ff;
-  margin-top: 0;
-  text-align: center;
-}
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+  }
 
-[type="submit"] {
-  width: 80%;
-  height: 5vh;
-  border: none;
-  border-radius: 10px;
-  background-color: #8083ff;
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-top: 3vh;
-  cursor: pointer;
-  outline: none;
-}
-
-div{
+  textarea {
+    width: 80%;
+    height: 10vh;
+    border: 1px solid #8083ff;
+    border-radius: 10px;
+    padding: 6vh;
     font-family: 'Open Sans', sans-serif;
     font-size: 1.2rem;
     font-weight: 400;
     color: #000000;
     margin-top: 0;
     text-align: center;
+    resize: none;
+    outline: none;
+  }
+
+  textarea::placeholder {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #8083ff;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  [type="submit"] {
+    width: 80%;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    background-color: #8083ff;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 3vh;
+    cursor: pointer;
+    outline: none;
+  }
+
+
+
+  .post-actions {
+     /* display: inline; */
+     justify-content: flex-end;
+    align-items: center;
+    /* padding-left: 50%; */
+    position: relative;
+
+  }
+
+  .comment-button,
+  .like-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0 5px;
+    outline: none;
+    transition: transform 0.3s ease;
+  }
+
+  .comment-button,
+  .like-button {
+    transition: transform 0.3s ease;
+  }
+
+  .comment-button:hover,
+  .like-button:hover {
+    transform: scale(1.1);
+  }
+
+  .user-picture {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  margin-right: 1.33vh;
+  background-color: #b1b1b1;
+  top: 2.4vh;
+}
+.comments{
+  background-color: #f7f7f7;
+    border-radius: 10px;
+    position: relative;
+    padding: 2vh;
+    margin-bottom: 4%;
+    margin-top: 2vh;
+    margin-left: 8%;
+    width: 100%;
+    max-width: 79%;
+    /* height: 15%; */
+}
+
+hr{
+  border: 0;
+    height: 1px;
+    background: #8083ff;
+    background-image: linear-gradient(to right, #8083ff, #8083ff, #8083ff);
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    /* margin-left: 8%;*/
+}
+
+.username{
+  display: inline;
+    font-family: "Opens Sans", sans-serif;
+    font-size: 2vh;
+    position: absolute;
+    line-height: 0;
+    margin-bottom: 2vh;
+    font-style: normal;
+    word-wrap: break-word;
+}
+.user-comment{
+  display: inline;
+    font-family: "Opens Sans", sans-serif;
+    font-size: 2vh;
+    position: absolute;
+    /* line-height: 2.5vh; */
     margin-bottom: 1vh;
-    }
+    font-style: normal;
+    word-wrap: break-word;
+    /* margin-left: 8vh; */
+    padding-top: 2vh;
+}
 </style>
+
 <body>
-    <div class="wrapper">
-        <div class="background-container">
-            <button class="arrow-left" onclick="goBack()" style="z-index: 10px;">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
-                <path fill="#8083ff"
-                  d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
-              </svg>
-            </button>
-    <h1><strong> Bucket Title:</strong> <%=bucketTitle%></h1>
+  <div class="wrapper">
+
+    <button class="arrow-left" onclick="goBack()" style="z-index: 10px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
+        <path fill="#8083ff"
+          d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
+      </svg>
+    </button>
+    <h1>Post</h1>
+    <h2>
+      <%=bucketTitle%>
+    </h2>
+
+
+    <!-- <form action = "/profile/comment/<%=message.id%>" method = "POST">
+
+      <textarea style="outline: none; resize: none" type="text" name="newComment"
+      placeholder="Cheer your Friend!" class="create_post"></textarea>
+      <button type="submit">Add Comment</button>
+    </form> -->
+    <div class="message" id="message">  
+      <img class="user-picture"src=<%=message.message_userInfo.profileImg%>>
+      <p class="username"><%=message.message_userInfo.username%></p>
+      <p class="content">
+        <%=message.message_content%>
+      </p>
+      <div class="post-actions">
+        <button type="button" class="like-button" onclick="toggleLike(event)">
+          <i class="far fa-heart"></i>
+        </button>
+        <a class="comment-button">
+          <i class="far fa-comment-alt"></i>
+        </a>
+      </div>
+    </div> 
+    <hr>
+    <h3>Comments</h3>
+    <div class="comments" id="comments"> 
+    <% comments.forEach(comment=> { %>
+        <img class="user-picture" src=<%=comment.userProfile%>>
+       <p class="username"><%=comment.username%></p>
+        <p class="content"><%=comment.comment%></p>
+      
+      <% }) %>
     </div>
-    <h2><%=message.message_content%></h2>
-    <img src=<%=message.message_userInfo.profileImg%>>
+  </div>
+  
 
 
-    <% comments.forEach(comment => { %>
-        <div>
-            <%=comment.comment%> -- by --  <%=comment.username%>
-            <img src=<%=comment.userProfile%>>
-        </div>
-    <% }) %>
 
-    <form action = "/profile/comment/<%=message.id%>" method = "POST">
-        <h3> Leave new comment! </h3>
-            <textarea style="outline: none; resize: none" type="text" name="newComment"
-            placeholder="Cheer your Friend!" class="create_post"></textarea>
-          <button type="submit">Add Comment</button>
-    </form>
-</div>
 </body>
 <script>
-    function goBack() {
-        window.history.back();
-    }
+  function goBack() {
+    window.history.back();
+  }
+
+
+  function toggleLike(event) {
+    const likeButton = event.target.closest('.like-button');
+    const heartIcon = likeButton.querySelector('i');
+    heartIcon.classList.toggle('far');
+    heartIcon.classList.toggle('fas');
+  }
+  function updateScrollHeight() {
+    const postsContainer = document.querySelector(".posts-container");
+    postsContainer.scrollTop = postsContainer.scrollHeight;
+  }
+
+
+
+  function createCommentBox() {
+    const commentButton = document.querySelector('.comment-button');
+    commentButton.addEventListener('click', function() {
+      let commentForm = document.createElement('form');
+      commentForm.action = `/profile/comment/${message.id}`;
+      commentForm.method = 'POST';
+
+      let commentTextArea = document.createElement('textarea');
+      commentTextArea.style.outline = 'none';
+      commentTextArea.style.resize = 'none';
+      commentTextArea.type = 'text';
+      commentTextArea.name = 'newComment';
+      commentTextArea.placeholder = 'Cheer your Friend!';
+      commentTextArea.className = 'create_post';
+
+      let commentSubmitButton = document.createElement('button');
+      commentSubmitButton.type = 'submit';
+      commentSubmitButton.textContent = 'Add Comment';
+
+      commentForm.appendChild(commentTextArea);
+      commentForm.appendChild(commentSubmitButton);
+
+      document.querySelector('#comments').appendChild(commentForm);
+    });
+  }
+
+  createCommentBox();
+
+  function updateScrollHeight() {
+    const postsContainer = document.querySelector(".posts-container");
+    postsContainer.scrollTop = postsContainer.scrollHeight;
+  }
 </script>
+
 </html>

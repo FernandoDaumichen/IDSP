@@ -47,27 +47,31 @@
     <div class="tag-section">
       <p>Choose your Tag</p>
       <div class="tag-grid">
-        <% tags.forEach(tag=> { %>
+        <% tags.forEach((tag, index) => { %>
           <div class="tag-container">
-            <input type="checkbox" id="tag" name="tag" value="<%=tag.id%>">
-            <label for="<%=tag.id%>">
-              <%=tag.tagName%>
-            </label>
+              <label for="tag<%=index%>">
+                  <input type="checkbox" id="tag<%=index%>" name="tag" value="<%=tag.id%>">
+                  <span class="checkmark"></span>
+                  <%=tag.tagName%>
+              </label>
           </div>
-          <% }) %>
+      <% }) %>
       </div>
     </div>
 
 
-    <!-- <button id="submitBtn" type="submit">Create New Bucketlist</button> -->
     <div class="button-container">
       <button class="Create-Goal" id="submitBtn" type="submit">Create New Goal </button>
     </div>
 
     </form>
+
+    <img id="bucket" src="../styles/images/balde-removebg-preview.png" style="display: none;">
+<div id="plusOne" style="display: none; color: green;">+1</div>
+
   </div>
   <script>
-    const form = document.querySelector("form");
+   const form = document.querySelector("#createNewBucketForm");
 
 
     function goBack() {
@@ -81,6 +85,8 @@
       const selectedOption = prioritySelect.options[prioritySelect.selectedIndex]; 
       prioritySelect.style.color = window.getComputedStyle(selectedOption).color; 
     });
+
+
   </script>
 </body>
 
