@@ -10,6 +10,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
+    
   }
   
   .navbar img {
@@ -88,6 +89,8 @@
     border: 2px solid #9B99FF;
     border-radius: 20px;
     color: grey;
+    margin-left: 42%;
+    margin-top: 3%;
 }
 
 #search-input::placeholder {
@@ -95,15 +98,15 @@
 }
 
 #search {
-    position: absolute;
-    right: 1vh;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #9B99FF;
-    color: #ffffff;
-    border: none;
-    border-radius: 20px;
-    padding: 0.5em 1em;
+  position: absolute;
+  right: -40%;
+  top: 62%;
+  transform: translateY(-50%);
+  background-color: #9B99FF;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5em 1em;
 }
 #tag-buttons {
     display: flex;
@@ -112,33 +115,44 @@
     width: 100%;
     padding: 1vh 0;
     align-items: center;
-    gap: 0.5%;
+    gap: 2.8%;
+    margin-left: 4%;
 }
 
 .button-value {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #9B99FF;
-    background-color: transparent;
-    color: #9B99FF;
-    height: 5vh;
-    width: 5vh;
-    border-radius: 50%; /* make the button circular */
-    padding: 4vh 4vh;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    box-sizing: border-box; /* ensure that padding is included in the button size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: #9B99FF;
+  height: 5vh;
+  width: 5vh;
+  border-radius: 50%;
+  padding: 4vh 4vh;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .button-value .tag-icon {
     width: 20px;
     height: 20px;
-    margin-right: 1vh; /* add some space between the icon and the text */
+    margin-right: 1vh; 
 }
 
+.tag-name{
+  font-size: 100%;
+  font-family: 'Open Sans', sans-serif;
+  color: #000000;
+  margin-top: 1vh;
+  margin-left: 1vh;
+  margin-right: 1vh;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .button-value.active {
     background-color: #6759ff;
     color: #ffffff;
@@ -146,10 +160,143 @@
 
 h1{
 margin-top: 4vh;
-margin-left: 1vh;
+margin-left: 4%;
 font-size: 3.5vh;
 font-family:'Open Sans', sans-serif;
 color: #8083ff;
 }
 
 
+h2{
+
+  margin-top: 4vh;
+  margin-bottom: 0vh;
+  margin-left: 4%;
+font-size: 2.5vh;
+font-family:'Open Sans', sans-serif;
+color: #9B99FF;
+}
+
+#user-cards{
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: 100%;
+  padding: 1vh 0;
+  gap: 2%;
+  overflow-x: auto;
+  margin-left: 4%;
+}
+.user-picture{
+  width: 10vh;
+  height: 10vh;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 2vh;
+  margin-right: 2vh;
+  
+}
+
+.followers-username{
+  font-size: 2vh;
+  font-family:'Open Sans', sans-serif;
+  color: #8083ff;
+  margin-left: 2vh;
+  margin-right: 2vh;
+  white-space: nowrap;
+  
+  text-align: center;
+}
+
+[href="/search/tag/1"]{
+  text-decoration: none;
+  background-image: url("../styles/images/travel.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/2"]{
+  text-decoration: none;
+  background-image: url("../styles/images/adventure.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/3"]{
+  text-decoration: none;
+  background-image: url("../styles/images/personalGrowth.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/4"]{
+  text-decoration: none;
+  background-image: url("../styles/images/sports.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/5"]{
+  text-decoration: none;
+  background-image: url("../styles/images/music.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/6"]{
+  text-decoration: none;
+  background-image: url("../styles/images/food.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/7"]{
+  text-decoration: none;
+  background-image: url("../styles/images/carrer.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+[href="/search/tag/8"]{
+  text-decoration: none;
+  background-image: url("../styles/images/study.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/9"]{
+  text-decoration: none;
+  background-image: url("../styles/images/date.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/10"]{
+  text-decoration: none;
+  background-image: url("../styles/images/health.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/11"]{
+  text-decoration: none;
+  background-image: url("../styles/images/finance.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/12"]{
+  text-decoration: none;
+  background-image: url("../styles/images/spiritual.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/13"]{
+  text-decoration: none;
+  background-image: url("../styles/images/family.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+[href="/search/tag/14"]{
+  text-decoration: none;
+  background-image: url("../styles/images/friends.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.tag-wrapper {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}

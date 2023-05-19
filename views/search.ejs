@@ -12,7 +12,7 @@
 </head>
 
 <body>
-
+    <div class="wrapper">
     <div id="search-container">
         <form action="/search/" method="post">
             <div class="input-wrap">
@@ -25,19 +25,25 @@
 
     <h1>Filter</h1>
     <div id="tag-buttons">
-        <% tags.forEach(tag => { %>
-            <a href="/search/tag/<%=tag.id%>" class="button-value"><%=tag.tagName%>
-            <img src="<%=tag.imageUrl%>" alt="<%=tag.tagName%> Icon"> </a>
-        <% }) %>
-    </div>
-
+      <% tags.forEach(tag => { %>
+          <div class="tag-wrapper"> <!-- wrap each button and name with a div -->
+              <a href="/search/tag/<%=tag.id%>" class="button-value">
+                  <div class="tag-container">  
+                      <img src="<%=tag.imageUrl%>">
+                  </div>
+              </a>
+              <span class="tag-name"><%=tag.tagName%></span> <!-- this will now appear below the button -->
+          </div>
+      <% }) %>
+  </div>  
+      
    <h2>Your Followers</h2>
 
    <div id="user-cards" data-user-card-container>
     <% data.forEach(following => { %>
         <div class="card">
             <img src="<%=following.profileImg %>" style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;"  class="user-picture"></a>
-            <div class="header"><%=following.username%></div>
+            <div class="followers-username"><%=following.username%></div>
         </div>
     <% }) %>
     <div class="navbar">
@@ -85,6 +91,7 @@
         </a>
       </div>
    </div>
+  </div>
    <script>
     const searchInput = document.querySelector("[data-search]");
   
