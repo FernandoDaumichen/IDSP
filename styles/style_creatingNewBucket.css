@@ -214,12 +214,19 @@ textarea::placeholder {
   text-align: center;
   color: #8083ff;
   margin-top: 6vh;
- 
 }
 
 p {
   text-align: center;
   font-size: 2.4vh;
+}
+
+textarea.create_post::placeholder {
+  font-size: 16px; /* Adjust the font size as desired */
+}
+
+textarea.create_post {
+  width: 300px; /* Adjust the width as desired */
 }
 
 

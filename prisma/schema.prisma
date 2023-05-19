@@ -65,7 +65,7 @@ model Comment {
   id        Int      @id @default(autoincrement())
   content   String
   messageId Int
-  message   Message  @relation(fields: [messageId], references: [id])
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
@@ -76,5 +76,5 @@ model Like {
   userId      Int
   user        User      @relation(fields: [userId], references: [id])
   messageId   Int
-  message     Message   @relation(fields: [messageId], references: [id])
+  message     Message   @relation(fields: [messageId], references: [id], onDelete: Cascade)
 }

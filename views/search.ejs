@@ -97,6 +97,9 @@
   </div>
    <script>
     const searchInput = document.querySelector("[data-search]");
+    const searchBar = document.querySelector("#search-input");
+    searchBar.innerHTML="";
+
   
     searchInput.addEventListener("input", (e) => {
       try {
@@ -118,6 +121,7 @@
             }
           });
         });
+        searchBar.innerHTML = ""
       } catch (error) {
         console.log(error);
       }
