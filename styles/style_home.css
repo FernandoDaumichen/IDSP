@@ -1,5 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
+@keyframes logoAnimation {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.logo {
+  animation: logoAnimation 3s  linear;
+}
+
+
 .wrapper {
   /* max-width: 375px; limit the maximum width */
   height: 100vh;
