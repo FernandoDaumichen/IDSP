@@ -75,7 +75,7 @@ h2 {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: url("https://media.pitchfork.com/photos/5a00b098ec4b2c2177a85205/1:1/w_800,h_800,c_limit/samsmith_thrill.jpg");
+  /* background: url("https://media.pitchfork.com/photos/5a00b098ec4b2c2177a85205/1:1/w_800,h_800,c_limit/samsmith_thrill.jpg"); */
   background-size: cover;
   background-position: center;
 }
@@ -106,7 +106,7 @@ h2 {
 }
 
 .change-username {
-  font-size: 1.4vh;
+  font-size: 2vh;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -118,7 +118,7 @@ h2 {
 }
 
 .changeUserName {
-  font-size: 2vh;
+  font-size: 4vh;
   width:100%;
   text-align: center;
   font-family: "Open Sans", sans-serif;
@@ -135,11 +135,13 @@ h2 {
   <body>
     <div class="wrapper">
       <button class="cancel" onclick="goBack()">Cancel</button>
-      <form action="/profile/editedit/<%=data.id%>" method="POST">
+      <form action="/profile/edit/<%=data.id%>" method="POST">
         <button class="save">Save</button>
         <h1>Edit Profile</h1>
         <div class="picture-container">
-          <div class="profile-photo"></div>
+          <div class="profile-photo">
+            <img src="<%=data.profileImg%>" alt="profile-photo">
+          </div>
           <button class="edit-picture">Edit Picture</button>
         </div>
         

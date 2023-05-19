@@ -23,7 +23,6 @@ router.use(ensureAuthenticated);
 
 router.get("/", async (req, res) => {
   try {
-    // console.log(req.user);
     const user_id= req.user.id;
     const data = await getUserFollowing(req.user.id);
     const followings = Object.values(data).flat();
@@ -89,7 +88,7 @@ router.post("/", async (req, res) => {
         }
       });
     }
-    console.log(allSimilarBucket);
+
 
     const uniqueBucketTitles = [...new Set(allSimilarBucket)];
 
@@ -157,19 +156,6 @@ router.get("/search", async (req, res) => {
       })
     );
 
- 
-
-    // [ { userId: 5, bucketId: 17 }, { userId: 11, bucketId: 16 } ]
-
-    // const unflattenedpossibleBucketpossibleMessages = await Promise.all(
-    //   BucketUsers.map(async (bucketuser) => {
-    //     const outcome = await getMessagesofCertainBucket(
-    //       bucketuser.userId,
-    //       bucketuser.bucketId
-    //     );
-    //     return outcome;
-    //   })
-    // );
 
     const unflattenedpossibleBucketpossibleMessages = await Promise.all(
       BucketUsers.map(async (bucketuser) => {
@@ -179,34 +165,13 @@ router.get("/search", async (req, res) => {
     );
 
 
-    // console.log(unflattenedpossibleBucketpossibleMessages);
-
-    // const unflattedMessages = await Promise.all(
-    //   BucketUsers.map((user) => getAllMessages(user.userId))
-    // );
-
     const flatMessages = unflattenedpossibleBucketpossibleMessages.flat(1);
-    console.log(flatMessages);
-    console.log(possibleBucketIds);
+
 
     const filteredMessages = flatMessages.filter((message) => {
       return possibleBucketIds.some((bucket) => {
         return bucket == message.bucket.id});
     });
-
-    // const filteredArray = array.filter((obj) => {
-    //   return filterCriteria.some((criteria) => {
-    //     return obj.bucket.id.toString() === criteria.bucketId.toString();
-    //   });
-    // });
-
-    console.log(filteredMessages);
-
-    // const filteredArray = array.filter((obj) => {
-    //   return filterCriteria.some((criteria) => {
-    //     return obj.bucket.id === criteria.bucketId;
-    //   });
-    // });
 
 
     const uniqueMessages = filteredMessages.filter((message, index) => {
@@ -218,7 +183,6 @@ router.get("/search", async (req, res) => {
       );
     });
 
-    // console.log(uniqueMessages, user_id);
     res.render("possibleBuckets", { feed: uniqueMessages, user_id });
   } catch (error) {
     console.log(error);

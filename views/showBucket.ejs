@@ -235,7 +235,6 @@ const getTask = async () => {
     const res = await post("/feeds/getTask", { bucketId });
     const tasks = res.tasks;
     const taskListUL = document.querySelector("#task-list");;
-    console.log(tasks);
 
     if (tasks.length > 0) {
       const taskList = tasks.map((task) => {
@@ -256,7 +255,7 @@ const getTask = async () => {
         return li;
       });
 
-      console.log(taskList);
+      (taskList);
     }
   } catch (error) {
     console.log(error);
