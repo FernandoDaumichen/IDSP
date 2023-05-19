@@ -134,36 +134,35 @@ router.get("/tag/:tag_id", async (req, res) => {
 
 router.get("/search", async (req, res) => {
   try {
-    const user_id = req.user.id;
+    const user_id = req.user.id; //1
     const queryString = req.originalUrl.split("?")[1];
     const decodedQuery = decodeURIComponent(queryString);
-    const { data } = querystring.parse(decodedQuery);
+    const { data } = querystring.parse(decodedQuery); //[16]
 
     const possibleBucketIds = JSON.parse(data);
+
     const BucketUsers = await Promise.all(
       possibleBucketIds.map(async (bucket) => {
         return await getUserIdByBucketId(bucket.id);
       })
     );
-
     const allMessages = await Promise.all(
       BucketUsers.map((user) => getAllMessages(user.userId))
     );
-    const allMessage = allMessages.flat();
-
-    const filteredMessages = allMessage.filter((message) =>
-      possibleBucketIds.some((bucket) => bucket.id === message.bucket.id)
-    );
-
-    const uniqueMessages = filteredMessages.filter(
-      (message, index) =>
-        index ===
-        filteredMessages.findIndex(
-          (obj) => JSON.stringify(obj) === JSON.stringify(message)
-        )
-    );
-
-    res.render("possibleBuckets", { feed: uniqueMessages, user_id });
+    const allallMessage = allMessages.flat();
+  
+    const filteredMessages = allallMessage.filter(message => {
+      return possibleBucketIds.some(bucket => bucket.id === message.bucket.id);
+    });
+  
+    const uniqueMessages = filteredMessages.filter((message, index) => {
+      return index === filteredMessages.findIndex(obj => {
+        return JSON.stringify(obj) === JSON.stringify(message);
+      });
+    });
+  
+  
+    res.render("possibleBuckets", {feed: uniqueMessages, user_id});
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });

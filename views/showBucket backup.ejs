@@ -168,102 +168,137 @@ progress{
         </svg>
       </button>
       <h1>
-        <%=bucket.title%>
+        <%=bucketTitle.title%>
       </h1>
-      <div id = "bar"></div>
-      <p>Start Date : <%=bucket.startDate%></p>
-      <p>Due Date: <%=bucket.dueDate%></p>
-      </div>
-          <br>
-          <br>
-          <div>
-            <h3> Daily Tasks </h3>
-            <p> Get started on your daily tasks!</p>
-          </div>
-          <div id = "task-list-div">
-            <ul id = "task-list">
-            </ul>
-          </div>
+          <progress id="progressbar" value="<%= numOfCompleted %>" max="<%= tasks.Task.length %>">
+            32%
+          </progress>
+          <br />
+          <br />
+        </div>
+        
+        <ul>
+          <% tasks.Task.forEach(function(task) { %>
+            <li>
+              <label>
+                <input <%=task.completed ? "checked='checked'" : null %> type="checkbox" name="milestoneTask" value="<%=
+                task.id %>" />
+                <%= task.message %>
+              </label>
+            </li>
+            <% }) %>
+          </ul>
+          
         <div class="input-container">
           <input type="text" name="taskEntry" placeholder="Enter your milestone task">
           <button id="addTask">Add</button>
         </div>
           
         <button id="completeBucketlist" class="Create-Goal">Complete Bucketlist</button>
-    </div>
 
+  </div>
 </body>
 <script>
 
-const post = async (url, data) => {
-  try {
-    const res = await fetch(url, {
-      body: JSON.stringify(data),
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-    return { error: "An error occurred" };
-  }
-};
-
-const get = async (url) => {
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-    return { error: "An error occurred" };
-  }
-};
-
-function goBack() {
 const AddTaskButton = document.querySelector("#addTask");
 
+function goBack() {
   window.history.back();
 }
 
-const getTask = async () => {
+function addProgressBar() {
+  const progressBar = document.getElementById("progressbar");
+  progressBar.value++;
+}
+
+function completeProgressBar() {
+  const progressBar = document.getElementById("progressbar");
+  progressBar.value = 100;
+}
+
+function minusProgressBar() {
+  const progressBar = document.getElementById("progressbar");
+  progressBar.value--;
+}
+
+async function addTaskHandler() {
   try {
+    const task = document.querySelector("input[name=taskEntry]").value;
     const pathArr = window.location.pathname.split("/");
-    const bucketId = pathArr[pathArr.length - 1];
-    const res = await post("/feeds/getTask", { bucketId });
-    const tasks = res.tasks;
-    const taskListUL = document.querySelector("#task-list");;
-    console.log(tasks);
+    const path = pathArr[pathArr.length - 1];
+    const res = await fetch("/feeds/addTask", {
+      body: JSON.stringify({ task, path }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const { success, taskId } = await res.json();
+    if (success) {
+      completeProgressBar();
+      const taskList = document.querySelector("ul");
+      taskList.innerHTML += `
+        <li>
+          <label>
+            <input type="checkbox" name="milestoneTask" value="${taskId}" />
+            ${task}
+          </label>
+        </li>
+      `;
+      addCheckboxListeners();
+    }
+    minusProgressBar();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-    if (tasks.length > 0) {
-      const taskList = tasks.map((task) => {
-        const li = document.createElement("li");
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        if (task.completed) {
-          input.checked = true;
-        }
-        input.name = "milestoneTask";
-        input.value = task.id;
+document.querySelector("#addTask").addEventListener("click", addTaskHandler);
+addCheckboxListeners();
 
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(task.message));
-        li.appendChild(label);
-        taskListUL.appendChild(li);
-        return li;
-      });
+function addCheckboxListeners() {
+  const checkboxNodes = Array.from(
+    document.querySelectorAll("input[name=milestoneTask]")
+  );
+  checkboxNodes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", async function (event) {
+      try {
+        const taskId = event.target.value;
+        const completed = event.target.checked;
+        const res = await fetch(`/feeds/updateTask/${taskId}`, {
+          body: JSON.stringify({ completed }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        addProgressBar();
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
+}
 
-      console.log(taskList);
+async function completeBucketlist() {
+  try {
+    const urlArr = window.location.pathname.split("/");
+    const bucket_id = urlArr[urlArr.length - 1];
+    const res = await fetch("/feeds/bucket/:id", {
+      body: JSON.stringify({ bucket_id }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const { success } = await res.json();
+
+    if (success) {
+      completeProgressBar();
+      const taskList = document.querySelector("ul");
+      taskList.innerHTML = "Bucketlist Completed!";
     }
   } catch (error) {
     console.log(error);
   }
-};
+}
 
+const completeBtn = document.querySelector("#completeBucketlist");
+completeBtn.addEventListener("click", completeBucketlist);
 
-getTask();
-</script>
+    </script>
 </html>

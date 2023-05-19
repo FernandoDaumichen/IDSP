@@ -543,7 +543,30 @@ const removeFriend = async (user_id, friend_id) => {
   }
 };
 
+const showBucketforMilestone = async (bucket_id) => {
+  const Bucket = await prisma.bucket.findUnique({
+    where: { id: bucket_id },
+      select: {
+        id: true,
+        startDate: true,
+        dueDate: true,
+        title: true,
+        completed: true,
+        userId: true,
+        Task: true,
+      },
+    });
+    return Bucket;
+  };
+
+
+  // const main = async() => {
+  //   await showBucketforMilestone(5);
+  // };
+  // main()
+
 module.exports = {
+  showBucketforMilestone,
   addFriend,
   removeFriend,
   getAllUsers,

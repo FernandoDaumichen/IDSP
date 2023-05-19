@@ -6,18 +6,30 @@ const {
   getAllMessages,
   deleteBucketlist,
   showBuckets,
-  getTasks,
   getAllTags,
   createNewTasks,
-  getBucketTitleByBucketId,
   updateTask,
   likeMessage,
   UnlikeMessage,
+  showBucketforMilestone,
 } = require("../database");
 
 const { ensureAuthenticated } = require("../middleware");
 
 router.use(ensureAuthenticated);
+
+router.post("/getTask", async (req, res) => {
+  try {
+    const {bucketId} = req.body;
+    const bucket = await showBucketforMilestone(parseInt(bucketId));
+    const tasks = bucket.Task;
+    res.status(200).json({ success: true, tasks });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false });
+  }
+});
+
 
 router.get("/home", async (req, res) => {
   try {
@@ -148,6 +160,10 @@ router.post("/deleteBucket", async (req, res) => {
     res.status(500).json({ success: false });
   }
 });
+////🐨
+
+
+
 
 router.post("/addTask", async (req, res) => {
   try {
@@ -183,21 +199,19 @@ router.get("/createMessage", async (req, res) => {
     res.status(500).json({ success: false });
   }
 });
-
+////////🦝
 router.get("/bucket/:id", async (req, res) => {
   try {
-    const user_id = req.user.id;
-    const tasks = await getTasks(parseInt(req.params.id));
-    const bucketTitle = await getBucketTitleByBucketId(parseInt(req.params.id));
     let numOfCompleted = 0;
+    const bucket = await showBucketforMilestone(parseInt(req.params.id));
 
-    tasks.Task.forEach((task) => {
+    bucket.Task.forEach((task) => {
       if (task.completed) {
         numOfCompleted++;
       }
     });
 
-    res.render("showBucket", { tasks, user_id, numOfCompleted, bucketTitle });
+    res.render("showBucket", {bucket, numOfCompleted});
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });
