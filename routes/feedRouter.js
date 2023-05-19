@@ -7,7 +7,7 @@ const {
   deleteBucketlist,
   showBuckets,
   getAllTags,
-  createNewTasks,
+  addTask,
   updateTask,
   likeMessage,
   UnlikeMessage,
@@ -18,9 +18,20 @@ const { ensureAuthenticated } = require("../middleware");
 
 router.use(ensureAuthenticated);
 
+router.post("/addTask", async (req, res) => {
+  try {
+    const { newTask, bucketId } = req.body;
+    await addTask(newTask, parseInt(bucketId));
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false });
+  }
+});
+
 router.post("/getTask", async (req, res) => {
   try {
-    const {bucketId} = req.body;
+    const { bucketId } = req.body;
     const bucket = await showBucketforMilestone(parseInt(bucketId));
     const tasks = bucket.Task;
     res.status(200).json({ success: true, tasks });
@@ -30,6 +41,17 @@ router.post("/getTask", async (req, res) => {
   }
 });
 
+router.post("/updateTask", async (req, res) => {
+  try {
+    const { taskId, completed } = req.body;
+    const task_id = parseInt(taskId);
+    await updateTask(completed, task_id);
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false });
+  }
+});
 
 router.get("/home", async (req, res) => {
   try {
@@ -114,7 +136,7 @@ router.post("/createTask", async (req, res) => {
     if (task.length > 0) {
       await Promise.all(
         task.map(async (ele) => {
-          await createNewTasks(ele);
+          await addTask(ele);
         })
       );
     }
@@ -162,26 +184,11 @@ router.post("/deleteBucket", async (req, res) => {
 });
 ////🐨
 
-
-
-
 router.post("/addTask", async (req, res) => {
   try {
     const { task, path } = req.body;
-    const newTask = await createNewTasks(task, Number(path));
+    const newTask = await addTask(task, Number(path));
     res.status(200).json({ success: true, taskId: newTask.id });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false });
-  }
-});
-
-router.post("/updateTask/:taskId", async (req, res) => {
-  try {
-    const { completed } = req.body;
-    const taskId = req.params.taskId;
-    await updateTask(completed, Number(taskId));
-    res.status(200).json({ success: true });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });
@@ -199,11 +206,26 @@ router.get("/createMessage", async (req, res) => {
     res.status(500).json({ success: false });
   }
 });
-////////🦝
+
 router.get("/bucket/:id", async (req, res) => {
   try {
     let numOfCompleted = 0;
     const bucket = await showBucketforMilestone(parseInt(req.params.id));
+    const startdate = new Date(bucket.startDate);
+    const duedate = new Date(bucket.dueDate);
+    const formattedStartDate = startdate.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+    const formattedDueDate = duedate.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+
+    bucket.startDate = formattedStartDate;
+    bucket.dueDate = formattedDueDate;
 
     bucket.Task.forEach((task) => {
       if (task.completed) {
@@ -211,7 +233,7 @@ router.get("/bucket/:id", async (req, res) => {
       }
     });
 
-    res.render("showBucket", {bucket, numOfCompleted});
+    res.render("showBucket", { bucket, numOfCompleted });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });

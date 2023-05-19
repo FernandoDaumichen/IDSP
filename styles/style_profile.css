@@ -58,6 +58,7 @@ h1 {
 .profilephoto{
   margin-bottom: -4vh;
 }
+
 button {
   font-family: "Open Sans", sans-serif;
   font-weight: 500;
@@ -78,6 +79,20 @@ button {
 
 
 .edit-button {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  margin-bottom: 0.8vh;
+  padding: 1.3vh 2.6vh;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: #8083ff;
+  border: 1px solid #8083ff;
+  transition: all 0.3s ease-in-out;
+}
+
+.friend-button {
   font-family: "Open Sans", sans-serif;
   font-weight: 500;
   margin-bottom: 0.8vh;

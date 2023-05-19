@@ -171,14 +171,15 @@ progress{
         <%=bucket.title%>
       </h1>
       <div id = "bar"></div>
-      <p>Start Date : <%=bucket.startDate%></p>
-      <p>Due Date: <%=bucket.dueDate%></p>
+      <p>Start on <%=bucket.startDate%></p>
+      <p>Finish by <%=bucket.dueDate%></p>
       </div>
           <br>
           <br>
-          <div>
+          <div class = "daily-task-summary">
             <h3> Daily Tasks </h3>
             <p> Get started on your daily tasks!</p>
+            <p> <%= numOfCompleted%>/<%=bucket.Task.length%> Milestone Tasks Completed</p>
           </div>
           <div id = "task-list-div">
             <ul id = "task-list">
@@ -194,75 +195,163 @@ progress{
 
 </body>
 <script>
+  const AddTaskButton = document.querySelector("#addTask");
+  const taskInput = document.querySelector('input[name="taskEntry"]');
+  const taskListUL = document.querySelector("#task-list");
+  const barDiv = document.querySelector("#bar");
+  const checkboxesNodes = document.querySelectorAll(
+    'input[name="milestoneTask"]'
+  );
+  const pathArr = window.location.pathname.split("/");
+  const bucketId = pathArr[pathArr.length - 1];
 
-const post = async (url, data) => {
-  try {
-    const res = await fetch(url, {
-      body: JSON.stringify(data),
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-    return { error: "An error occurred" };
+  const post = async (url, data) => {
+    try {
+      const res = await fetch(url, {
+        body: JSON.stringify(data),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      return await res.json();
+    } catch (error) {
+      console.log(error);
+      return { error: "An error occurred" };
+    }
+  };
+
+  const get = async (url) => {
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      return await res.json();
+    } catch (error) {
+      console.log(error);
+      return { error: "An error occurred" };
+    }
+  };
+
+  function goBack() {
+    window.history.back();
   }
+
+  const createProgressBar = (numOfCompleted, taskLength) => {
+  let progress = document.querySelector("#progressbar");
+  if (!progress) {
+    progress = document.createElement("progress");
+    progress.id = "progressbar";
+    barDiv.appendChild(progress);
+  }
+  progress.value = numOfCompleted;
+  progress.max = taskLength;
+  progress.textContent = `${(numOfCompleted / taskLength) * 100}%`;
 };
 
-const get = async (url) => {
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
+
+  const updateProgressBar = () => {
+    const checkboxes = Array.from(checkboxesNodes);
+    const numOfCompleted = checkboxes.filter((checkbox) => checkbox.checked)
+      .length;
+    const taskLength = checkboxes.length;
+    createProgressBar(numOfCompleted, taskLength);
+  };
+
+  const createTaskElement = (task) => {
+    const li = document.createElement("li");
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    if (task.completed) {
+      input.checked = true;
+    }
+    input.name = "milestoneTask";
+    input.value = task.id;
+
+    // Add event listener to checkbox
+    input.addEventListener("change", async function (event) {
+      if (event.target.checked) {
+        const taskId = event.target.value;
+        const completed = true;
+        const res = await post("/feeds/updateTask", { taskId, completed });
+      } else {
+        const taskId = event.target.value;
+        const completed = false;
+        const res = await post("/feeds/updateTask", { taskId, completed });
+      }
+      updateProgressBar();
     });
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-    return { error: "An error occurred" };
-  }
-};
 
-function goBack() {
-const AddTaskButton = document.querySelector("#addTask");
+    label.appendChild(input);
+    li.appendChild(label);
+    label.appendChild(document.createTextNode(task.message));
+    return li;
+  };
 
-  window.history.back();
-}
+  const clearTaskList = () => {
+    taskListUL.innerHTML = "";
+  };
 
-const getTask = async () => {
-  try {
-    const pathArr = window.location.pathname.split("/");
-    const bucketId = pathArr[pathArr.length - 1];
-    const res = await post("/feeds/getTask", { bucketId });
-    const tasks = res.tasks;
-    const taskListUL = document.querySelector("#task-list");;
+  const addTaskToList = (task) => {
+    const taskElement = createTaskElement(task);
+    taskListUL.appendChild(taskElement);
+    updateProgressBar();
+  };
 
-    if (tasks.length > 0) {
-      const taskList = tasks.map((task) => {
-        const li = document.createElement("li");
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-        input.type = "checkbox";
+  const getTask = async () => {
+    try {
+      const res = await post("/feeds/getTask", { bucketId });
+      const tasks = res.tasks;
+      let numOfCompleted = 0;
+
+      tasks.forEach((task) => {
         if (task.completed) {
-          input.checked = true;
+          numOfCompleted++;
         }
-        input.name = "milestoneTask";
-        input.value = task.id;
-
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(task.message));
-        li.appendChild(label);
-        taskListUL.appendChild(li);
-        return li;
       });
 
-      (taskList);
+      const taskLength = res.tasks.length;
+
+      clearTaskList();
+
+      if (tasks.length > 0) {
+        createProgressBar(numOfCompleted, taskLength);
+        tasks.forEach((task) => {
+          const taskElement = createTaskElement(task);
+          taskListUL.appendChild(taskElement);
+        });
+      }
+      taskInput.value = "";
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
+  getTask();
 
-getTask();
+  AddTaskButton.addEventListener("click", async () => {
+    if (taskInput.value) {
+      const newTask = taskInput.value;
+      const pathArr = window.location.pathname.split("/");
+      const bucketId = pathArr[pathArr.length - 1];
+
+      try {
+        const response = await post("/feeds/addTask", { newTask, bucketId });
+        if (response.success) {
+          const task = {
+            id: response.taskId,
+            message: newTask,
+            completed: false,
+          };
+          addTaskToList(task);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      alert("Please enter a new task");
+    }
+  });
 </script>
+
 </html>

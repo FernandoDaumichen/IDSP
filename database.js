@@ -114,10 +114,10 @@ const getBucketIdByBucketTitle = async (bucket_title) => {
   }
 };
 
-const completeBucketlist = async (bucket_id) => {
+const completeBucketlist = async (bucketId) => {
   try {
     await prisma.bucket.update({
-      where: { id: bucket_id },
+      where: { id: bucketId },
       data: { completed: true },
     });
   } catch (error) {
@@ -125,10 +125,10 @@ const completeBucketlist = async (bucket_id) => {
   }
 };
 
-const deleteBucketlist = async (bucket_id) => {
+const deleteBucketlist = async (bucketId) => {
   try {
     await prisma.bucket.delete({
-      where: { id: bucket_id },
+      where: { id: bucketId },
       include: { Task: true, messages: true },
     });
   } catch (error) {
@@ -136,13 +136,13 @@ const deleteBucketlist = async (bucket_id) => {
   }
 };
 
-const createNewTasks = async (taskMessage, bucket_id) => {
+const addTask = async (taskMessage, bucketId) => {
   try {
     const newTask = await prisma.task.create({
       data: {
         message: taskMessage,
         completed: false,
-        bucket: { connect: { id: bucket_id } },
+        bucket: { connect: { id: bucketId } },
       },
     });
     return newTask;
@@ -169,10 +169,10 @@ const updateTask = async (completion, task_id) => {
   }
 };
 
-const getTasks = async (bucket_id) => {
+const getTasks = async (bucketId) => {
   try {
     const tasks = await prisma.bucket.findUnique({
-      where: { id: bucket_id },
+      where: { id: bucketId },
       select: { Task: true },
     });
     return tasks;
@@ -332,9 +332,9 @@ const getAllTags = async () => {
   }
 };
 
-const addNewMessage = async (content, bucket_id) => {
+const addNewMessage = async (content, bucketId) => {
   try {
-    const bucketId = Number(bucket_id);
+    const bucketId = Number(bucketId);
     const newMessage = await prisma.message.create({
       data: {
         content: content,
@@ -456,10 +456,10 @@ const messagesByTag = async (user_id, tag_id) => {
   }
 };
 
-const getAllMessagesByBucketId = async (bucket_id) => {
+const getAllMessagesByBucketId = async (bucketId) => {
   try {
     const messages = await prisma.message.findMany({
-      where: { bucketId: bucket_id },
+      where: { bucketId: bucketId },
       select: {
         id: true,
         content: true,
@@ -487,20 +487,20 @@ const getAllMessagesByBucketId = async (bucket_id) => {
   }
 };
 
-const getUserIdByBucketId = async (bucket_id) => {
+const getUserIdByBucketId = async (bucketId) => {
   const outcome = await prisma.bucket.findUnique({
-    where: { id: parseInt(bucket_id) },
+    where: { id: parseInt(bucketId) },
     select: { userId: true },
   });
   return outcome;
 };
 
-const getMessagesofCertainBucket = async (user_id, bucket_id) => {
+const getMessagesofCertainBucket = async (user_id, bucketId) => {
   const data = await prisma.message.findMany({
     where: {
       bucket: {
         userId: user_id,
-        id: bucket_id,
+        id: bucketId,
       },
     },
   });
@@ -533,9 +533,9 @@ const removeFriend = async (user_id, friend_id) => {
   }
 };
 
-const showBucketforMilestone = async (bucket_id) => {
+const showBucketforMilestone = async (bucketId) => {
   const Bucket = await prisma.bucket.findUnique({
-    where: { id: bucket_id },
+    where: { id: bucketId },
     select: {
       id: true,
       startDate: true,
@@ -578,7 +578,7 @@ module.exports = {
   showBuckets,
   getAllTags,
   messagesByTag,
-  createNewTasks,
+  addTask,
   getAllMessageOfOneUser,
   updateTask,
   completeBucketlist,
