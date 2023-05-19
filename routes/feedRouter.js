@@ -101,11 +101,11 @@ router.get("/createBucket", async (req, res) => {
 router.post("/createBucket", async (req, res) => {
   try {
     const userId = req.user.id;
-    const { dueDate, newBucket, tag } = req.body;
+    const { dueDate, newBucketInput, tag } = req.body;
     const tagId = parseInt(tag);
     const NewBucketList = await createNewBucket(
       dueDate,
-      newBucket,
+      newBucketInput,
       userId,
       tagId
     );
