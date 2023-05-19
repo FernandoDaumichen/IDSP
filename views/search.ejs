@@ -5,37 +5,93 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/style_search.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+
+    <title>Explore 🔎</title>
 </head>
 
 <body>
-    <h1>This page needs styling</h1>
-
-    <div class ="search-wrapper">
-        <div id="search-container">
-            <form action="/search/" method="post">
-            <input type="search" name = "searchInput" id="search-input" data-search placeholder="Search topics or people"/>
-            <button id="search">Search</button>
+    <div class="wrapper">
+    <div id="search-container">
+        <form action="/search/" method="post">
+            <div class="input-wrap">
+                <input type="search" name="searchInput" id="search-input" placeholder="Search topics or people"/>
+                <button id="search"><i class="fas fa-search"></i> Search</button>
+              </div>              
         </form>
-        </div>
     </div>
+    
 
+    <h1>Filter</h1>
     <div id="tag-buttons">
-        <% tags.forEach(tag => { %>
-            <a href="/search/tag/<%=tag.id%>" class="button-value"><%=tag.tagName%></a>
-        <% }) %>
-    </div>
-
+      <% tags.forEach(tag => { %>
+          <div class="tag-wrapper"> <!-- wrap each button and name with a div -->
+              <a href="/search/tag/<%=tag.id%>" class="button-value">
+                  <div class="tag-container">  
+                      <img src="<%=tag.imageUrl%>">
+                  </div>
+              </a>
+              <span class="tag-name"><%=tag.tagName%></span> <!-- this will now appear below the button -->
+          </div>
+      <% }) %>
+  </div>  
+      
    <h2>Your Followers</h2>
 
    <div id="user-cards" data-user-card-container>
     <% data.forEach(following => { %>
         <div class="card">
             <img src="<%=following.profileImg %>" style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;"  class="user-picture"></a>
-            <div class="header"><%=following.username%></div>
+            <div class="followers-username"><%=following.username%></div>
         </div>
     <% }) %>
+    <div class="navbar">
+        <a href="/feeds/home">
+          <img
+            src="../styles/images/home_icon_noBackground2.png"
+            alt="Home"
+            width="50"
+            height="50"
+          />
+        </a>
+        <a href="/search/">
+          <img
+            src="../styles/images/search_icon_noBackground2.png"
+            alt="Search"
+            width="50"
+            height="50"
+          />
+        </a>
+        <div class="circle">
+          <a href="/feeds/buckets?show=inprogress">
+            <img
+              src="../styles/images/bucket_icon_noBackground.png"
+              alt="Bucket"
+              width="60"
+              height="60"
+            />
+          </a>
+        </div>
+        <a href="/feeds/buckets?show=completed">
+          <img
+            src="../styles/images/note_icon_noBackground.png"
+            alt="Notes"
+            width="50"
+            height="50"
+          />
+        </a>
+        <a href="/profile/<%=user_id%>">
+          <img
+            src="../styles/images/profile_icon_noBackground2.png"
+            alt="Profile"
+            width="60"
+            height="60"
+          />
+        </a>
+      </div>
    </div>
+  </div>
    <script>
     const searchInput = document.querySelector("[data-search]");
   

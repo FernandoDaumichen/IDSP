@@ -32,7 +32,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 7vh;
+  height: 8vh;
   background-color: #ffffff;
   box-shadow: 0vh 0vh 1vh rgba(128, 131, 255, 0.75);
   border-radius: 1vh;
@@ -74,8 +74,8 @@
 }
 
 a[href="/feeds/buckets?show=inprogress"] img {
-  width: 4vh;
-  height: 4vh;
+  width: 5vh;
+  height: 5vh;
 }
 
 .homefeedTop {
@@ -95,20 +95,24 @@ a[href="/feeds/buckets?show=inprogress"] img {
 }
 
 .post {
+
+  align-items: center;
   background-color: #f7f7f7;
   border-radius: 10px;
   position: relative;
-  padding: 2vh; /* adjust as needed */
-  margin-bottom: 2vh; /* adjust as needed */
-  margin-top: 2vh; /* adjust as needed */
-  margin-left: 5%;
+  padding: 2vh;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
+  /* margin-left: 5%; */
+  width: 100%;
   max-width: 80%;
+
 }
 
 .post p {
   font-family: "Opens Sans", sans-serif;
   font-size: 2vh; /* adjust as needed */
-  line-height: 2.5vh; /* adjust as needed */
+  /* line-height: 2.5vh;  */
   margin-bottom: 1vh;
   font-style: normal;
   word-wrap: break-word;
@@ -157,7 +161,7 @@ p.post-message {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 19px;
+  line-height: 24px;
 }
 
 .posts-container {
@@ -165,10 +169,33 @@ p.post-message {
   flex-direction: column;
   overflow-y: auto;
   width: 100%;
-  margin-top: 10px;
-  max-height: calc(80vh - 5vh); /* adjust as needed */
-  padding-bottom: 20vh; /* adjust as needed */
-  margin-left: 5vh;
+  align-items: center;
+  /* padding-left: 5%; */
+  /* margin-top: 10px; */
+  max-height: calc(80vh - 5vh);
+  padding-bottom: 20vh;
+  /* margin-left: 5vh; */
+  background: linear-gradient(
+    38deg,
+    rgba(116, 209, 174, 0.75) 1.82%,
+    rgba(116, 209, 174, 0.75) 30.9%,
+    rgba(128, 131, 255, 0.75) 72.64%
+  );
+  background-size: 200% 200%;
+  animation: Gradient 5s linear infinite;
+}
+
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .grey_background {
@@ -253,4 +280,3 @@ p.post-message {
 .comment-button:hover, .like-button:hover {
   transform: scale(1.1);
 }
-

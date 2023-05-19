@@ -23,10 +23,12 @@ router.use(ensureAuthenticated);
 
 router.get("/", async (req, res) => {
   try {
+    // console.log(req.user);
+    const user_id= req.user.id;
     const data = await getUserFollowing(req.user.id);
     const followings = Object.values(data).flat();
     const tags = await getAllTags();
-    res.render("search", { data: followings, tags });
+    res.render("search", { data: followings, tags , user_id});
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });
@@ -127,7 +129,11 @@ router.get("/tag/:tag_id", async (req, res) => {
     const user_id = req.user.id;
     const tag_id = Number(req.params.tag_id);
     const data = await messagesByTag(user_id, tag_id);
-    res.render("messageByTag", { data });
+    
+    const allTags = await getAllTags();
+    const tag = allTags.find((tag) => tag.id === tag_id);
+  
+    res.render("messageByTag", { data ,tag});
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });

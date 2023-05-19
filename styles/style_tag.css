@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
+
+.wrapper {
+    /* max-width: 375px; limit the maximum width */
+    height: 100vh;
+    width: 100%;
+    background: #fffefe;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    /* border-radius: 30px; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    
+  }
+
+
+  .arrow-left {
+    position: absolute;
+    top: 3vh;
+    left: 3vh;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+  }
+  
+  h1{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #8083ff;
+    margin-bottom: 0;
+    text-align: center;
+  }

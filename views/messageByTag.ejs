@@ -4,10 +4,89 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link type="text/css" rel="stylesheet" href="../styles/style_tag.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+  />
+
+    <title> Tags =)</title>
 </head>
+<style>
+    h1{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #8083ff;
+    margin-bottom: 0;
+    text-align: center;
+  }
+  
+  .post{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* margin: 1px 0 20px 0; */
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+    width: 70%;
+    margin-left: 14%;
+    margin-top: 5%;
+
+  }
+
+  .arrow-left {
+  position: absolute;
+  top: 3vh;
+  left: 3vh;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.post-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.comment-button,
+.like-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0 20px;
+  outline: none;
+  transition: transform 0.3s ease;
+}
+
+.comment-button, .like-button {
+  transition: transform 0.3s ease;
+}
+
+.comment-button:hover, .like-button:hover {
+  transform: scale(1.1);
+}
+
+.user-picture {
+  width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    margin-right: 1.33vh;
+    background-color: #b1b1b1;
+  margin-left: 2vh;
+}
+
+</style>
 <body>
-    <h1>This page needs styling: Please follow the figma design</h1>
+  <div class="wrapper">
+    <button class="arrow-left" onclick="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
+        <path fill="#8083ff"
+          d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
+      </svg>
+    </button>
+    <h1><%=tag.tagName%></h1>
     <% data.forEach( message => { %> 
         <div class="post">
           <a href="/profile/<%=message.bucket.user.id%>">
@@ -31,6 +110,12 @@
         </div>
  <% }) %>
 
-
+<div>
 </body>
+<script>
+      function goBack() {
+      window.history.back();
+    }
+
+</script>
 </html>
