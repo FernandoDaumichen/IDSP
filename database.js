@@ -488,33 +488,23 @@ const getAllMessagesByBucketId = async (bucket_id) => {
 };
 
 const getUserIdByBucketId = async (bucket_id) => {
-  try {
-    const outcome = await prisma.bucket.findUnique({
-      where: { id: bucket_id },
-      select: { userId: true },
-    });
-    return outcome;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  const outcome = await prisma.bucket.findUnique({
+    where: { id: parseInt(bucket_id) },
+    select: { userId: true },
+  });
+  return outcome;
 };
 
 const getMessagesofCertainBucket = async (user_id, bucket_id) => {
-  try {
-    const data = await prisma.message.findMany({
-      where: {
-        bucket: {
-          userId: user_id,
-          id: bucket_id,
-        },
+  const data = await prisma.message.findMany({
+    where: {
+      bucket: {
+        userId: user_id,
+        id: bucket_id,
       },
-    });
-    return data;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
+    },
+  });
+  return data;
 };
 
 const addFriend = async (user_id, friend_id) => {
@@ -546,24 +536,23 @@ const removeFriend = async (user_id, friend_id) => {
 const showBucketforMilestone = async (bucket_id) => {
   const Bucket = await prisma.bucket.findUnique({
     where: { id: bucket_id },
-      select: {
-        id: true,
-        startDate: true,
-        dueDate: true,
-        title: true,
-        completed: true,
-        userId: true,
-        Task: true,
-      },
-    });
-    return Bucket;
-  };
+    select: {
+      id: true,
+      startDate: true,
+      dueDate: true,
+      title: true,
+      completed: true,
+      userId: true,
+      Task: true,
+    },
+  });
+  return Bucket;
+};
 
-
-  // const main = async() => {
-  //   await showBucketforMilestone(5);
-  // };
-  // main()
+// const main = async() => {
+//   await showBucketforMilestone(5);
+// };
+// main()
 
 module.exports = {
   showBucketforMilestone,

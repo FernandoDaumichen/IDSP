@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getAllUsers,
   getUserFollowing,
+  getMessagesofCertainBucket,
   getAllTags,
   messagesByTag,
   getAllMessages,
@@ -86,6 +87,7 @@ router.post("/", async (req, res) => {
         }
       });
     }
+    console.log(allSimilarBucket);
 
     const uniqueBucketTitles = [...new Set(allSimilarBucket)];
 
@@ -134,35 +136,84 @@ router.get("/tag/:tag_id", async (req, res) => {
 
 router.get("/search", async (req, res) => {
   try {
-    const user_id = req.user.id; //1
+    const user_id = req.user.id;
     const queryString = req.originalUrl.split("?")[1];
     const decodedQuery = decodeURIComponent(queryString);
-    const { data } = querystring.parse(decodedQuery); //[16]
+    const { data } = querystring.parse(decodedQuery);
 
     const possibleBucketIds = JSON.parse(data);
 
     const BucketUsers = await Promise.all(
       possibleBucketIds.map(async (bucket) => {
-        return await getUserIdByBucketId(bucket.id);
+        const outcome = await getUserIdByBucketId(bucket);
+        outcome.bucketId = bucket;
+        return outcome;
       })
     );
-    const allMessages = await Promise.all(
-      BucketUsers.map((user) => getAllMessages(user.userId))
+
+ 
+
+    // [ { userId: 5, bucketId: 17 }, { userId: 11, bucketId: 16 } ]
+
+    // const unflattenedpossibleBucketpossibleMessages = await Promise.all(
+    //   BucketUsers.map(async (bucketuser) => {
+    //     const outcome = await getMessagesofCertainBucket(
+    //       bucketuser.userId,
+    //       bucketuser.bucketId
+    //     );
+    //     return outcome;
+    //   })
+    // );
+
+    const unflattenedpossibleBucketpossibleMessages = await Promise.all(
+      BucketUsers.map(async (bucketuser) => {
+        const outcome = await getAllMessages(bucketuser.userId)
+        return outcome;
+      })
     );
-    const allallMessage = allMessages.flat();
-  
-    const filteredMessages = allallMessage.filter(message => {
-      return possibleBucketIds.some(bucket => bucket.id === message.bucket.id);
+
+
+    // console.log(unflattenedpossibleBucketpossibleMessages);
+
+    // const unflattedMessages = await Promise.all(
+    //   BucketUsers.map((user) => getAllMessages(user.userId))
+    // );
+
+    const flatMessages = unflattenedpossibleBucketpossibleMessages.flat(1);
+    console.log(flatMessages);
+    console.log(possibleBucketIds);
+
+    const filteredMessages = flatMessages.filter((message) => {
+      return possibleBucketIds.some((bucket) => {
+        return bucket == message.bucket.id});
     });
-  
+
+    // const filteredArray = array.filter((obj) => {
+    //   return filterCriteria.some((criteria) => {
+    //     return obj.bucket.id.toString() === criteria.bucketId.toString();
+    //   });
+    // });
+
+    console.log(filteredMessages);
+
+    // const filteredArray = array.filter((obj) => {
+    //   return filterCriteria.some((criteria) => {
+    //     return obj.bucket.id === criteria.bucketId;
+    //   });
+    // });
+
+
     const uniqueMessages = filteredMessages.filter((message, index) => {
-      return index === filteredMessages.findIndex(obj => {
-        return JSON.stringify(obj) === JSON.stringify(message);
-      });
+      return (
+        index ===
+        filteredMessages.findIndex((obj) => {
+          return JSON.stringify(obj) === JSON.stringify(message);
+        })
+      );
     });
-  
-  
-    res.render("possibleBuckets", {feed: uniqueMessages, user_id});
+
+    // console.log(uniqueMessages, user_id);
+    res.render("possibleBuckets", { feed: uniqueMessages, user_id });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });
