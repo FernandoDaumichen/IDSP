@@ -59,10 +59,6 @@ router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async fu
   const user_id = req.user.id;
   // Do cloudinary stuff here
   await addNewPhotoMessage(newMessage, bucketId, file.destination)
-  console.log("=======")
-  console.log(newMessage);
-  console.log(file);
-  console.log("=======")
   res.redirect(`/profile/${user_id}`);
 })
 
@@ -89,8 +85,6 @@ router.get("/postMessage/:bucketId", async (req, res) => {
   const userId = Number(req.user.id);
   const bucketId = req.params.bucketId;
   const user = await getUserByUserId(userId);
-  console.log("---hey---")
-  console.log(user);
   res.render("postMessage", { user, userId, bucketId });
 })
 

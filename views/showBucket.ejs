@@ -325,8 +325,6 @@ const updateProgressBarAndSummary = () => {
     const addTaskButton = document.getElementById("addTask");
     const completeBucketlistButton = document.getElementById("completeBucketlist");
 
-    console.log(bucketCompleted);
-
     if(bucketCompleted){
       taskEntry.setAttribute("disabled", "");
       addTaskButton.setAttribute("disabled", "");
@@ -344,8 +342,6 @@ const updateProgressBarAndSummary = () => {
     try {
       const res = await post("/feeds/getTask", { bucketId });
       const tasks = res.tasks;
-      // console.log(bucket);
-      // console.log(tasks);
       let numOfCompleted = 0;
 
       tasks.forEach((task) => {

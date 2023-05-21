@@ -213,17 +213,6 @@ router.post("/updateTask", async (req, res) => {
   }
 });
 
-// router.post("/updateTask", async (req, res) => {
-//   try {
-//     const { task, path } = req.body;
-//     const newTask = await addTask(task, Number(path));
-//     res.status(200).json({ success: true, taskId: newTask.id });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ success: false });
-//   }
-// });
-
 router.get("/createMessage", async (req, res) => {
   try {
     const bucketTitle = req.query.bucket;

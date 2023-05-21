@@ -11,18 +11,16 @@ router.get("/forgot", forwardAuthenticated, (req, res) => res.render("forgot"));
 
 router.get("/forgotPartTwo", forwardAuthenticated, async (req, res) => {
   const username = req.app.locals.user;
-  console.log(username);
   if (!username) {
     res.redirect("/auth/login");
   } else {
     const { secretQuestion, secretAnswer } = await getSecretFromUser(username);
-    console.log({ secretQuestion, secretAnswer });
     res.render("forgotPartTwo", { secretQuestion, secretAnswer })
   }
 })
 
 router.post("/forgotPassword", async (req, res) => {
-  console.log("hit")
+
  const user = await getUserByUsername(req.body.username);
  if (user) {
   req.app.locals.user = req.body.username;
