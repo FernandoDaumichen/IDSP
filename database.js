@@ -447,6 +447,7 @@ const getAllMessageOfOneUser = async (userId) => {
       select: {
         id: true,
         content: true,
+        photo: true,
         createdAt: true,
         likes: true,
         comments: true,

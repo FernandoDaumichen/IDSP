@@ -21,10 +21,13 @@
         <div class="bounce post">
           <a href="/profile/<%=message.bucket.user.id%>">
             <img
-              src="<%=message.bucket.user.profileImg %>"
-              style="z-index: 0; margin-top: 3vh; width: 6.5vh; height: auto"
-              class="user-picture user-avatar"
-          /></a>
+            src="<%=message.bucket.user.profileImg %>"
+            style="z-index: 0; margin-top: 3vh; width: 6.5vh; height: auto"
+            class="user-picture user-avatar"
+            /></a>
+            <% if (message.photo) { %>
+              <img src="<%=message.photo%>" alt="user photo image"> 
+            <% } %>
           <div class="post-content" style="padding: 10px">
             <p class="message.bucket.user.username">
               <%= message.bucket.user.username %>

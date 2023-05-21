@@ -54,18 +54,6 @@ router.post("/getTask", async (req, res) => {
   }
 });
 
-// router.post("/updateTask", async (req, res) => {
-//   try {
-//     const { taskId, completed } = req.body;
-//     const task_id = parseInt(taskId);
-//     await updateTask(completed, task_id);
-//     res.status(200).json({ success: true });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ success: false });
-//   }
-// });
-
 router.get("/home", async (req, res) => {
   try {
     const user_id = req.user.id;

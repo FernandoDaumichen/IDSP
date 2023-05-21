@@ -93,6 +93,9 @@
           <p class="username-inside">
             <%=user.username%>
           </p>
+          <% if (post.photo) { %>
+            <img src="<%=post.photo%>" alt="user photo image"> 
+          <% } %>
           <p class="bucket-info">
             <%= post.bucket.title %> <span class="<%= post.bucket.completed ? 'Completed': 'InProgress' %>"><%= post.bucket.completed ? 'Completed': 'In Progress' %></span>
           </p>

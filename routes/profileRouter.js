@@ -27,6 +27,7 @@ const storage = new CloudinaryStorage({
 //     cb(null, Date.now() + path.extname(file.originalname))
 //   }
 // })
+
 const upload = multer({ storage: storage });
 const router = express.Router();
 const bodyParser = require("body-parser");
@@ -57,10 +58,20 @@ router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async fu
   const bucketId = req.params.bucketid;
   const file = req.file;
   const user_id = req.user.id;
-  // Do cloudinary stuff here
-  await addNewPhotoMessage(newMessage, bucketId, file.destination)
+
+  try {
+    const cloud = await cloudinary.uploader.upload(file.path);
+    await addNewPhotoMessage(newMessage, bucketId, cloud.url);
+  } catch (error) {
+    console.log(error);
+  }
+
   res.redirect(`/profile/${user_id}`);
-})
+});
+
+
+  // const url = cloudinary.url()
+
 
 router.post("/friendUnfriend", async (req, res) => {
   try {
