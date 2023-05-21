@@ -10,6 +10,7 @@ const {
   addTask,
   updateTask,
   likeMessage,
+  getBucketByBucketId,
   UnlikeMessage,
   showBucketforMilestone,
 } = require("../database");
@@ -17,6 +18,18 @@ const {
 const { ensureAuthenticated } = require("../middleware");
 
 router.use(ensureAuthenticated);
+
+
+router.post("/getBucket", async (req, res) => {
+  try {
+    const { bucketId } = req.body;
+    const bucket = await getBucketByBucketId(parseInt(bucketId));
+    res.status(200).json({ success: true, bucket });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false });
+  }
+});
 
 router.post("/addTask", async (req, res) => {
   try {

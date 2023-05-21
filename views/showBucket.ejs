@@ -190,11 +190,11 @@ button:disabled {
             </ul>
           </div>
         <div class="input-container">
-          <input type="text" name="taskEntry" disabled="<%= bucket.completed %>" placeholder="Enter your milestone task">
-          <button disabled="<%= bucket.completed %>" id="addTask">Add</button>
+          <input type="text" name="taskEntry" placeholder="Enter your milestone task">
+          <button  id="addTask">Add</button>
         </div>
           <div id="completeList">
-            <button disabled="<%= bucket.completed %>" id="completeBucketlist" class="Create-Goal">Complete Bucketlist</button>
+            <button  id="completeBucketlist" class="Create-Goal">Complete Bucketlist</button>
           </div>
         
     </div>
@@ -318,10 +318,34 @@ const updateProgressBarAndSummary = () => {
     updateProgressBarAndSummary();
   };
 
+  const getBucket = async () => {
+    const res = await post("/feeds/getBucket", { bucketId });
+    const bucketCompleted = res.bucket.completed;
+    const taskEntry = document.querySelector('input[type="text"][name="taskEntry"]');
+    const addTaskButton = document.getElementById("addTask");
+    const completeBucketlistButton = document.getElementById("completeBucketlist");
+
+    console.log(bucketCompleted);
+
+    if(bucketCompleted){
+      taskEntry.setAttribute("disabled", "");
+      addTaskButton.setAttribute("disabled", "");
+      completeBucketlistButton.setAttribute("disabled", "");
+    } else {
+      taskEntry.removeAttribute("disabled");
+      addTaskButton.removeAttribute("disabled");
+      completeBucketlistButton.removeAttribute("disabled");
+    }
+    }
+
+  getBucket();
+
   const getTask = async () => {
     try {
       const res = await post("/feeds/getTask", { bucketId });
       const tasks = res.tasks;
+      // console.log(bucket);
+      // console.log(tasks);
       let numOfCompleted = 0;
 
       tasks.forEach((task) => {
@@ -386,6 +410,9 @@ const updateProgressBarAndSummary = () => {
     }
     taskInput.value = "";
   });
+
+
+
 </script>
 
 </html>

@@ -12,6 +12,11 @@ const getAllUsers = async () => {
   }
 };
 
+const getBucketByBucketId = async (bucketId) => {
+  const bucket = await prisma.bucket.findUnique({ where: { id: bucketId } });
+  return bucket;
+}
+
 const getBucketTitleByMessageId = async (messageId) => {
   try {
     const message = await prisma.message.findUnique({
@@ -651,4 +656,5 @@ module.exports = {
   getMessagesByMessageId,
   getBucketTitleByMessageId,
   getBucketIdByBucketTitle,
+  getBucketByBucketId
 };
