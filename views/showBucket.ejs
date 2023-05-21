@@ -156,6 +156,10 @@ li {
 progress{
   width: 35vh;
 }
+button:disabled {
+  background-color: #a1a1a1 !important;
+  cursor: default !important;
+}
 </style>
 
 <body>
@@ -176,35 +180,40 @@ progress{
       </div>
           <br>
           <br>
+          <h3> Daily Tasks </h3>
+          <p> Get started on your daily tasks!</p>
           <div class = "daily-task-summary">
-            <h3> Daily Tasks </h3>
-            <p> Get started on your daily tasks!</p>
-            <p> <%= numOfCompleted%>/<%=bucket.Task.length%> Milestone Tasks Completed</p>
+            <p id="completedTaskCount"><%= numOfCompleted %>/<%=bucket.Task.length%> Milestone Tasks Completed</p>
           </div>
           <div id = "task-list-div">
             <ul id = "task-list">
             </ul>
           </div>
         <div class="input-container">
-          <input type="text" name="taskEntry" placeholder="Enter your milestone task">
-          <button id="addTask">Add</button>
+          <input type="text" name="taskEntry" disabled="<%= bucket.completed %>" placeholder="Enter your milestone task">
+          <button disabled="<%= bucket.completed %>" id="addTask">Add</button>
         </div>
-          
-        <button id="completeBucketlist" class="Create-Goal">Complete Bucketlist</button>
+          <div id="completeList">
+            <button disabled="<%= bucket.completed %>" id="completeBucketlist" class="Create-Goal">Complete Bucketlist</button>
+          </div>
+        
     </div>
 
 </body>
 <script>
+
+  //DOM SELECTORS:
   const AddTaskButton = document.querySelector("#addTask");
   const taskInput = document.querySelector('input[name="taskEntry"]');
   const taskListUL = document.querySelector("#task-list");
   const barDiv = document.querySelector("#bar");
-  const checkboxesNodes = document.querySelectorAll(
-    'input[name="milestoneTask"]'
-  );
+
   const pathArr = window.location.pathname.split("/");
   const bucketId = pathArr[pathArr.length - 1];
+  const dailyTaskSummary = document.querySelector('.daily-task-summary');
+  const milestoneTasksCompleted = dailyTaskSummary.querySelector('p').textContent;
 
+  //FETCH POST AND GET FUNCTIONS: 
   const post = async (url, data) => {
     try {
       const res = await fetch(url, {
@@ -218,7 +227,6 @@ progress{
       return { error: "An error occurred" };
     }
   };
-
   const get = async (url) => {
     try {
       const res = await fetch(url, {
@@ -236,6 +244,12 @@ progress{
     window.history.back();
   }
 
+  const updateDailyTaskSummary = (numOfCompleted, totalTasks) => {
+    const completedTaskCount = document.querySelector("#completedTaskCount");
+    const summaryText = `${numOfCompleted}/${totalTasks} Milestone Tasks Completed`;
+    completedTaskCount.textContent = summaryText;
+  };
+
   const createProgressBar = (numOfCompleted, taskLength) => {
   let progress = document.querySelector("#progressbar");
   if (!progress) {
@@ -249,15 +263,18 @@ progress{
 };
 
 
-  const updateProgressBar = () => {
-    const checkboxes = Array.from(checkboxesNodes);
-    const numOfCompleted = checkboxes.filter((checkbox) => checkbox.checked)
-      .length;
-    const taskLength = checkboxes.length;
-    createProgressBar(numOfCompleted, taskLength);
-  };
-
+const updateProgressBarAndSummary = () => {
+  const checkboxesNodes = document.querySelectorAll('input[name="milestoneTask"]');
+  const checkboxes = Array.from(checkboxesNodes);
+  const numOfCompleted = checkboxes.filter((checkbox) => checkbox.checked).length;
+  const taskLength = checkboxes.length;
+  createProgressBar(numOfCompleted, taskLength);
+  debugger;
+  updateDailyTaskSummary(numOfCompleted, taskLength);
+};
+// createTaskElement
   const createTaskElement = (task) => {
+    // debugger;
     const li = document.createElement("li");
     const label = document.createElement("label");
     const input = document.createElement("input");
@@ -270,16 +287,12 @@ progress{
 
     // Add event listener to checkbox
     input.addEventListener("change", async function (event) {
-      if (event.target.checked) {
-        const taskId = event.target.value;
-        const completed = true;
-        const res = await post("/feeds/updateTask", { taskId, completed });
-      } else {
-        const taskId = event.target.value;
-        const completed = false;
-        const res = await post("/feeds/updateTask", { taskId, completed });
-      }
-      updateProgressBar();
+      const completed = event.target.checked == true;
+      const taskId = event.target.value;
+      const res = await post("/feeds/updateTask", { taskId, completed });
+      updateProgressBarAndSummary();
+      // location.reload();
+      window.location.href = window.location.href;
     });
 
     label.appendChild(input);
@@ -292,10 +305,17 @@ progress{
     taskListUL.innerHTML = "";
   };
 
+  const clearTaskListAndUpdateSummary = () => {
+    taskListUL.innerHTML = "";
+
+  updateProgressBarAndSummary();
+};
+
+
   const addTaskToList = (task) => {
     const taskElement = createTaskElement(task);
     taskListUL.appendChild(taskElement);
-    updateProgressBar();
+    updateProgressBarAndSummary();
   };
 
   const getTask = async () => {
@@ -329,6 +349,16 @@ progress{
 
   getTask();
 
+  document.querySelector("#completeBucketlist").addEventListener("click", async () => {
+    const pathArr = window.location.pathname.split("/");
+    const bucket_id = pathArr[pathArr.length - 1];
+
+    const res = await fetch("/feeds/completeBuckets", { body: JSON.stringify({ bucket_id }), method: "POST", headers: { "Content-Type": "application/json"} });
+    const { success } = await res.json();
+    const completeList = document.querySelector("#completeList");
+    completeList.innerHTML = `<a href="/feeds/buckets?show=completed">Return to Bucket List</a>`
+  })
+
   AddTaskButton.addEventListener("click", async () => {
     if (taskInput.value) {
       const newTask = taskInput.value;
@@ -336,6 +366,7 @@ progress{
       const bucketId = pathArr[pathArr.length - 1];
 
       try {
+        debugger;
         const response = await post("/feeds/addTask", { newTask, bucketId });
         if (response.success) {
           const task = {
@@ -344,6 +375,8 @@ progress{
             completed: false,
           };
           addTaskToList(task);
+          // location.reload()
+          // window.location.href = "https://google.ca";
         }
       } catch (error) {
         console.log(error);
@@ -351,6 +384,7 @@ progress{
     } else {
       alert("Please enter a new task");
     }
+    taskInput.value = "";
   });
 </script>
 

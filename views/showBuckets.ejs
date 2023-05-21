@@ -45,7 +45,8 @@
 
         <h2>WooHoo!</h2>
         <p class="congrats">Congratulations on completing a goal !</p>
-        <button class="post-btn" id="post-picture-video">Post a Picture/Video</button>
+        <a id="post-picture-video" class="post-btn" href="#">Post a Picture/Video</a>
+        <!-- <button class="post-btn" id="post-picture-video"></button> -->
         <button class="post-btn" id="post-message">Post a Message</button>
         <button class="post-btn" id="none">None</button>
 
@@ -180,11 +181,11 @@
       const link = bucketImg.nextElementSibling;
       const href = link.href;
       const hrefArr = href.split("/");
-      const bucket_id = hrefArr[hrefArr.length-1];
-
+      bucket_id = hrefArr[hrefArr.length-1];
+      document.querySelector("#post-picture-video").href = `/profile/postMessage/${bucket_id}`
       if (statusSelect.value === "/feeds/buckets?show=inprogress") {
         if (bucketImg.src.endsWith("inProgress_icon_noBackground.png")) {
-          bucketImg.src = "../styles/images/red_icon_noBackground.png";
+          bucketImg.src = "../styles/images/completed_icon_noBackground.png";
           modal.style.display = "block";
           
           const res = await fetch("/feeds/completeBuckets", { body: JSON.stringify({ bucket_id }), method: "POST", headers: { "Content-Type": "application/json"} });
@@ -208,6 +209,9 @@
           ;
         }
       }
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 20000)
     });
   });
 

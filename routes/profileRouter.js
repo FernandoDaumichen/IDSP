@@ -1,4 +1,33 @@
 const express = require("express");
+const multer  = require('multer');
+const path = require("path");
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+cloudinary.config({
+  cloud_name: "dhw1v7zh9",
+  api_key: "963797227352463",
+  api_secret: "ncUOeop1r8YMqE8n7SZl5L0iRUQ"
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'bucketed',
+    format: async (req, file) => 'png', // supports promises as well
+    public_id: (req, file) => Date.now() + path.extname(file.originalname),
+  },
+});
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './public/data/uploads/')
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + path.extname(file.originalname))
+//   }
+// })
+const upload = multer({ storage: storage });
 const router = express.Router();
 const bodyParser = require("body-parser");
 const {
@@ -15,12 +44,27 @@ const {
   getUserFollowing,
   addFriend,
   removeFriend,
+  addNewPhotoMessage,
 } = require("../database");
 
 const { ensureAuthenticated } = require("../middleware");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(ensureAuthenticated);
+
+router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async function (req, res) {
+  const { newMessage } = req.body;
+  const bucketId = req.params.bucketid;
+  const file = req.file;
+  const user_id = req.user.id;
+  // Do cloudinary stuff here
+  await addNewPhotoMessage(newMessage, bucketId, file.destination)
+  console.log("=======")
+  console.log(newMessage);
+  console.log(file);
+  console.log("=======")
+  res.redirect(`/profile/${user_id}`);
+})
 
 router.post("/friendUnfriend", async (req, res) => {
   try {
@@ -40,6 +84,15 @@ router.post("/friendUnfriend", async (req, res) => {
     res.json({ message: "error" });
   }
 });
+
+router.get("/postMessage/:bucketId", async (req, res) => {
+  const userId = Number(req.user.id);
+  const bucketId = req.params.bucketId;
+  const user = await getUserByUserId(userId);
+  console.log("---hey---")
+  console.log(user);
+  res.render("postMessage", { user, userId, bucketId });
+})
 
 router.get("/:user_id", async (req, res) => {
   try {
@@ -179,6 +232,7 @@ router.post("/comment/:messageId", async (req, res) => {
     res.status(500).json({ success: false });
   }
 });
+
 
 
 

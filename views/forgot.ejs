@@ -5,34 +5,22 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/style_login.css" />
+  <link rel="stylesheet" href="../styles/style_login.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 </head>
-<title>Welcome Back!</title>
+<title>Forgot Password</title>
 </head>
 <body>
   <div class="wrapper">
-    <h1 data-text="Welcome Back!">Welcome Back!</h1>
-    <h2 data-text="Login to Continue">Login to Continue</h2>
+    <h1 data-text="Forgot Password">Forgot Password</h1>
     <div class="grey_background"></div>
     <div class="inside_wrapper">
-      <form method="POST" action="/auth/login">
+      <form method="POST" action="/auth/forgotPassword">
         <input required id="username" name="username" placeholder="Username" />
-        <div class="password-container">
-          <input required id="password" name="password" placeholder="Password" type="password" />
-          <i class="material-icons eye-icon" onclick="togglePasswordVisibility()">
-            visibility_off
-          </i>
-        </div>
-        <button type="submit" class="login-button">Login</button>
+      
+        <button type="submit" class="login-button">Reset Password</button>
       </form>
-      <div class="forgot">
-        <a href="/auth/forgot">Forgot Password?</a>
-      </div>
-      <div class="signup">
-        <p>Don't have an account?</p>
-        <a href="/auth/signup">Sign Up</a>
-      </div>
+
     </div>
   </div>
 </body>

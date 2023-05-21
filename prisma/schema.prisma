@@ -13,6 +13,8 @@ datasource db {
 model User {
   id         Int       @id @default(autoincrement())
   username   String    @unique
+  secretQuestion String @default("")
+  secretAnswer String @default("")
   email      String    @unique
   password   String
   profileImg String?
@@ -54,6 +56,7 @@ model Task {
 model Message {
   id        Int       @id @default(autoincrement())
   content   String
+  photo     String?
   bucketId  Int
   bucket    Bucket    @relation(fields: [bucketId], references: [id], onDelete: Cascade)
   comments  Comment[]

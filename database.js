@@ -239,9 +239,50 @@ const getUserByUsernameAndPassword = async (username, password) => {
   }
 };
 
+const getUserByUsername = async (username) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username: username },
+    });
+    return user;;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+
+const getSecretFromUser = async (username) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username: username },
+      select: { secretQuestion: true, secretAnswer: true }
+    });
+    return user;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const updatePassword = async (username, password) => {
+  try {
+    await prisma.user.update({
+      where: { username },
+      data: {
+        password
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
 const createUser = async (user) => {
   try {
-    const { email, username, password } = user;
+    const { email, username, password, secretQuestion, secretAnswer } = user;
     const existingUser = await prisma.user.findUnique({
       where: { email: email },
     });
@@ -251,9 +292,11 @@ const createUser = async (user) => {
     } else {
       const newUser = await prisma.user.create({
         data: {
-          email: email,
-          username: username,
-          password: password,
+          email,
+          username,
+          password,
+          secretQuestion,
+          secretAnswer,
           profileImg:
             "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg",
         },
@@ -340,6 +383,23 @@ const addNewMessage = async (content, bucketId) => {
         content: content,
         bucket: { connect: { id: bucketId } },
         likes: 0,
+      },
+    });
+    return newMessage;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const addNewPhotoMessage = async (content, bucketId, photoUrl) => {
+  try {
+    const bucket_id = Number(bucketId);
+    const newMessage = await prisma.message.create({
+      data: {
+        content: content,
+        bucket: { connect: { id: bucket_id } },
+        photo: photoUrl
       },
     });
     return newMessage;
@@ -569,11 +629,14 @@ module.exports = {
   likeMessage,
   UnlikeMessage,
   addNewMessage,
+  addNewPhotoMessage,
   getBucketTitleByBucketId,
   getTasks,
   getUserIdByBucketId,
   getUserByUsernameAndPassword,
   getUserByUserId,
+  getSecretFromUser,
+  getUserByUsername,
   createUser,
   showBuckets,
   getAllTags,
@@ -581,6 +644,7 @@ module.exports = {
   addTask,
   getAllMessageOfOneUser,
   updateTask,
+  updatePassword,
   completeBucketlist,
   commentMessage,
   getAllComments,

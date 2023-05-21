@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles/style_login.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+</head>
+<title>Forgot Password</title>
+</head>
+<body>
+  <div class="wrapper">
+    <h1 data-text="Forgot Password">Forgot Password</h1>
+    <div class="grey_background"></div>
+    <div class="inside_wrapper">
+      <form method="POST" action="/auth/resetVerify">
+<input required id="username" value="<%= secretQuestion %>" name="secretQuestion" placeholder="secret question" />
+<input required id="username"  name="secretAnswer" placeholder="secret answer" />
+
+        <button type="submit" class="login-button">Reset Password</button>
+      </form>
+
+    </div>
+  </div>
+</body>
+<script>
+  function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('password');
+    const passwordType = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', passwordType);
+  }
+</script>
+
+</html>

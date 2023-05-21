@@ -2,10 +2,62 @@ const express = require("express");
 const router = express.Router();
 const passport = require("../passport-middleware");
 const { forwardAuthenticated } = require("../middleware");
-const { createUser } = require("../database");
+const { createUser, updatePassword, getUserByUsername, getSecretFromUser } = require("../database");
 const prisma = require("../prisma/client");
 
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
+
+router.get("/forgot", forwardAuthenticated, (req, res) => res.render("forgot"));
+
+router.get("/forgotPartTwo", forwardAuthenticated, async (req, res) => {
+  const username = req.app.locals.user;
+  console.log(username);
+  if (!username) {
+    res.redirect("/auth/login");
+  } else {
+    const { secretQuestion, secretAnswer } = await getSecretFromUser(username);
+    console.log({ secretQuestion, secretAnswer });
+    res.render("forgotPartTwo", { secretQuestion, secretAnswer })
+  }
+})
+
+router.post("/forgotPassword", async (req, res) => {
+  console.log("hit")
+ const user = await getUserByUsername(req.body.username);
+ if (user) {
+  req.app.locals.user = req.body.username;
+  res.redirect("/auth/forgotPartTwo");
+ } else {
+  res.redirect("/auth/forgot");
+ }
+
+})
+
+router.post("/updatePassword", async (req, res) => {
+  const username = req.app.locals.user;
+  const password = req.body.password;
+  await updatePassword(username, password);
+  res.redirect("/auth/login");
+})
+router.post("/resetVerify", async (req, res) => {
+  const username = req.app.locals.user;
+  const answerInput = req.body.secretAnswer;
+  const { secretAnswer } = await getSecretFromUser(username);
+  if (answerInput == secretAnswer) {
+    res.render("reset")
+  } else {
+    res.redirect("/auth/login");
+  }
+//  const user = await getUserByUsername(req.body.username);
+//  if (user) {
+//   req.app.locals.user = req.body.username;
+//   res.redirect("/auth/forgotPartTwo");
+//  } else {
+//   res.redirect("/auth/forgot");
+//  }
+
+})
+
 
 router.get("/signup", (req, res) => res.render("signup"));
 

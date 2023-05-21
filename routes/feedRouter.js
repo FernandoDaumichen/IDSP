@@ -21,8 +21,8 @@ router.use(ensureAuthenticated);
 router.post("/addTask", async (req, res) => {
   try {
     const { newTask, bucketId } = req.body;
-    await addTask(newTask, parseInt(bucketId));
-    res.status(200).json({ success: true });
+    const task = await addTask(newTask, parseInt(bucketId));
+    res.status(200).json({ success: true, taskId: task.id  });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });
@@ -41,17 +41,17 @@ router.post("/getTask", async (req, res) => {
   }
 });
 
-router.post("/updateTask", async (req, res) => {
-  try {
-    const { taskId, completed } = req.body;
-    const task_id = parseInt(taskId);
-    await updateTask(completed, task_id);
-    res.status(200).json({ success: true });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false });
-  }
-});
+// router.post("/updateTask", async (req, res) => {
+//   try {
+//     const { taskId, completed } = req.body;
+//     const task_id = parseInt(taskId);
+//     await updateTask(completed, task_id);
+//     res.status(200).json({ success: true });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ success: false });
+//   }
+// });
 
 router.get("/home", async (req, res) => {
   try {
@@ -152,6 +152,10 @@ router.get("/buckets", async (req, res) => {
     const { show } = req.query;
     const currentUserId = req.user.id;
     const buckets = await showBuckets(show, currentUserId);
+    // buckets.map(bucket => {
+    //   bucket.show = show;
+    //   return bucket;
+    // })
     res.render("showBuckets", { buckets, user_id: currentUserId });
   } catch (error) {
     console.log(error);
@@ -184,16 +188,28 @@ router.post("/deleteBucket", async (req, res) => {
 });
 ////🐨
 
-router.post("/addTask", async (req, res) => {
+router.post("/updateTask", async (req, res) => {
   try {
-    const { task, path } = req.body;
-    const newTask = await addTask(task, Number(path));
-    res.status(200).json({ success: true, taskId: newTask.id });
+    const { taskId, completed } = req.body;
+    const task_id = parseInt(taskId);
+    await updateTask(completed, task_id);
+    res.status(200).json({ success: true });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });
   }
 });
+
+// router.post("/updateTask", async (req, res) => {
+//   try {
+//     const { task, path } = req.body;
+//     const newTask = await addTask(task, Number(path));
+//     res.status(200).json({ success: true, taskId: newTask.id });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ success: false });
+//   }
+// });
 
 router.get("/createMessage", async (req, res) => {
   try {

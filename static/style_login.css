@@ -1,0 +1,190 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
+
+.wrapper {
+  /* max-width: 375px; limit the maximum width */
+  height: 100vh;
+  width: 100%;
+  background: #FFFEFE;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  /* border-radius: 30px; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+
+h1,
+h2 {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  color: transparent;
+  text-align: center;
+}
+
+h1 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.75rem;
+  margin-top: 8vh; 
+}
+
+h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.25rem;
+  padding-bottom: 6vh;
+}
+
+
+h1::before,
+h2::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(18deg, rgba(116, 209, 174, 0.75) 1.82%, rgba(116, 209, 174, 0.75) 30.9%, rgba(128, 131, 255, 0.75) 72.64%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: -1;
+}
+
+.grey_background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 25vh;
+  z-index: -1;
+}
+.grey_background::before, .grey_background::after {
+  content: '';
+  display: block;
+  position: absolute;
+  background-size: 200% 200%;
+  background-image: linear-gradient(190.99deg, rgba(57, 185, 19, 0.725) 1.82%, rgba(116, 209, 174, 0.32) 30.9%, rgba(81, 83, 255, 0.32) 72.64%);
+  animation: gradient 5s ease infinite;
+}
+
+.grey_background::before {
+  border-radius: 100% 0% 100% 0% /30% 100% 0% 70%;
+  width: 100%;
+  height: calc(100% - 7.5vh);
+}
+
+.grey_background::after {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 7.5vh; 
+  border-radius: 0 0 50% 90%;
+}
+
+.inside_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 10vh;
+}
+
+input {
+  margin-bottom: 1.5vh;
+  border: 0.1vh solid #000000;
+  border-radius: 2.5vh;
+  padding: 1.5vh;
+  font-size: 1rem;
+  width: 110%;
+  margin-left: -3vh;
+}
+
+input::placeholder {
+  font-family: "Open sans", sans-serif;
+  font-size: 1rem;
+  opacity: 0.5;
+  color: #000000;
+}
+
+.password-container {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: -0.5vh;
+  top: 35%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.login-button {
+  display: block;
+  margin: 1vh auto 0;
+  background: #8083ff;
+  border-radius: 2.5vh;
+  border: none;
+  padding: 1vh 1vh;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 18.3vh;
+  font-family: "Open sans", sans-serif;
+  color: #ffffff;
+  font-size: 2vh;
+}
+
+.signup,
+.forgot {
+  margin-top: 0.8vh;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.65rem;
+  text-align: center;
+}
+
+.signup a,
+.forgot a {
+  text-decoration: none;
+  color: #8083ff;
+  font-weight: 600;
+}
+
+.signup a:hover,
+.forgot a:hover {
+  color: #8083ff;
+  text-decoration: underline;
+}
+
+
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
