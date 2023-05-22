@@ -46,14 +46,6 @@ router.post("/resetVerify", async (req, res) => {
   } else {
     res.redirect("/auth/login");
   }
-//  const user = await getUserByUsername(req.body.username);
-//  if (user) {
-//   req.app.locals.user = req.body.username;
-//   res.redirect("/auth/forgotPartTwo");
-//  } else {
-//   res.redirect("/auth/forgot");
-//  }
-
 })
 
 
