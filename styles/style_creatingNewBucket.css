@@ -57,9 +57,8 @@ textarea {
   border: none;
   border-radius: 1vh;
   background-color: transparent;
-  padding-left: 2vh;
   resize: none;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 textarea::placeholder {
@@ -222,11 +221,11 @@ p {
 }
 
 textarea.create_post::placeholder {
-  font-size: 16px; /* Adjust the font size as desired */
+  font-size: 26px; /* Adjust the font size as desired */
 }
 
 textarea.create_post {
-  width: 300px; /* Adjust the width as desired */
+  width: 100%; 
 }
 
 
@@ -237,7 +236,7 @@ textarea.create_post {
   justify-content: center;
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
-  margin-top: 18vh;
+  margin-top: 15%;
   
 }
 /* 

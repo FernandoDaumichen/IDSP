@@ -78,39 +78,38 @@
 
   
   .input-wrap {
-    position: relative;
-    width: 40%;
-    background-color: transparent;
+    position: relative; 
+    width: 90%;
+    margin: 3% auto; 
 }
 
 #search-input {
-    width: 100%;
-    padding: 1em 4em 1em 2em;
+  width: 70%;
+  padding: 1em 2em 1em;
     border: 2px solid #9B99FF;
     border-radius: 20px;
     color: grey;
-    margin-left: 42%;
-    margin-top: 3%;
-}
-
-#search-input::placeholder {
-    color: grey;
+    box-sizing: border-box; 
 }
 
 #search {
   position: absolute;
-  right: -40%;
-  top: 62%;
+  right: 31%;
+  top: 50%;
   transform: translateY(-50%);
   background-color: #9B99FF;
   color: #ffffff;
   border: none;
   border-radius: 20px;
   padding: 0.5em 1em;
+  cursor: pointer;
+}
+#search-input::placeholder {
+    color: grey;
 }
 #tag-buttons {
-    display: flex;
-    flex-wrap: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
     overflow-x: auto;
     width: 100%;
     padding: 1vh 0;
@@ -150,8 +149,12 @@
   margin-top: 1vh;
   margin-left: 1vh;
   margin-right: 1vh;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   text-overflow: ellipsis;
+  max-width: 100px;
+  white-space: normal;
+  text-align: center;
+
 }
 .button-value.active {
     background-color: #6759ff;
@@ -185,6 +188,9 @@ color: #9B99FF;
   width: 100%;
   padding: 1vh 0;
   gap: 2%;
+  overflow-x: auto;
+  display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
   margin-left: 4%;
 }

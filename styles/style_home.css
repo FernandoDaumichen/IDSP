@@ -1,27 +1,129 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-@keyframes logoAnimation {
+.snowflake {
+  color: #fff;
+  font-size: 1em;
+  font-family: Arial;
+  text-shadow: 0 0 1px #000;
+}
+
+@-webkit-keyframes snowflakes-fall {
   0% {
-    transform: rotate(0deg) scale(1);
-  }
-  50% {
-    transform: rotate(180deg) scale(1.2);
+    top: -10%;
   }
   100% {
-    transform: rotate(360deg) scale(1);
+    top: 100%;
   }
 }
-
-.logo {
-  animation: logoAnimation 3s  linear;
+@-webkit-keyframes snowflakes-shake {
+  0% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+  }
+  50% {
+    -webkit-transform: translateX(80px);
+    transform: translateX(80px);
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+  }
 }
-
+@keyframes snowflakes-fall {
+  0% {
+    top: -10%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+@keyframes snowflakes-shake {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(80px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+.snowflake {
+  position: fixed;
+  top: -10%;
+  z-index: 9999;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  -webkit-animation-name: snowflakes-fall, snowflakes-shake;
+  -webkit-animation-duration: 10s, 3s;
+  -webkit-animation-timing-function: linear, ease-in-out;
+  -webkit-animation-iteration-count: infinite, infinite;
+  -webkit-animation-play-state: running, running;
+  animation-name: snowflakes-fall, snowflakes-shake;
+  animation-duration: 10s, 3s;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-play-state: running, running;
+}
+.snowflake:nth-of-type(0) {
+  left: 1%;
+  -webkit-animation-delay: 0s, 0s;
+  animation-delay: 0s, 0s;
+}
+.snowflake:nth-of-type(1) {
+  left: 10%;
+  -webkit-animation-delay: 1s, 1s;
+  animation-delay: 1s, 1s;
+}
+.snowflake:nth-of-type(2) {
+  left: 20%;
+  -webkit-animation-delay: 6s, 0.5s;
+  animation-delay: 6s, 0.5s;
+}
+.snowflake:nth-of-type(3) {
+  left: 30%;
+  -webkit-animation-delay: 4s, 2s;
+  animation-delay: 4s, 2s;
+}
+.snowflake:nth-of-type(4) {
+  left: 40%;
+  -webkit-animation-delay: 2s, 2s;
+  animation-delay: 2s, 2s;
+}
+.snowflake:nth-of-type(5) {
+  left: 50%;
+  -webkit-animation-delay: 8s, 3s;
+  animation-delay: 8s, 3s;
+}
+.snowflake:nth-of-type(6) {
+  left: 60%;
+  -webkit-animation-delay: 6s, 2s;
+  animation-delay: 6s, 2s;
+}
+.snowflake:nth-of-type(7) {
+  left: 70%;
+  -webkit-animation-delay: 2.5s, 1s;
+  animation-delay: 2.5s, 1s;
+}
+.snowflake:nth-of-type(8) {
+  left: 80%;
+  -webkit-animation-delay: 1s, 0s;
+  animation-delay: 1s, 0s;
+}
+.snowflake:nth-of-type(9) {
+  left: 90%;
+  -webkit-animation-delay: 3s, 1.5s;
+  animation-delay: 3s, 1.5s;
+}
 
 .wrapper {
   /* max-width: 375px; limit the maximum width */
   height: 100vh;
   width: 100%;
-  background: #FFFEFE;
+  background: #fffefe;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   /* border-radius: 30px; */
   position: absolute;
@@ -31,13 +133,12 @@
   overflow: hidden;
 }
 
-
 h1 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-size: 4vh;
   text-align: center;
   margin: 0;
-  padding:  12vh 0 16vh 0;
+  padding: 12vh 0 16vh 0;
 }
 
 .grey_background {
@@ -48,12 +149,18 @@ h1 {
   top: 25vh;
   z-index: -1;
 }
-.grey_background::before, .grey_background::after {
-  content: '';
+.grey_background::before,
+.grey_background::after {
+  content: "";
   display: block;
   position: absolute;
   background-size: 200% 200%;
-  background-image: linear-gradient(190.99deg, rgba(57, 185, 19, 0.725) 1.82%, rgba(116, 209, 174, 0.32) 30.9%, rgba(81, 83, 255, 0.32) 72.64%);
+  background-image: linear-gradient(
+    190.99deg,
+    rgba(57, 185, 19, 0.725) 1.82%,
+    rgba(116, 209, 174, 0.32) 30.9%,
+    rgba(81, 83, 255, 0.32) 72.64%
+  );
   animation: gradient 5s ease infinite;
 }
 
@@ -67,7 +174,7 @@ h1 {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 7.5vh; 
+  height: 7.5vh;
   border-radius: 0 0 50% 90%;
 }
 
@@ -83,7 +190,7 @@ h1 {
   width: 29.333vh;
   height: auto;
   margin-bottom: 4vh;
-  margin-top:-2vh ;
+  margin-top: -2vh;
   margin-left: 1vh;
 }
 
@@ -94,15 +201,14 @@ h1 {
   align-items: center;
   padding: 2vh 4vh 2vh 4vh;
   gap: 1vh;
-  border: 0.267vh solid #8083FF;
+  border: 0.267vh solid #8083ff;
   border-radius: 7.5vh;
-  background-color: #8083FF;
+  background-color: #8083ff;
 }
-
 
 .start_button span {
   height: 1.333vh;
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-style: bold;
   font-weight: 700;
   font-size: 3.333vh;
@@ -112,37 +218,36 @@ h1 {
   flex: none;
   order: 0;
   flex-grow: 0;
-  background-color: #8083FF;
+  background-color: #8083ff;
 }
 
 .login {
   margin-top: 1.333vh;
-  font-family: 'Open Sans',sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 1.75vh;
   text-align: center;
   margin-top: 15vh;
   color: black;
-  }
-  
-  .login a {
-  color: #8083FF;
+}
+
+.login a {
+  color: #8083ff;
   font-weight: 500;
   text-decoration: none;
-  }
-  
-  .login a:hover {
-  color: #333;
-  
-  }
+}
 
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+.login a:hover {
+  color: #333;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
   }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

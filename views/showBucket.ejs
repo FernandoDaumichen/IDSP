@@ -58,12 +58,19 @@
   }
 
   h1 {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 2.5rem;
     font-weight: 600;
-    color: #8083ff;
+    color: #0E0E0E;
     margin-bottom: 0;
     text-align: center;
+    font-weight: 700;
+  }
+
+  h2{
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
   }
 
   .Create-Goal {
@@ -85,32 +92,25 @@
     /* centering horizontally */
   }
 
-/* 
-  .input-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  padding: 10px;
-  margin: 2vh auto;
-} */
+
 
 
 .input-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80vh;
+
   margin: auto;
 }
 
 input[name="taskEntry"] {
-  flex-grow: 1;
-  padding: 1vh;
-  border: 1px solid #8083ff;
-  border-radius: 2.5vh;
-  font-family: "Open sans", sans-serif;
-  font-size: 2vh;
+    width: 70%;
+    padding: 1vh;
+    border: 1px solid #8083ff;
+    border-radius: 2.5vh;
+    font-family: "Open sans", sans-serif;
+    font-size: 2vh;
+
 }
 
 button#addTask {
@@ -147,19 +147,90 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80vh;
+  width: 46vh;
   padding: 1.4vh;
   list-style-type: none;
   text-align: center;
+  font-size: 3vh;
+  border: 1px solid #8083ff;
+  border-radius: 2.5vh;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
 }
 
+input[type="checkbox"]{
+  margin-right: 1vh;
+  width: 4.5vh;
+  height: 4.5vh;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid #8083ff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  vertical-align: middle;  /* Add this line */
+}
+
+label {
+  display: inline-block;  /* Add this line */
+  vertical-align: middle; 
+  
+{}
+
+input[type="checkbox"]:checked:before {
+  content: "\2713";
+  display: block;
+  text-align: center;
+  font-size: 3vh;
+  color: #8083ff;
+  /* line-height: 2.5vh; */
+}
 progress{
-  width: 35vh;
+  width:28vh;
 }
 button:disabled {
   background-color: #a1a1a1 !important;
   cursor: default !important;
 }
+
+p {
+  font-size: 2.05vh;
+    text-align: center;
+    font-family: 'Opens Sans', sans-serif;
+}
+
+hr {
+  width: 14%;
+    margin: 0 auto;
+    border: 1px solid #8083ff;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #f3f3f3; /* Color of the total progress bar for Chrome */
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: #8083ff; /* Color of the filled progress bar for Chrome */
+}
+
+progress[value]::-moz-progress-bar {
+  background-color: #8083ff; /* Color of the filled progress bar for Firefox */
+}
+
+progress[value]::-ms-fill {
+  background-color: #8083ff; /* Color of the filled progress bar for IE */
+}
+
+  #progressbar {
+    height: 20%;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    overflow: hidden;     
+    height: 2vh;
+    border: 2px solid #8083ff;
+    
+}
+
 </style>
 
 <body>
@@ -176,11 +247,12 @@ button:disabled {
       </h1>
       <div id = "bar"></div>
       <p>Start on <%=bucket.startDate%></p>
+      <hr>
       <p>Finish by <%=bucket.dueDate%></p>
       </div>
           <br>
           <br>
-          <h3> Daily Tasks </h3>
+          <h2> Daily Tasks </h2>
           <p> Get started on your daily tasks!</p>
           <div class = "daily-task-summary">
             <p id="completedTaskCount"><%= numOfCompleted %>/<%=bucket.Task.length%> Milestone Tasks Completed</p>
