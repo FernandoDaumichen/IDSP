@@ -170,16 +170,16 @@ router.post("/edit/:userId", async (req, res) => {
   }
 });
 
-// router.get("/settings", (req, res) => {
-//   try {
-//     const user_id = req.user.id;
-//     const data = getUserFeed(user_id);
-//     res.render("settings", { data });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ success: false });
-//   }
-// });
+router.get("/settings/:userId", async (req, res) => {
+  try {
+    const user_id = Number(req.params.userId);
+    const data = await getUserByUserId(user_id);
+    res.render("settings", { data });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false });
+  }
+});
 
 router.get("/comment/:messageId", async (req, res) => {
   try {
