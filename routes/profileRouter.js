@@ -1,13 +1,16 @@
 const express = require("express");
 const multer  = require('multer');
 const path = require("path");
+const bodyParser = require("body-parser");
+
+//CLOUDINARY
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
-  cloud_name: "dhw1v7zh9",
-  api_key: "963797227352463",
-  api_secret: "ncUOeop1r8YMqE8n7SZl5L0iRUQ"
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 const storage = new CloudinaryStorage({
@@ -30,7 +33,7 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 const router = express.Router();
-const bodyParser = require("body-parser");
+
 const {
   getBucketTitleByMessageId,
   changeUsername,
@@ -53,6 +56,7 @@ const { ensureAuthenticated } = require("../middleware");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(ensureAuthenticated);
 
+//UPLOAD MEDIA WITH MESSAGE WHEN COMPLETE BUCKETLIST
 router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async function (req, res) {
   const { newMessage } = req.body;
   const bucketId = req.params.bucketid;
@@ -69,15 +73,13 @@ router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async fu
   res.redirect(`/profile/${user_id}`);
 });
 
+//UPLOAD MESSAGE ONLY WHEN COMPLETE BUCKETLIST
 router.post('/uploadMessageOnly/:bucketid', async function (req, res) {
   const { newMessage } = req.body;
-  // console.log(newMessage);
   const bucketId = req.params.bucketid;
-  // const file = req.file;
   const user_id = req.user.id;
 
   try {
-    // const cloud = await cloudinary.uploader.upload(file.path);
     await addNewMessage(newMessage, bucketId);
   } catch (error) {
     console.log(error);
@@ -86,20 +88,17 @@ router.post('/uploadMessageOnly/:bucketid', async function (req, res) {
   res.redirect(`/profile/${user_id}`);
 });
 
-
-
+//FOLLOWING OR UNFOLLOWING
 router.post("/friendUnfriend", async (req, res) => {
   try {
     const { friendshipValue, friend_id } = req.body;
-    const friendid = Number(friend_id);
     const user_id = req.user.id;
     if (friendshipValue === "Add Friend") {
-      await addFriend(user_id, friendid);
+      await addFriend(user_id, Number(friend_id));
       res.status(200).json({ success: true, message: "friended" });
     } else {
-      await removeFriend(user_id, friendid);
+      await removeFriend(user_id, Number(friend_id));
       res.status(200).json({ success: true, message: "unfriended" });
-
     }
   } catch (error) {
     console.log(error);
@@ -107,6 +106,7 @@ router.post("/friendUnfriend", async (req, res) => {
   }
 });
 
+//POST MESSAGE -- CLEANING UP IN PROGRESS
 router.get("/postMessage/:bucketId", async (req, res) => {
   const userId = Number(req.user.id);
   const bucketId = req.params.bucketId;

@@ -20,9 +20,10 @@ const {
 
 const { ensureAuthenticated } = require("../middleware");
 
+//MIDDLEWARE TO ENSURE AUTHENTICATED REQUESTS
 router.use(ensureAuthenticated);
 
-
+//ROUTE TO GET A SPECIFIC BUCKET BY BUCKETID
 router.post("/getBucket", async (req, res) => {
   try {
     const { bucketId } = req.body;
@@ -34,6 +35,7 @@ router.post("/getBucket", async (req, res) => {
   }
 });
 
+//ROUTE TO GET A NEW TASK TO A BUCKET
 router.post("/addTask", async (req, res) => {
   try {
     const { newTask, bucketId } = req.body;
@@ -45,6 +47,7 @@ router.post("/addTask", async (req, res) => {
   }
 });
 
+//ROUTE TO GET TASKS FOR A SPECIFIC BUCKET
 router.post("/getTask", async (req, res) => {
   try {
     const { bucketId } = req.body;
@@ -57,32 +60,46 @@ router.post("/getTask", async (req, res) => {
   }
 });
 
+//ROUTE TO DELETE A MESSAGE
 router.post("/deleteMessage", async (req, res) => {
-  const id = req.body.messageId;
-  await deleteMessage(parseInt(id));
-  res.status(200).json({ success: true });
+  try {
+    const id = req.body.messageId;
+    await deleteMessage(parseInt(id));
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: "An error occurred while deleting the message."});
+  }
 });
 
+//ROUTE TO UPDATE A MESSAGE
 router.post("/updateMessage/:messageId", async (req, res) => {
-  const messageId = req.params.messageId;
-  const { newMessage } = req.body;
-  const message = await updateMessage(parseInt(messageId), newMessage);
-  res.redirect("/feeds/home");
+  try {
+    const messageId = req.params.messageId;
+    const { newMessage } = req.body;
+    await updateMessage(parseInt(messageId), newMessage);
+    res.redirect("/feeds/home");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false });
+  }
 });
 
+//ROUTE TO EDIT A MESSAGE
 router.get("/editMessage/:messageId", async (req, res) => {
-  const id = req.params.messageId;
-  const message = await getMessageByMessageId(parseInt(id));
-   const bucketTitle = (await getBucketByBucketId(message.bucketId)).title
-  const user_id = req.user.id;
-  //const data = await getUserFeed(user_id);
-  res.render("editMessage", { id, user_id, message, bucketTitle });
-
-  // res.render("createMessage", { data, user_id, bucketTitle });
-
-  
+  try {
+    const id = req.params.messageId;
+    const message = await getMessageByMessageId(parseInt(id));
+    const bucketTitle = (await getBucketByBucketId(message.bucketId)).title
+    const user_id = req.user.id;
+    res.render("editMessage", { id, user_id, message, bucketTitle });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false });    
+  }  
 });
 
+//DISPLAY MAINFEED
 router.get("/home", async (req, res) => {
   try {
     const user_id = req.user.id;
@@ -94,16 +111,16 @@ router.get("/home", async (req, res) => {
   }
 });
 
+//LIKE OR UNLIKE MESSAGE
 router.post("/likeMessage", async (req, res) => {
   try {
     const user_id = Number(req.user.id);
     const { status, messageId } = req.body;
-    const message_id = Number(messageId);
 
     if (status === "like") {
-      await likeMessage(user_id, message_id);
+      await likeMessage(user_id, Number(messageId));
     } else if (status === "unlike") {
-      await UnlikeMessage(user_id, message_id);
+      await UnlikeMessage(user_id, Number(messageId));
     }
     res.status(200).json({ success: true });
   } catch (error) {
@@ -112,6 +129,7 @@ router.post("/likeMessage", async (req, res) => {
   }
 });
 
+//CREATE A NEW BUCKET
 router.get("/createBucket", async (req, res) => {
   try {
     const user_id = req.user.id;
@@ -128,6 +146,7 @@ router.get("/createBucket", async (req, res) => {
   }
 });
 
+//CREATE A NEW BUCKET (POST)
 router.post("/createBucket", async (req, res) => {
   try {
     const userId = req.user.id;
@@ -139,6 +158,7 @@ router.post("/createBucket", async (req, res) => {
       userId,
       tagId
     );
+
     if (NewBucketList) {
       res.redirect("/feeds/buckets?show=inprogress");
     } else {
@@ -150,16 +170,18 @@ router.post("/createBucket", async (req, res) => {
   }
 });
 
-router.get("/createTask/:bucketid", async (req, res) => {
-  try {
-    const bucketId = parseInt(req.params.bucketid);
-    res.render("createTask");
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false });
-  }
-});
+// //CREATE A NEW TASK
+// router.get("/createTask/:bucketid", async (req, res) => {
+//   try {
+//     const bucketId = parseInt(req.params.bucketid);
+//     res.render("createTask");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ success: false });
+//   }
+// });
 
+//CREATE A NEW TASK
 router.post("/createTask", async (req, res) => {
   try {
     const { task } = req.body;
@@ -177,15 +199,12 @@ router.post("/createTask", async (req, res) => {
   }
 });
 
+//DISPLAY BUCKETS
 router.get("/buckets", async (req, res) => {
   try {
     const { show } = req.query;
     const currentUserId = req.user.id;
     const buckets = await showBuckets(show, currentUserId);
-    // buckets.map(bucket => {
-    //   bucket.show = show;
-    //   return bucket;
-    // })
     res.render("showBuckets", { buckets, user_id: currentUserId });
   } catch (error) {
     console.log(error);
@@ -193,6 +212,7 @@ router.get("/buckets", async (req, res) => {
   }
 });
 
+//COMPLETE A BUCKET
 router.post("/completeBuckets", async (req, res) => {
   try {
     const { bucket_id } = req.body;
@@ -205,6 +225,7 @@ router.post("/completeBuckets", async (req, res) => {
   }
 });
 
+//DELETE A BUCKET
 router.post("/deleteBucket", async (req, res) => {
   try {
     const { bucket_id } = req.body;
@@ -216,8 +237,8 @@ router.post("/deleteBucket", async (req, res) => {
     res.status(500).json({ success: false });
   }
 });
-////🐨
 
+//UPDATE TASK COMPLETION 
 router.post("/updateTask", async (req, res) => {
   try {
     const { taskId, completed } = req.body;
@@ -230,11 +251,11 @@ router.post("/updateTask", async (req, res) => {
   }
 });
 
+//CREATE A NEW MESSAGE
 router.get("/createMessage", async (req, res) => {
   try {
     const bucketTitle = req.query.bucket;
     const user_id = req.user.id;
-    // const data = await getUserFeed(user_id);
     res.render("createMessage", { user_id, bucketTitle });
   } catch (error) {
     console.log(error);
@@ -242,6 +263,7 @@ router.get("/createMessage", async (req, res) => {
   }
 });
 
+//DISPLAY A BUCKET WITH MILESTONE TASKS
 router.get("/bucket/:id", async (req, res) => {
   try {
     let numOfCompleted = 0;
@@ -275,6 +297,7 @@ router.get("/bucket/:id", async (req, res) => {
   }
 });
 
+//COMPLETE A BUCKET
 router.post("/bucket/:id", async (req, res) => {
   try {
     const { bucket_id } = req.body;

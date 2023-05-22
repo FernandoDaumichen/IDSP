@@ -5,10 +5,18 @@ const { forwardAuthenticated } = require("../middleware");
 const { createUser, updatePassword, getUserByUsername, getSecretFromUser } = require("../database");
 const prisma = require("../prisma/client");
 
+//LOGIN:
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/feeds/home",
+    failureRedirect: "/auth/login",
+  })
+);
 
+//FORGOT ROUTES:
 router.get("/forgot", forwardAuthenticated, (req, res) => res.render("forgot"));
-
 router.get("/forgotPartTwo", forwardAuthenticated, async (req, res) => {
   const username = req.app.locals.user;
   if (!username) {
@@ -18,9 +26,7 @@ router.get("/forgotPartTwo", forwardAuthenticated, async (req, res) => {
     res.render("forgotPartTwo", { secretQuestion, secretAnswer })
   }
 })
-
 router.post("/forgotPassword", async (req, res) => {
-
  const user = await getUserByUsername(req.body.username);
  if (user) {
   req.app.locals.user = req.body.username;
@@ -28,9 +34,7 @@ router.post("/forgotPassword", async (req, res) => {
  } else {
   res.redirect("/auth/forgot");
  }
-
 })
-
 router.post("/updatePassword", async (req, res) => {
   const username = req.app.locals.user;
   const password = req.body.password;
@@ -48,9 +52,8 @@ router.post("/resetVerify", async (req, res) => {
   }
 })
 
-
+//SIGNUP:
 router.get("/signup", (req, res) => res.render("signup"));
-
 router.post("/signup", async (req, res) => {
   try {
     const user = await createUser(req.body);
@@ -65,14 +68,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/feeds/home",
-    failureRedirect: "/auth/login",
-  })
-);
-
+//LOGOUT:
 router.get("/logout", (req, res) => {
   req.logout(function(err) {
     if (err) {
