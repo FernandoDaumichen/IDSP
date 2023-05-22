@@ -335,3 +335,43 @@ p.post-message {
 .comment-button:hover, .like-button:hover {
   transform: scale(1.1);
 }
+
+#editOrDeleteModal {
+  background: white;
+  height: 200px;
+  margin: auto;
+  text-align: center;
+  border-radius: 63px;
+  box-shadow: 2px 0px 14px 8px #a3a5e8;
+  width: 700px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#editOrDeleteModal button {
+  width: 336px;
+  border-radius: 50px;
+  height: 50px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+#deleteButton {
+  background: #FD7070;
+}
+
+#editForm button {
+  background: #8083FF;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+/* .show {
+  visibility: visible;
+} */

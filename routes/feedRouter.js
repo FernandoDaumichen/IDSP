@@ -2,12 +2,15 @@ const express = require("express");
 const router = express.Router();
 const {
   createNewBucket,
+  updateMessage,
   completeBucketlist,
+  deleteMessage,
   getAllMessages,
   deleteBucketlist,
   showBuckets,
   getAllTags,
   addTask,
+  getMessageByMessageId,
   updateTask,
   likeMessage,
   getBucketByBucketId,
@@ -52,6 +55,33 @@ router.post("/getTask", async (req, res) => {
     console.log(error);
     res.status(500).json({ success: false });
   }
+});
+
+router.post("/deleteMessage", async (req, res) => {
+  console.log(req.body);
+  const id = req.body.messageId;
+  await deleteMessage(parseInt(id));
+  res.status(200).json({ success: true });
+});
+
+router.post("/updateMessage/:messageId", async (req, res) => {
+  const messageId = req.params.messageId;
+  const { newMessage } = req.body;
+  const message = await updateMessage(parseInt(messageId), newMessage);
+  res.redirect("/feeds/home");
+});
+
+router.get("/editMessage/:messageId", async (req, res) => {
+  const id = req.params.messageId;
+  const message = await getMessageByMessageId(parseInt(id));
+   const bucketTitle = (await getBucketByBucketId(message.bucketId)).title
+  const user_id = req.user.id;
+  //const data = await getUserFeed(user_id);
+  res.render("editMessage", { id, user_id, message, bucketTitle });
+
+  // res.render("createMessage", { data, user_id, bucketTitle });
+
+  
 });
 
 router.get("/home", async (req, res) => {
@@ -205,8 +235,8 @@ router.get("/createMessage", async (req, res) => {
   try {
     const bucketTitle = req.query.bucket;
     const user_id = req.user.id;
-    const data = await getUserFeed(user_id);
-    res.render("createMessage", { data, user_id, bucketTitle });
+    // const data = await getUserFeed(user_id);
+    res.render("createMessage", { user_id, bucketTitle });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });

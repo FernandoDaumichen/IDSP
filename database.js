@@ -106,6 +106,7 @@ const getBucketTitleByBucketId = async (id) => {
   }
 };
 
+
 const getBucketIdByBucketTitle = async (bucket_title) => {
   try {
     const bucket = await prisma.bucket.findFirst({
@@ -141,6 +142,16 @@ const deleteBucketlist = async (bucketId) => {
   }
 };
 
+const deleteMessage = async (messageId) => {
+  try {
+    await prisma.message.delete({
+      where: { id: messageId }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const addTask = async (taskMessage, bucketId) => {
   try {
     const newTask = await prisma.task.create({
@@ -168,6 +179,23 @@ const updateTask = async (completion, task_id) => {
       },
     });
     return task;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const updateMessage = async (messageId, messageContent) => {
+  try {
+    const message = await prisma.message.update({
+      where: {
+        id: messageId,
+      },
+      data: {
+        content: messageContent
+      },
+    });
+    return message;
   } catch (error) {
     console.log(error);
     return null;
@@ -328,7 +356,7 @@ const getAllComments = async (message_id) => {
   }
 };
 
-const getMessagesByMessageId = async (messageId) => {
+const getMessageByMessageId = async (messageId) => {
   try {
     const message = await prisma.message.findUnique({
       where: { id: messageId },
@@ -382,12 +410,10 @@ const getAllTags = async () => {
 
 const addNewMessage = async (content, bucketId) => {
   try {
-    const bucketId = Number(bucketId);
     const newMessage = await prisma.message.create({
       data: {
         content: content,
-        bucket: { connect: { id: bucketId } },
-        likes: 0,
+        bucket: { connect: { id: Number(bucketId) } }
       },
     });
     return newMessage;
@@ -634,6 +660,7 @@ module.exports = {
   createNewBucket,
   likeMessage,
   UnlikeMessage,
+  updateMessage,
   addNewMessage,
   addNewPhotoMessage,
   getBucketTitleByBucketId,
@@ -644,6 +671,7 @@ module.exports = {
   getSecretFromUser,
   getUserByUsername,
   createUser,
+  deleteMessage,
   showBuckets,
   getAllTags,
   messagesByTag,
@@ -654,7 +682,7 @@ module.exports = {
   completeBucketlist,
   commentMessage,
   getAllComments,
-  getMessagesByMessageId,
+  getMessageByMessageId,
   getBucketTitleByMessageId,
   getBucketIdByBucketTitle,
   getBucketByBucketId

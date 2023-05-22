@@ -14,20 +14,17 @@
     <title>Main Feed</title>
   </head>
 
-  <body>
+  <body style="height: 100vh; display: flex; overflow-y: hidden;">
     <div class="wrapper">
       <div class="posts-container">
         <% feed.forEach( message => { %>
-        <div class="bounce post">
+        <div class="bounce post" style="<%= message.photo ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + message.photo + ")" : ""  %>" >
           <a href="/profile/<%=message.bucket.user.id%>">
             <img
             src="<%=message.bucket.user.profileImg %>"
             style="z-index: 0; margin-top: 3vh; width: 6.5vh; height: auto"
             class="user-picture user-avatar"
             /></a>
-            <% if (message.photo) { %>
-              <img src="<%=message.photo%>" alt="user photo image"> 
-            <% } %>
           <div class="post-content" style="padding: 10px">
             <p class="message.bucket.user.username">
               <%= message.bucket.user.username %>
@@ -54,7 +51,11 @@
                 <i class="far fa-heart"></i>
               </button>
             <% } %>
-
+            <div id="ellipsis" style="<%= message.bucket.user.id == user_id ? 'display: inline; cursor: pointer;' : 'display: none' %>">
+              <svg width="4" height="14" viewBox="0 0 4 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path style="<%= message.photo ? 'fill: white': 'fill: black' %>" d="M1.99992 10.3333C2.44195 10.3333 2.86587 10.5089 3.17843 10.8215C3.49099 11.134 3.66659 11.558 3.66659 12C3.66659 12.442 3.49099 12.8659 3.17843 13.1785C2.86587 13.4911 2.44195 13.6666 1.99992 13.6666C1.55789 13.6666 1.13397 13.4911 0.821408 13.1785C0.508847 12.8659 0.333252 12.442 0.333252 12C0.333252 11.558 0.508847 11.134 0.821408 10.8215C1.13397 10.5089 1.55789 10.3333 1.99992 10.3333ZM1.99992 5.33331C2.44195 5.33331 2.86587 5.50891 3.17843 5.82147C3.49099 6.13403 3.66659 6.55795 3.66659 6.99998C3.66659 7.44201 3.49099 7.86593 3.17843 8.17849C2.86587 8.49105 2.44195 8.66665 1.99992 8.66665C1.55789 8.66665 1.13397 8.49105 0.821408 8.17849C0.508847 7.86593 0.333252 7.44201 0.333252 6.99998C0.333252 6.55795 0.508847 6.13403 0.821408 5.82147C1.13397 5.50891 1.55789 5.33331 1.99992 5.33331ZM1.99992 0.333313C2.44195 0.333313 2.86587 0.508908 3.17843 0.821468C3.49099 1.13403 3.66659 1.55795 3.66659 1.99998C3.66659 2.44201 3.49099 2.86593 3.17843 3.17849C2.86587 3.49105 2.44195 3.66665 1.99992 3.66665C1.55789 3.66665 1.13397 3.49105 0.821408 3.17849C0.508847 2.86593 0.333252 2.44201 0.333252 1.99998C0.333252 1.55795 0.508847 1.13403 0.821408 0.821468C1.13397 0.508908 1.55789 0.333313 1.99992 0.333313Z" fill="white"/>
+                </svg>                
+            </div>
 
             <a href="/profile/comment/<%=message.id%>" class="comment-button">
               <i class="far fa-comment-alt"></i>
@@ -108,10 +109,17 @@
         </a>
       </div>
     </div>
+    <div class="hide" id="editOrDeleteModal">
+      <button id="deleteButton">Delete</button>
+      <form id="editForm" action="">
+        <button>Edit</button>
+      </form>
     </div>
 
+    <form id="myForm"></form>
+
     <script>
-      const post = async (url, data) => {
+       const post = async (url, data) => {
         try {
           const res = await fetch(url, {
             body: JSON.stringify(data),
@@ -124,6 +132,43 @@
           return { error: "An error occurred" };
         }
       };
+      let messageId = -1;
+      document.querySelector("#deleteButton").addEventListener("click", async (e) => {
+        e.stopPropagation();
+        await post("/feeds/deleteMessage", { messageId: messageId });
+        const modal = document.querySelector("#editOrDeleteModal");
+          if (!modal.classList.contains("hide")) {
+            modal.classList.add("hide");
+           
+            document.getElementById("myForm").submit();
+
+          }
+      })
+
+
+       document.body.addEventListener("click", () =>{
+        const modal = document.querySelector("#editOrDeleteModal");
+          if (!modal.classList.contains("hide")) {
+            modal.classList.add("hide")
+          }
+      })
+        const deleteOrEditHandler = (e) => {
+          e.stopPropagation();
+          const postActions = document.querySelector("div.post-actions");
+          messageId = postActions.firstElementChild.value;
+          document.querySelector("#editForm").setAttribute("action", `/feeds/editMessage/${messageId}`);
+          console.log(document.querySelector("#editForm"));
+          const modal = document.querySelector("#editOrDeleteModal");
+        if (modal.classList.contains("hide")) {
+            modal.classList.remove("hide");
+          }
+      }
+      document.querySelectorAll("#ellipsis").forEach(div => div.addEventListener("click", deleteOrEditHandler))
+      
+     
+    
+      
+     
     
       async function likeUnlikeMessage(status, messageId) {
         try {
