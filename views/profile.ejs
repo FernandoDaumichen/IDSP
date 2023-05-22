@@ -53,12 +53,13 @@
         <%}%>
       <%}%>
       <div class="buttons">
-        <button style="width: 100px;">All</button>
-        <button style="width: 100px;">Media</button>
-        <button style="width: 100px;">Posts</button>
+        <a href="/profile/<%= userId %>"><button style="width: 100px;">All</button></a>
+        <a href="/profile/<%= userId %>?show=media"><button style="width: 100px;">Media</button></a>
+        <a href="/profile/<%= userId %>?show=posts"><button style="width: 100px;">Posts</button></a>
+       
       </div>
     </div>
-          <% if (loginUserId == userId) { %>
+          <% if (loginUserId == userId && (show == undefined) ) { %>
             <form class="user-info" action="/profile/<%=userId%>" method="POST">
               <div class="posts-container">
                 <div class="user-input-wrapper">
@@ -86,15 +87,65 @@
         </form>
           <% } %>
 
+          <% if (show == "media") { %>
+            <div class="grid-container">
+              <% data.forEach(message => { %>
+                <% if (message.photo) { %>
+                <a href="/profile/comment/<%=message.id%>"><div style="height: 200px; background: url(<%= message.photo %>) center / cover" class="grid-item"></div></a>
+                <% } %>
+              <% }) %>
+            </div>
+          <% } %>
+
+          <% if (show == "posts") { %>
+            <% data.forEach(post=> { %>
+              <% if(!post.photo) { %>
+              <div class="post" style="<%= post.photo ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + post.photo + ")" : ""  %>">
+               <img src=<%=user.profileImg%> style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;" class="user-picture user-avatar">
+                <div class="post-content" style="padding: 10px;">
+                  <p class="username-inside">
+                    <%=user.username%>
+                  </p>
+                  <% if (post.photo) { %>
+                    <!-- <img src="<%=post.photo%>" alt="user photo image">  -->
+                  <% } %>
+                  <p class="bucket-info">
+                    <%= post.bucket.title %> <span class="<%= post.bucket.completed ? 'Completed': 'InProgress' %>"><%= post.bucket.completed ? 'Completed': 'In Progress' %></span>
+                  </p>
+                  <p class="post-message">
+                    <%= post.content %>
+                  </p>
+                  <div class="post-actions">
+                    <input type="hidden" name="messageId" value="<%= post.id %>" />
+                    <% if (post.likes.filter(like => like.userId === loginUserId).length > 0) { %>
+                      <button type="button" class="like-button" onclick="toggleLike(event)">
+                        <i class="far fa-heart fas"></i>
+                      </button>
+                    <% } else { %>
+                      <button type="button" class="like-button" onclick="toggleLike(event)">
+                        <i class="far fa-heart"></i>
+                      </button>
+                    <% } %>
+                    <a href="/profile/comment/<%=post.id%>" class="comment-button">
+                      <i class="far fa-comment-alt"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+              <% }) %>
+              <% } %>
+
+          <% if (show == undefined) { %>
     <% data.forEach(post=> { %>
-      <div class="post">
+      <div class="post" style="<%= post.photo ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + post.photo + ")" : ""  %>">
        <img src=<%=user.profileImg%> style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;" class="user-picture user-avatar">
         <div class="post-content" style="padding: 10px;">
           <p class="username-inside">
             <%=user.username%>
           </p>
           <% if (post.photo) { %>
-            <img src="<%=post.photo%>" alt="user photo image"> 
+            <!-- <img src="<%=post.photo%>" alt="user photo image">  -->
           <% } %>
           <p class="bucket-info">
             <%= post.bucket.title %> <span class="<%= post.bucket.completed ? 'Completed': 'InProgress' %>"><%= post.bucket.completed ? 'Completed': 'In Progress' %></span>
@@ -120,6 +171,7 @@
         </div>
       </div>
       <% }) %>
+      <% } %>
       <br>
       <br>
   </div>

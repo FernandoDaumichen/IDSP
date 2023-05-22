@@ -101,6 +101,7 @@ router.get("/postMessage/:bucketId", async (req, res) => {
 
 router.get("/:user_id", async (req, res) => {
   try {
+    const { show } = req.query; // media | posts
     const loginUserId = Number(req.user.id);
     const userId = Number(req.params.user_id);
 
@@ -120,6 +121,7 @@ router.get("/:user_id", async (req, res) => {
       data,
       userId,
       user,
+      show,
       totalBucketTitle,
       userFollowingId,
     });
@@ -183,7 +185,7 @@ router.get("/comment/:messageId", async (req, res) => {
   try {
     const message_id = Number(req.params.messageId);
     const comments = await getAllComments(message_id);
-    const message = await getMessagesByMessageId(message_id);
+    const message = await getMessageByMessageId(message_id);
     const bucketTitle = await getBucketTitleByMessageId(message_id);
     const message_bucket_id = message.bucketId;
     const message_creator_id = await getUserIdByBucketId(message_bucket_id);
@@ -196,6 +198,7 @@ router.get("/comment/:messageId", async (req, res) => {
       bucketid: message.bucketId,
       createdAt: message.createdAt,
       userInfo: message_creator_info,
+      photo: message.photo
     };
 
     const modifiedComments = await Promise.all(

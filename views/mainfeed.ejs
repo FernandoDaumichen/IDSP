@@ -157,7 +157,6 @@
           const postActions = document.querySelector("div.post-actions");
           messageId = postActions.firstElementChild.value;
           document.querySelector("#editForm").setAttribute("action", `/feeds/editMessage/${messageId}`);
-          console.log(document.querySelector("#editForm"));
           const modal = document.querySelector("#editOrDeleteModal");
         if (modal.classList.contains("hide")) {
             modal.classList.remove("hide");

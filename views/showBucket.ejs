@@ -269,12 +269,11 @@ const updateProgressBarAndSummary = () => {
   const numOfCompleted = checkboxes.filter((checkbox) => checkbox.checked).length;
   const taskLength = checkboxes.length;
   createProgressBar(numOfCompleted, taskLength);
-  debugger;
   updateDailyTaskSummary(numOfCompleted, taskLength);
 };
 // createTaskElement
   const createTaskElement = (task) => {
-    // debugger;
+
     const li = document.createElement("li");
     const label = document.createElement("label");
     const input = document.createElement("input");
@@ -386,7 +385,7 @@ const updateProgressBarAndSummary = () => {
       const bucketId = pathArr[pathArr.length - 1];
 
       try {
-        debugger;
+
         const response = await post("/feeds/addTask", { newTask, bucketId });
         if (response.success) {
           const task = {

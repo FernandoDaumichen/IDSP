@@ -298,6 +298,10 @@
         placeholder="Cheer your Friend!" class="create_post"></textarea>
         <button type="submit">Add Comment</button>
       </form> -->
+  
+      <% if (message.photo) { %>
+        <img style="display: block;margin: auto;" width=200 src="<%= message.photo %>" />
+      <% } %>
       <div class="message" id="message">  
         <img class="user-picture"src=<%=message.userInfo.profileImg%>>
         <p class="username"><%=message.userInfo.username%></p>
