@@ -12,6 +12,13 @@ const getAllUsers = async () => {
   }
 };
 
+const changeProfilePhoto = async (user_id, photoUrl) => {
+  await prisma.user.update({
+    where: { id: user_id },
+    data: { profileImg: photoUrl }
+  })
+}
+
 const getBucketByBucketId = async (bucketId) => {
   const bucket = await prisma.bucket.findUnique({ where: { id: bucketId } });
   return bucket;
@@ -685,5 +692,6 @@ module.exports = {
   getMessageByMessageId,
   getBucketTitleByMessageId,
   getBucketIdByBucketTitle,
-  getBucketByBucketId
+  getBucketByBucketId,
+  changeProfilePhoto
 };

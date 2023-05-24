@@ -3,7 +3,6 @@ const router = express.Router();
 const {
   getAllUsers,
   getUserFollowing,
-  getMessagesofCertainBucket,
   getAllTags,
   messagesByTag,
   getAllMessages,

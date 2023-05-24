@@ -12,6 +12,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
 
+.image-preview{
+      width: 300px;
+      min-height: 100px;
+      border: 2px solid #dddddd;
+      margin-top:15px;
+      /*Default Text*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #cccccc;
+    }
+
+    .image-preview__image {
+      display: none;
+      width: 100%;
+    }
+    
 .wrapper {
   /* max-width: 375px; limit the maximum width */
   height: 100vh;
@@ -142,23 +160,62 @@ h2 {
           <div class="profile-photo">
             <img src="<%=data.profileImg%>" alt="profile-photo">
           </div>
-          <button class="edit-picture">Edit Picture</button>
         </div>
         
         <p class="change-username">This could be your first name or a nickname </p>
         <textarea
-          class="changeUserName"
-          type="text"
-          name="newUsername"
-          placeholder="<%= data.username %>"
+        class="changeUserName"
+        type="text"
+        name="newUsername"
+        placeholder="<%= data.username %>"
         ></textarea>
       </form>
-    
+
+
+      <form enctype="multipart/form-data" class="user-profile" action="/profile/updateProfilePhoto/<%=data.id%>" method="POST">
+
+        <input type="file" name="newProfilePhoto" id="inpFile"/>
+
+        <div class = "image-preview" id="imagePreview">
+          <img src="" alt="Image Preview" class="image-preview__image">
+          <span class="image-preview__default-text">Image Preview</span>
+        </div>
+      <button class="edit-picture">Edit Profile Picture</button>
+      </form>
+
+
+
     </div>
   </body>
   <script>
     function goBack() {
       window.history.back();
     }
+
+    
+    const inpFile = document.getElementById("inpFile");
+    const previewContainer = document.getElementById("imagePreview");
+    const previewImage = previewContainer.querySelector(".image-preview__image");
+    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+
+    inpFile.addEventListener("change", function(){
+  const file = this.files[0];
+
+  if(file){
+    const reader = new FileReader();
+    previewDefaultText.style.display = "none";
+    previewImage.style.display = "block";
+
+    reader.addEventListener("load", function(){
+      previewImage.setAttribute("src", this.result);
+    });
+
+    reader.readAsDataURL(file);
+
+  } else {
+    previewDefaultText.style.display = null;
+    previewImage.style.display = null;
+  }
+})
   </script>
 </html>

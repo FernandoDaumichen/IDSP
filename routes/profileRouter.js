@@ -1,16 +1,13 @@
 const express = require("express");
 const multer  = require('multer');
 const path = require("path");
-const bodyParser = require("body-parser");
-
-//CLOUDINARY
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: "dhw1v7zh9",
+  api_key: "963797227352463",
+  api_secret: "ncUOeop1r8YMqE8n7SZl5L0iRUQ"
 });
 
 const storage = new CloudinaryStorage({
@@ -33,7 +30,7 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 const router = express.Router();
-
+const bodyParser = require("body-parser");
 const {
   getBucketTitleByMessageId,
   changeUsername,
@@ -49,6 +46,7 @@ const {
   addFriend,
   removeFriend,
   addNewPhotoMessage,
+  changeProfilePhoto,
 } = require("../database");
 
 const { ensureAuthenticated } = require("../middleware");
@@ -56,7 +54,7 @@ const { ensureAuthenticated } = require("../middleware");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(ensureAuthenticated);
 
-//UPLOAD MEDIA WITH MESSAGE WHEN COMPLETE BUCKETLIST
+//Upload Media+Message after completing bucketlist
 router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async function (req, res) {
   const { newMessage } = req.body;
   const bucketId = req.params.bucketid;
@@ -72,6 +70,22 @@ router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async fu
 
   res.redirect(`/profile/${user_id}`);
 });
+
+//Update Profile Photo
+router.post('/updateProfilePhoto/:userid', upload.single('newProfilePhoto'), async function (req, res) {
+  const file = req.file;
+  const user_id = req.params.userid;
+
+  try {
+    const cloud = await cloudinary.uploader.upload(file.path);
+    await changeProfilePhoto(parseInt(user_id), file.path);
+    res.redirect(`/profile/${user_id}`);
+  } catch (error) {
+    console.log(error);
+  }
+
+});
+
 
 //UPLOAD MESSAGE ONLY WHEN COMPLETE BUCKETLIST
 router.post('/uploadMessageOnly/:bucketid', async function (req, res) {
