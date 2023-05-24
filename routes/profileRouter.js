@@ -19,19 +19,11 @@ const storage = new CloudinaryStorage({
   },
 });
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './public/data/uploads/')
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + path.extname(file.originalname))
-//   }
-// })
-
 const upload = multer({ storage: storage });
 const router = express.Router();
 const bodyParser = require("body-parser");
 const {
+  deleteProfilePhoto,
   getBucketTitleByMessageId,
   changeUsername,
   addNewMessage,
@@ -71,20 +63,17 @@ router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async fu
   res.redirect(`/profile/${user_id}`);
 });
 
-//Update Profile Photo
-router.post('/updateProfilePhoto/:userid', upload.single('newProfilePhoto'), async function (req, res) {
-  const file = req.file;
-  const user_id = req.params.userid;
-
+router.post('/deleteProfilePhoto', async (req, res)=>{
   try {
-    const cloud = await cloudinary.uploader.upload(file.path);
-    await changeProfilePhoto(parseInt(user_id), file.path);
-    res.redirect(`/profile/${user_id}`);
+    const user_id = req.user.id;
+    const updatedUser = await deleteProfilePhoto(parseInt(user_id));
+    console.log(updatedUser);
+    res.status(200).json({ success: true, data: updatedUser });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ success: false });
   }
-
-});
+})
 
 
 //UPLOAD MESSAGE ONLY WHEN COMPLETE BUCKETLIST
@@ -191,6 +180,35 @@ router.get("/edit/:userId", async (req, res) => {
     console.log(error);
     res.status(500).json({ success: false });
   }
+});
+
+
+//Update Profile Photo
+router.post('/updateProfilePhoto/:userid', upload.single('newProfilePhoto'), async function (req, res) {
+  const file = req.file;
+  const user_id = req.params.userid;
+  const { newUsername } = req.body;
+
+  if(newUsername && !file) {
+    await changeUsername(parseInt(user_id), newUsername);
+    res.redirect(`/profile/${user_id}`);
+  } else if(newUsername && file){
+    await changeUsername(user_id, newUsername);
+    const cloud = await cloudinary.uploader.upload(file.path);
+    await changeProfilePhoto(parseInt(user_id), file.path);
+    res.redirect(`/profile/${user_id}`);
+  } else if(!newUsername && file){
+    const cloud = await cloudinary.uploader.upload(file.path);
+    await changeProfilePhoto(parseInt(user_id), file.path);
+    res.redirect(`/profile/${user_id}`);
+  } else {
+    res.redirect(`/profile/${user_id}`);
+  }
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+
 });
 
 router.post("/edit/:userId", async (req, res) => {
