@@ -173,6 +173,30 @@
     font-size: 14px;
     margin-left: 4vh; /* adjust this value as needed */
 }
+
+.nothingToShow{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #9ea0e5;
+    font-family: "Open Sans", sans-serif;
+    animation: glow 2s infinite alternate;
+    border-radius: 40px;
+    margin-top: 30px;
+}
+
+@keyframes glow {
+  0% {
+    background-color: #e1c7ef;
+  }
+  50% {
+    background-color: #fbdff4;
+  }
+  100% {
+    background-color: #b0b2eb;
+  }
+}
+
 </style>
 <body>
   <div class="wrapper">
@@ -183,6 +207,11 @@
       </svg>
     </button>
     <h1><%=tag.tagName%></h1>
+    <% if (data.length == 0) { %>
+      <div class="nothingToShow">
+        <p>There is no message with <strong><%=tag.tagName%></strong></p>
+      </div>
+    <% } %>
     <div class="posts-container" >
       <% data.forEach( message => { %> 
   
