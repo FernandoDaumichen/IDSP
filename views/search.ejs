@@ -96,20 +96,21 @@
    </div>
   </div>
    <script>
-    const searchInput = document.querySelector("[data-search]");
+    // const searchInput = document.querySelector("#data-search");
     const searchBar = document.querySelector("#search-input");
     searchBar.innerHTML="";
 
   
-    searchInput.addEventListener("input", (e) => {
+    searchBar.addEventListener("input", (e) => {
       try {
         const value = e.target.value;
-        const buttons = document.querySelectorAll("#tag-buttons a");
+        console.log(value);
+        const filterButtons = document.querySelectorAll("#tag-buttons a");
         const users = document.querySelectorAll(".card");
-        buttons.forEach((button) => {
+        filterButtons.forEach((button) => {
           users.forEach((user) => {
             const headerDiv = user.querySelector(".header");
-            const userName = headerDiv.textContent;
+            // const userName = headerDiv.textContent;
   
             if (value.toUpperCase() === button.textContent.toUpperCase()) {
               button.classList.add("active");

@@ -12,6 +12,21 @@ const getAllUsers = async () => {
   }
 };
 
+const changeProfilePhoto = async (user_id, photoUrl) => {
+  await prisma.user.update({
+    where: { id: user_id },
+    data: { profileImg: photoUrl }
+  })
+}
+
+const deleteProfilePhoto = async (user_id) => {
+  const updatedUser = await prisma.user.update({
+    where: { id: user_id },
+    data: { profileImg: "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" }
+  })
+  return updatedUser;
+}
+
 const getBucketByBucketId = async (bucketId) => {
   const bucket = await prisma.bucket.findUnique({ where: { id: bucketId } });
   return bucket;
@@ -332,6 +347,7 @@ const createUser = async (user) => {
           secretAnswer,
           profileImg:
             "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg",
+          following: { connect: { id: 1} }
         },
       });
       return newUser;
@@ -685,5 +701,7 @@ module.exports = {
   getMessageByMessageId,
   getBucketTitleByMessageId,
   getBucketIdByBucketTitle,
-  getBucketByBucketId
+  getBucketByBucketId,
+  changeProfilePhoto,
+  deleteProfilePhoto
 };

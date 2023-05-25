@@ -18,11 +18,11 @@ model User {
   email      String    @unique
   password   String
   profileImg String?
-  buckets    Bucket[]
-  comments   Comment[]
+  buckets    Bucket[]  
+  comments   Comment[] 
   followers  User[]    @relation("UserFollows")
   following  User[]    @relation("UserFollows")
-  likes      Like[]
+  likes      Like[] 
 }
 
 model Tag {
@@ -38,7 +38,7 @@ model Bucket {
   title     String
   completed Boolean
   userId    Int
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   tagId     Int
   tag       Tag       @relation(fields: [tagId], references: [id])
   Task      Task[]
@@ -70,14 +70,14 @@ model Comment {
   messageId Int
   message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }
 
 model Like {
   id          Int       @id @default(autoincrement())
   userId      Int
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   messageId   Int
   message     Message   @relation(fields: [messageId], references: [id], onDelete: Cascade)
 }

@@ -11,8 +11,27 @@
     @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
+/*
+.image-preview{
+      width: 300px;
+      min-height: 100px;
+      border: 2px solid #dddddd;
+      margin-top:15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #cccccc;
+    }
 
-.wrapper {
+    */
+
+    .image-preview {
+      display: none;
+      width: 100%;
+    }
+
+    .wrapper {
   /* max-width: 375px; limit the maximum width */
   height: 100vh;
   width: 100%;
@@ -131,34 +150,110 @@ h2 {
   text-align: center;
   resize: none;
 }
+
+.divBtn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+.button:active {
+  background-color: #3e8e41;
+}
     </style>
   <body>
     <div class="wrapper">
       <button class="cancel" onclick="goBack()">Cancel</button>
-      <form action="/profile/edit/<%=data.id%>" method="POST">
+      <form enctype="multipart/form-data" class="user-profile" action="/profile/updateProfilePhoto/<%=data.id%>" method="POST">        
         <button class="save">Save</button>
         <h1>Edit Profile</h1>
         <div class="picture-container">
-          <div class="profile-photo">
-            <img src="<%=data.profileImg%>" alt="profile-photo">
+          <div class="profile-photo" id = "profile-photo">
+            <img src="<%=data.profileImg%>" alt="profile-photo" class = "image-preview__image">
           </div>
-          <button class="edit-picture">Edit Picture</button>
+          <p>Edit your profile photo</p>
+          <div class="divBtn">Remove profile photo</div>
+          <br>
+  
+          <input type="file" name="newProfilePhoto" id="inpFile"/>
+  
+          <div class = "image-preview" id="imagePreview">
+            <img src="" alt="Image Preview" class="image-preview">
+          </div>
         </div>
         
         <p class="change-username">This could be your first name or a nickname </p>
         <textarea
-          class="changeUserName"
-          type="text"
-          name="newUsername"
-          placeholder="<%= data.username %>"
+        class="changeUserName"
+        type="text"
+        name="newUsername"
+        placeholder="<%= data.username %>"
         ></textarea>
       </form>
-    
+
     </div>
   </body>
   <script>
-    function goBack() {
-      window.history.back();
+const inpFile = document.getElementById("inpFile");
+const previewContainer = document.getElementById("profile-photo");
+const profileImage = previewContainer.querySelector(".image-preview__image");
+const deleteBtn = document.querySelector(".divBtn");
+
+function goBack() {
+  window.history.back();
+}
+
+const post = async (url, data) => {
+  try {
+    const res = await fetch(url, {
+      body: JSON.stringify(data),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+    return { error: "An error occurred" };
+  }
+};
+
+inpFile.addEventListener("change", function() {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.addEventListener("load", function() {
+      profileImage.setAttribute("src", this.result);
+    });
+    reader.readAsDataURL(file);
+  }
+});
+
+const handleDeleteProfilePhoto = async () => {
+  try {
+    const res = await post("/profile/deleteProfilePhoto");
+    if (res.success) {
+      const reader = new FileReader();
+      reader.addEventListener("load", function() {
+        profileImage.setAttribute("src", res.data.updatedUser.profileImage);
+        // location.reload();
+      });
+      reader.readAsDataURL(res); 
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+deleteBtn.addEventListener("click", handleDeleteProfilePhoto);
   </script>
 </html>
