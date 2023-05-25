@@ -393,7 +393,6 @@
   async function likeUnlikeMessage(status, messageId) {
         try {
           const response = await post("/feeds/likeMessage", { status, messageId });
-          console.log(response);
           if (response.message) {
             alert(response.message);
           }

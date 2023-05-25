@@ -5,9 +5,11 @@ const {
   getUserFollowing,
   getAllTags,
   messagesByTag,
+  messagesByTagFromAllUsers,
   getAllMessages,
   getBucketIdByBucketTitle,
   getUserIdByBucketId,
+  getUserByUserId,
 } = require("../database");
 const querystring = require("querystring");
 
@@ -127,12 +129,38 @@ router.get("/tag/:tag_id", async (req, res) => {
   try {
     const user_id = req.user.id;
     const tag_id = Number(req.params.tag_id);
-    const data = await messagesByTag(user_id, tag_id);
+    // const data = await messagesByTag(user_id, tag_id);
+    const data= await messagesByTagFromAllUsers(tag_id);
+    const modifiedData = await Promise.all(data.map(async (d) => {
+      const userInfo = await getUserByUserId(d.bucket.userId);
+
+      const newData = {
+        messageId: d.id,
+        messageContent: d.content,
+        messagePhoto: d.photo,
+        createdAt: d.createdAt,
+        bucketId: d.bucketId,
+        bucketStartDate: d.bucket.startDate,
+        bucketDueDate: d.bucket.dueDate,
+        bucketTitle: d.bucket.title,
+        bucketStatus: d.bucket.completed,
+        bucketTag: d.bucket.tagId,
+        userId: d.bucket.userId,
+        userName: userInfo.username,
+        userProfileImg: userInfo.profileImg,
+      };
+    
+      return newData;
+    }));
     
     const allTags = await getAllTags();
     const tag = allTags.find((tag) => tag.id === tag_id);
   
-    res.render("messageByTag", { data ,tag});
+    // console.log(data);
+    console.log(tag);
+
+    console.log(modifiedData);
+    res.render("messageByTag", { data:modifiedData, tag });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false });

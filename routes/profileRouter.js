@@ -277,7 +277,6 @@ router.get("/comment/:messageId", async (req, res) => {
       })
     );
 
-    console.log(modifiedMessage);
 
     res.render("comment", {
       comments: modifiedComments,

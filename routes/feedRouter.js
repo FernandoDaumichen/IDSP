@@ -28,7 +28,6 @@ router.post("/likeMessage", async (req, res) => {
   try {
     const user_id = Number(req.user.id);
     const { status, messageId } = req.body;
-    console.log(status,messageId)
 
     if (status === "like") {
       await likeMessage(user_id, Number(messageId));
