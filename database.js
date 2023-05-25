@@ -15,22 +15,25 @@ const getAllUsers = async () => {
 const changeProfilePhoto = async (user_id, photoUrl) => {
   await prisma.user.update({
     where: { id: user_id },
-    data: { profileImg: photoUrl }
-  })
-}
+    data: { profileImg: photoUrl },
+  });
+};
 
 const deleteProfilePhoto = async (user_id) => {
   const updatedUser = await prisma.user.update({
     where: { id: user_id },
-    data: { profileImg: "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" }
-  })
+    data: {
+      profileImg:
+        "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg",
+    },
+  });
   return updatedUser;
-}
+};
 
 const getBucketByBucketId = async (bucketId) => {
   const bucket = await prisma.bucket.findUnique({ where: { id: bucketId } });
   return bucket;
-}
+};
 
 const getBucketTitleByMessageId = async (messageId) => {
   try {
@@ -121,7 +124,6 @@ const getBucketTitleByBucketId = async (id) => {
   }
 };
 
-
 const getBucketIdByBucketTitle = async (bucket_title) => {
   try {
     const bucket = await prisma.bucket.findFirst({
@@ -160,7 +162,7 @@ const deleteBucketlist = async (bucketId) => {
 const deleteMessage = async (messageId) => {
   try {
     await prisma.message.delete({
-      where: { id: messageId }
+      where: { id: messageId },
     });
   } catch (error) {
     console.log(error);
@@ -207,7 +209,7 @@ const updateMessage = async (messageId, messageContent) => {
         id: messageId,
       },
       data: {
-        content: messageContent
+        content: messageContent,
       },
     });
     return message;
@@ -244,7 +246,7 @@ const changeUsername = async (userId, newUsername) => {
 const getUserByUserId = async (user_id) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: user_id },
+      where: { id: parseInt(user_id) },
     });
     return user;
   } catch (error) {
@@ -252,6 +254,14 @@ const getUserByUserId = async (user_id) => {
     return null;
   }
 };
+
+
+const main = async() => {
+  const result = await getUserByUserId(1);
+  console.log(result);
+}
+
+main()
 
 const createNewBucket = async (dueDate, newBucket, userId, tagId) => {
   try {
@@ -292,19 +302,18 @@ const getUserByUsername = async (username) => {
     const user = await prisma.user.findUnique({
       where: { username: username },
     });
-    return user;;
+    return user;
   } catch (error) {
     console.log(error);
     return null;
   }
 };
 
-
 const getSecretFromUser = async (username) => {
   try {
     const user = await prisma.user.findUnique({
       where: { username: username },
-      select: { secretQuestion: true, secretAnswer: true }
+      select: { secretQuestion: true, secretAnswer: true },
     });
     return user;
   } catch (error) {
@@ -318,15 +327,13 @@ const updatePassword = async (username, password) => {
     await prisma.user.update({
       where: { username },
       data: {
-        password
+        password,
       },
     });
   } catch (error) {
     console.log(error);
   }
-}
-
-
+};
 
 const createUser = async (user) => {
   try {
@@ -347,7 +354,7 @@ const createUser = async (user) => {
           secretAnswer,
           profileImg:
             "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg",
-          following: { connect: { id: 1} }
+          following: { connect: { id: 1 } },
         },
       });
       return newUser;
@@ -376,6 +383,14 @@ const getMessageByMessageId = async (messageId) => {
   try {
     const message = await prisma.message.findUnique({
       where: { id: messageId },
+      select: {
+        id: true,
+        content: true,
+        photo: true,
+        bucketId: true,
+        createdAt: true,
+        likes: true,
+      },
     });
     return message;
   } catch (error) {
@@ -429,7 +444,7 @@ const addNewMessage = async (content, bucketId) => {
     const newMessage = await prisma.message.create({
       data: {
         content: content,
-        bucket: { connect: { id: Number(bucketId) } }
+        bucket: { connect: { id: Number(bucketId) } },
       },
     });
     return newMessage;
@@ -446,7 +461,7 @@ const addNewPhotoMessage = async (content, bucketId, photoUrl) => {
       data: {
         content: content,
         bucket: { connect: { id: bucket_id } },
-        photo: photoUrl
+        photo: photoUrl,
       },
     });
     return newMessage;
@@ -563,6 +578,23 @@ const messagesByTag = async (user_id, tag_id) => {
     return [];
   }
 };
+
+const messagesByTagFromAllUsers = async (tag_id) => {
+  const messages = await prisma.message.findMany({
+    where: {
+      bucket: {
+        tagId: parseInt(tag_id),
+      },
+    },
+    include: {
+      bucket: true,
+    },
+  });
+  return messages;
+};
+
+
+
 
 const getAllMessagesByBucketId = async (bucketId) => {
   try {
@@ -703,5 +735,6 @@ module.exports = {
   getBucketIdByBucketTitle,
   getBucketByBucketId,
   changeProfilePhoto,
-  deleteProfilePhoto
+  deleteProfilePhoto,
+  messagesByTagFromAllUsers,
 };

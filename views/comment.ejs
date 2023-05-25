@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
     <title>Comment 💬</title>
   </head>
+
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
     @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
@@ -279,25 +280,19 @@
 
   <body>
     <div class="wrapper">
-
-      <button class="arrow-left" onclick="goBack()" style="z-index: 10px;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
-          <path fill="#8083ff"
-            d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
-        </svg>
-      </button>
+      <form action="/feeds/home" method="get">
+        <button class="arrow-left" style="z-index: 10px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
+            <path fill="#8083ff"
+              d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
+          </svg>
+        </button>
+      </form>
+  
       <h1>Post</h1>
       <h2>
         <%=bucketTitle%>
       </h2>
-
-
-      <!-- <form action = "/profile/comment/<%=message.id%>" method = "POST">
-
-        <textarea style="outline: none; resize: none" type="text" name="newComment"
-        placeholder="Cheer your Friend!" class="create_post"></textarea>
-        <button type="submit">Add Comment</button>
-      </form> -->
   
       <% if (message.photo) { %>
         <img style="display: block;margin: auto;" width=200 src="<%= message.photo %>" />
@@ -309,9 +304,16 @@
           <%=message.content%>
         </p>
         <div class="post-actions">
-          <button type="button" class="like-button" onclick="toggleLike(event)">
-            <i class="far fa-heart"></i>
-          </button>
+          
+          <% if (message.likes.filter(like => like.userId === user_id).length > 0) { %>
+            <button type="button" class="like-button" onclick="toggleLike(event)">
+              <i class="far fa-heart fas"></i>
+            </button>
+          <% } else { %>
+            <button type="button" class="like-button" onclick="toggleLike(event)">
+              <i class="far fa-heart"></i>
+            </button>
+          <% } %>
           <a class="comment-button" onclick="showCommentForm()">
             <i class="far fa-comment-alt"></i>
           </a>
@@ -343,19 +345,23 @@
       </div>
   
 
-      <!-- <h2><%=message.content%></h2>
-      <img src=<%=message.userInfo.profileImg%>> -->
-
-
 
   </body>
   <script>
-    function goBack() {
-      // window.location.href = "http://example.com/main-page"; // Replace "http://example.com/main-page" with the actual URL of your main page
 
-      window.history.back();
-    }
-
+    const post = async (url, data) => {
+        try {
+          const res = await fetch(url, {
+            body: JSON.stringify(data),
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          });
+          return await res.json();
+        } catch (error) {
+          console.log(error);
+          return { error: "An error occurred" };
+        }
+      };
 
     function toggleLike(event) {
       const likeButton = event.target.closest('.like-button');
@@ -363,6 +369,7 @@
       heartIcon.classList.toggle('far');
       heartIcon.classList.toggle('fas');
     }
+
     function updateScrollHeight() {
       const postsContainer = document.querySelector(".posts-container");
       postsContainer.scrollTop = postsContainer.scrollHeight;
@@ -382,6 +389,33 @@
       commentForm.style.display = 'none';
     }
   }
+
+  async function likeUnlikeMessage(status, messageId) {
+        try {
+          const response = await post("/feeds/likeMessage", { status, messageId });
+          if (response.message) {
+            alert(response.message);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
+  async function toggleLike(event) {
+        const likeButton = event.target.closest(".like-button");
+        const pathArr = window.location.pathname.split("/");
+        const messageId = pathArr[pathArr.length - 1];
+        const heartIcon = likeButton.querySelector("i");
+
+    
+        if (heartIcon.classList.contains("fas")) {
+          heartIcon.classList.remove("fas");
+          await likeUnlikeMessage("unlike", messageId);
+        } else {
+          heartIcon.classList.add("fas");
+          await likeUnlikeMessage("like", messageId);
+        }
+      }
 
   </script>
 
