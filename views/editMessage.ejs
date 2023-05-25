@@ -5,33 +5,119 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/style_createMessage.css" />
-    <title>Creating Message✍🏻</title>
+    <title>Editing Message✍🏻</title>
   </head>
+<style>
+  .create_post {
+    display: flex;
+    border-radius: 10px;
+    width: 100%;
+    height:100%;
+    font-size: 18px;
+    box-sizing: border-box;
+    margin-bottom: 2vh;
+    padding-left: 8vh;
+    border: none;
+    position: relative;
+    /* top: 6vh; */
+    padding-top: 1%;
+    border-radius: 10px;
+    border: 1px solid #8083ff;
 
+  }
+  .newBucketTitle {
+    font-weight: 600;
+    font-size: 3vh;
+    color: #8083ff;
+    margin-bottom: 1vh;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.cancel {
+  font-size: 2.75vh;
+  font-family: "Open Sans", sans-serif;
+  font-style: light;
+  border: none;
+  background-color: #ffffff;
+  color: #000000;
+  position: absolute;
+  top: 2.67vh;
+  left: 2.67vh;
+  cursor: pointer;
+}
+
+[type="submit"] {
+  font-size: 2.75vh;
+    padding: 0.5vh 1vh;
+    border-radius: 1vh;
+    color: #8083ff;
+    border: 0.1vh solid #8083ff;
+    background-color: #ffffff;
+    margin: 1vh 0.5vh;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+    left: 85%;
+}
+
+.cancel:hover, [type="submit"]:hover {
+  background-color: #8083ff;
+  color: #ffffff;
+}
+
+.createInput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  max-width: 60vh;
+  margin-top:25%;
+
+}
+
+.create_post {
+  width: 100%;
+    padding: 2vh 2vh;
+    border-radius: 1vh;
+    border: 1px solid #8083ff;
+    margin-top: 1vh;
+    font-size: 2.75vh;
+    height: 40vh;
+}
+
+</style>
   <body>
+
+    
+      <textarea style="outline: none; resize: none" type="text" name="newMessage"
+        placeholder="What's on your mind?" class="create_post"></textarea>
+      <button type="submit" class="add-button">
+        <img src="../styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
+      </button>
+    </div>      
+
+
     <div class="wrapper">
       <button class="cancel" onclick="goBack()">Cancel</button>
       <form action="/feeds/updateMessage/<%= id
-       %>" method="POST">
-        <button type="submit">Update</button>
-        <div class="input-container">
-          <div class="profile-photo"></div>
-          <p class="newBucketTitle">Your New Bucketlist: <%=bucketTitle%></p>
-          <!-- <input type="text" name="newMessage" placeholder="What's your next goal?" /> -->
-          <textarea
-            style="outline: none; resize: none"
-            type="text"
-            name="newMessage"
-            class="create_post"
-          ><%= message.content %></textarea>
-        </div>
-        <br />
-        <input type="hidden" name="bucket" value="<%= bucketTitle %>" />
-        <br />
-        <!-- <button type="submit" class="add-button">
-          <img src="../styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
-        </button>               -->
-      </form>
+      %>" method="POST">
+      <div class="createInput">
+        <p class="newBucketTitle">The Bucket that you are editing: <%=bucketTitle%></p>
+        <!-- <input type="text" name="newMessage" placeholder="What's your next goal?" /> -->
+        <textarea
+        style="outline: none; resize: none"
+        type="text"
+        name="newMessage"
+        class="create_post"
+        ><%= message.content %></textarea>
+      </div>
+      <input type="hidden" name="bucket" value="<%= bucketTitle %>" />
+      <!-- <button type="submit" class="add-button">
+        <img src="../styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
+      </button>               -->
+      <button type="submit">Edit</button>
+    </form>
       <div class="navbar">
         <a href="/feeds/home">
           <img

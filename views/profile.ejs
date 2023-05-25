@@ -59,9 +59,9 @@
        
       </div>
     </div>
+    <div class="posts-container">
           <% if (loginUserId == userId && (show == undefined) ) { %>
             <form class="user-info" action="/profile/<%=userId%>" method="POST">
-              <div class="posts-container">
                 <div class="user-input-wrapper">
                   <div class="wrapwrap" style="display: flex; align-items: flex-start">
                     <img src= <%=user.profileImg%> class="user-avatar">

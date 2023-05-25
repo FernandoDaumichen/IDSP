@@ -23,7 +23,7 @@
   }
   
   .post{
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -77,6 +77,102 @@
   margin-left: 2vh;
 }
 
+.InProgress {
+  background: aliceblue;
+  border: 1px solid #4883dd;
+  border-radius: 33px;
+  font-weight: 700;
+  color: #4883dd;
+  padding: 5px;
+}
+
+.Completed {
+  background: #eeffed;
+  border: 1px solid #55be36;
+  border-radius: 33px;
+  font-weight: 700;
+  color: #55be36;
+  padding: 5px;
+}
+
+
+#messagebucketuserusername{
+  font-family: "Opens Sans", sans-serif;
+    font-size: 2vh;
+    /* line-height: 2.5vh; */
+    margin-bottom: 1vh;
+    font-style: normal;
+    word-wrap: break-word;
+}
+
+.posts-container{
+  display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    width: 100%;
+    align-items: center;
+    /* padding-left: 5%; */
+    /* margin-top: 10px; */
+    max-height: calc(80vh - 5vh);
+    padding-bottom: 20vh;
+    /* margin-left: 5vh; */
+}
+
+.post {
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    position: relative;
+    padding: 2vh;
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+    /* margin-left: 8%; */
+    max-width: 80%;
+}
+.post-content {
+    /* margin-left: 6vh; */
+    margin-left: -2vh;
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    width: 98%;
+    /* padding-left: 38%; */
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1vh;
+}
+.bucket-info {
+    display: flex;
+    align-items: center;
+    margin-left: 2vh;
+}
+
+.post p {
+    font-family: "Opens Sans", sans-serif;
+    font-size: 2vh;
+    /* line-height: 2.5vh; */
+    margin-bottom: 1vh;
+    font-style: normal;
+    word-wrap: break-word;
+}
+
+.post p:nth-child(2) {
+  margin-top: 5px;
+    margin-left: 0vh;
+    font-size: 12px;
+}
+
+.post p:last-child {
+    margin-bottom: 0;
+}
+.post #post-message {
+    margin-top: -2vh; /* adjust this value as needed */
+    font-size: 14px;
+    margin-left: 4vh; /* adjust this value as needed */
+}
 </style>
 <body>
   <div class="wrapper">
@@ -87,18 +183,24 @@
       </svg>
     </button>
     <h1><%=tag.tagName%></h1>
+    <div class="posts-container" >
     <% data.forEach( message => { %> 
+
+<div class="post-content" style="padding: 10px">
         <div class="post" style="<%= message.photo ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + message.photo + ")" : ""  %>" >
+         
+          <div class="user-info">
           <a href="/profile/<%=message.bucket.user.id%>">
-          <img src="<%=message.bucket.user.profileImg %>" style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;"  class="user-picture user-avatar"></a>
+          <img src="<%=message.bucket.user.profileImg %>" style="z-index: 0;  margin-top: 1vh;  width: 6.5vh; height: auto;"  class="user-picture user-avatar"></a>
           <div class="post-content" style="padding: 10px">
-            <p class="message.bucket.user.username"><%= message.bucket.user.username %></p>
+            <p class="message.bucket.user.username" id="messagebucketuserusername"><%= message.bucket.user.username %></p>
             <p class="bucket-info">
               <%= message.bucket.title %>
               <span class="<%= message.bucket.completed ? 'Completed': 'InProgress' %>"><%= message.bucket.completed ? 'Completed': 'In Progress' %></span>
             </p>
-            <p class="post-message"><%= message.content %></p>
+            </div>
           </div>
+          <p class="post-message"id="post-message"><%= message.content %></p>
           <div class="post-actions">
             <button type="button" class="like-button" onclick="toggleLike(event)">
               <i class="far fa-heart"></i>
@@ -109,7 +211,8 @@
           </div>
         </div>
  <% }) %>
-
+</div>
+      </div>
 <div>
 </body>
 <script>
