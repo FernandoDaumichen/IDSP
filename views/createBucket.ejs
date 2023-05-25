@@ -50,7 +50,6 @@
           <div class="tag-container">
               <label for="tag<%=index%>">
                   <input type="checkbox" id="tag<%=index%>" name="tag" value="<%=tag.id%>">
-                  <span class="checkmark"></span>
                   <%=tag.tagName%>
               </label>
           </div>
@@ -62,12 +61,13 @@
     <div class="button-container">
       <button class="Create-Goal" id="submitBtn" type="submit">Create New Goal </button>
     </div>
+    
+    
+  </form>
+  <!-- <img id="bucket" src="../styles/images/balde-removebg-preview.png" alt="bucket">
+<div id="plusOne">+1</div> -->
 
-    </form>
-
-    <img id="bucket" src="../styles/images/balde-removebg-preview.png" style="display: none;">
-<div id="plusOne" style="display: none; color: green;">+1</div>
-
+  
   </div>
   <script>
    const form = document.querySelector("#createNewBucketForm");
@@ -85,6 +85,25 @@
       prioritySelect.style.color = window.getComputedStyle(selectedOption).color; 
     });
 
+
+    document.getElementById('submitBtn').addEventListener('click', function(e) {
+  e.preventDefault(); // prevents the form from being submitted immediately, remove if not needed
+
+  // Show the image and text
+  document.getElementById('bucket').style.display = 'block';
+  document.getElementById('plusOne').style.display = 'block';
+
+  // Start the animations
+  document.getElementById('bucket').style.animationPlayState = 'running';
+  document.getElementById('plusOne').style.animationPlayState = 'running';
+
+  // Optionally hide the image and text after the animation ends, and submit the form
+  setTimeout(function() {
+    document.getElementById('bucket').style.display = 'none';
+    document.getElementById('plusOne').style.display = 'none';
+    document.getElementById('createNewBucketForm').submit();
+  }, 2000); // adjust time according to your animation-duration
+});
 
   </script>
 </body>

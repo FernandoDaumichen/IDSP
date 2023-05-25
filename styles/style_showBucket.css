@@ -72,4 +72,23 @@ h1 {
   transform: translateX(-50%); /* centering horizontally */
 }
 
+/* ANIMATION */
 
+.party-popper,
+.party-popper-inverted,
+.partying-face {
+  max-width: 14vw;
+  height: auto;
+}
+
+@media screen and (max-width: 600px) {
+  .party-popper,
+  .party-popper-inverted,
+  .partying-face {
+    max-width: 16vw;
+  }
+}
+
+.party-popper-inverted {
+  transform: scaleX(-1);
+}

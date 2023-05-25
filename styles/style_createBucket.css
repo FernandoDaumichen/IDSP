@@ -106,7 +106,6 @@ a[href="/feeds/buckets?show=inprogress"] img {
 
 .select-container {
   margin-top: 5vh;
-  
 }
 
 .status-select {
@@ -140,6 +139,9 @@ a[href="/feeds/buckets?show=inprogress"] img {
   margin-bottom: 1vh;
   align-items: center;
   color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bucket-content {
@@ -151,6 +153,7 @@ a[href="/feeds/buckets?show=inprogress"] img {
   padding-left: 1vh;
   padding-right: 1vh;
   margin-top: 2vh;
+  height: 70vh;
 }
 
 .bucket-item a {
@@ -237,7 +240,11 @@ h1 {
   right: -5px;
   bottom: -5px;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(185, 255, 229, 0.75) 0%, rgba(128, 131, 255, 0.75));
+  background: linear-gradient(
+    180deg,
+    rgba(185, 255, 229, 0.75) 0%,
+    rgba(128, 131, 255, 0.75)
+  );
   border-radius: 15px;
 }
 
@@ -245,28 +252,28 @@ h1 {
   text-align: center;
   font-size: 2rem;
   color: #333;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .post-btn {
   background-color: #8083ff;
   border: none;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   margin: 3vh 1vh;
   cursor: pointer;
   padding: 1.5vh 2vh;
   border-radius: 20px;
   transition-duration: 0.4s;
-  width: 100%;
+  width: 80%;
 }
 .post-btn:hover {
   background-color: #5a5fff;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .modal-gifs {

@@ -8,15 +8,15 @@
   <link rel="stylesheet" href="/styles/style_profile.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
 
-  <title>Post photo message after completing: needs styling
+  <title>Creating your post 🥳
   </title>
- 
+
   <style>
-    .image-preview{
-      width: 300px;
-      min-height: 100px;
+    .image-preview {
+      width: 80%;
+    min-height: 40vh;
       border: 2px solid #dddddd;
-      margin-top:15px;
+      margin-top: 15px;
       /*Default Text*/
       display: flex;
       align-items: center;
@@ -27,166 +27,228 @@
 
     .image-preview__image {
       display: none;
-      width: 100%;
-    }
+    /* width: 100%; */
+    max-width: 80%;
+    max-height: fit-content;
+}
+
+    .image-space {
+      display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
+    margin-top: 2%;
+}
+
+  .user-avatar2 {
+    width: 6vh;
+    height: auto;
+    border-radius: 50%;
+    background-color: #b1b1b1;
+    z-index: 1;
+    position: relative;
+    left: 2%;
+  } 
+.createInput2 {
+  border: #8083ff 1px solid;
+    display: flex;
+    align-items: flex-end;
+    margin: 10px;
+    border-radius: 10px;
+    width: 97%;
+    height: 100%;
+}
+.posts-container2 {
+  overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+    padding: 0px 8.5vh;
+    /* margin-top: 2vh; */
+    height: 47vh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+form.user-info {
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.cancel{
+  font-size: 2vh;
+  font-family: "Open Sans", sans-serif;
+  font-style: light;
+  border: none;
+  padding: 0.4vh 0.8vh;
+  position: absolute;
+  top: 1vh;
+  cursor: pointer;
+}
+
+.cancel {
+  top:2%;
+  left: 2%;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+h1 {	
+  font-family: "Open Sans", sans-serif;
+  font-size: 3vh;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 6%;
+  margin-bottom: 2%;
+}
+
+.image-preview__image {
+  display: none;
+  max-width: 80%;
+  max-height: 60vh;
+  object-fit: contain; /* Preserve aspect ratio and fill the box */
+}
+
   </style>
 </head>
+
 <body>
-  
-  <div class="flex-container">  
-  <div class="wrapper">
+
+  <div class="flex-container">
+    <div class="wrapper">
+      <button class="cancel" onclick="goBack()">Cancel</button>
+      <h1> New Post</h1>
+      <form enctype="multipart/form-data" class="user-info" action="/profile/uploadMedia/<%= bucketId %>" method="POST">
+
+
+        <input type="file" name="completionPhoto" id="inpFile" />
+        <div class="image-space">
+          <div class="image-preview" id="imagePreview">
+            <img src="" alt="Image Preview" class="image-preview__image">
+            <span class="image-preview__default-text">Image Preview</span>
+          </div>
+        </div>
+
+
         
-            <form enctype="multipart/form-data" class="user-info" action="/profile/uploadMedia/<%= bucketId %>" method="POST">
+        <img src=<%=user.profileImg%> class="user-avatar2">
+        <div class="posts-container2">
+          <div class="user-input-wrapper">
+            <div class="wrapwrap" style="display: flex; align-items: flex-start">
+              <div>
 
-
-                <input type="file" name="completionPhoto" id="inpFile"/>
-                <div class = "image-preview" id="imagePreview">
-                  <img src="" alt="Image Preview" class="image-preview__image">
-                  <span class="image-preview__default-text">Image Preview</span>
-                </div>
-
-
-
-
-              <div class="posts-container">
-                <div class="user-input-wrapper">
-                  <div class="wrapwrap" style="display: flex; align-items: flex-start">
-                    <img src= <%=user.profileImg%> class="user-avatar">
-                    <div>
-                     
-                    </div>
-                  </div>
-            <div class="createInput">
+              </div>
+            </div>
+            <div class="createInput2">
               <textarea style="outline: none; resize: none" type="text" name="newMessage"
                 placeholder="Post a celebratory message!" class="create_post"></textarea>
               <button type="submit" class="add-button">
                 <img src="/styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
               </button>
-            </div>        
+            </div>
           </div>
-        </form>        
+      </form>
       <br>
       <br>
-  </div>
-  <div class="navbar">
-    <a href="/feeds/home">
-      <img
-        src="/styles/images/home_icon_noBackground2.png"
-        alt="Home"
-        width="50"
-        height="50"
-      />
-    </a>
-    <a href="/search/">
-      <img
-        src="/styles/images/search_icon_noBackground2.png"
-        alt="Search"
-        width="50"
-        height="50"
-      />
-    </a>
-    <div class="circle">
-      <a href="/feeds/buckets?show=inprogress">
-        <img
-          src="/styles/images/bucket_icon_noBackground.png"
-          alt="Bucket"
-          width="60"
-          height="60"
-        />
+    </div>
+    <div class="navbar">
+      <a href="/feeds/home">
+        <img src="/styles/images/home_icon_noBackground2.png" alt="Home" width="50" height="50" />
+      </a>
+      <a href="/search/">
+        <img src="/styles/images/search_icon_noBackground2.png" alt="Search" width="50" height="50" />
+      </a>
+      <div class="circle">
+        <a href="/feeds/buckets?show=inprogress">
+          <img src="/styles/images/bucket_icon_noBackground.png" alt="Bucket" width="60" height="60" />
+        </a>
+      </div>
+      <a href="/feeds/buckets?show=completed">
+        <img src="/styles/images/note_icon_noBackground.png" alt="Notes" width="50" height="50" />
+      </a>
+      <a href="/profile/<%=user.id%>">
+        <img src="/styles/images/profile_icon_noBackground2.png" alt="Profile" width="60" height="60" />
       </a>
     </div>
-    <a href="/feeds/buckets?show=completed">
-      <img
-        src="/styles/images/note_icon_noBackground.png"
-        alt="Notes"
-        width="50"
-        height="50"
-      />
-    </a>
-    <a href="/profile/<%=user.id%>">
-      <img
-        src="/styles/images/profile_icon_noBackground2.png"
-        alt="Profile"
-        width="60"
-        height="60"
-      />
-    </a>
   </div>
-</div>
 
-<script>
-const friendBtn = document.querySelector(".friend-button");
-const postsContainer = document.querySelector(".posts-container");
-
-const post = async (url, data) => {
-  try {
-    const res = await fetch(url, {
-      body: JSON.stringify(data),
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-    return { error: "An error occurred" };
-  }
-};
-
-const inpFile = document.getElementById("inpFile");
-const previewContainer = document.getElementById("imagePreview");
-const previewImage = previewContainer.querySelector(".image-preview__image");
-const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
-
-inpFile.addEventListener("change", function(){
-  const file = this.files[0];
-
-  if(file){
-    const reader = new FileReader();
-    previewDefaultText.style.display = "none";
-    previewImage.style.display = "block";
-
-    reader.addEventListener("load", function(){
-      previewImage.setAttribute("src", this.result);
-    });
-
-    reader.readAsDataURL(file);
-
-  } else {
-    previewDefaultText.style.display = null;
-    previewImage.style.display = null;
-  }
-})
-
-const likeUnlikeMessage = async (status, messageId) => {
-  try {
-    const response = await post("/feeds/likeMessage", { status, messageId });
-    if (response.message) {
-      alert(response.message);
+  <script>
+        function goBack() {
+      window.history.back();
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-const toggleLike = async (event) => {
-  const likeButton = event.target.closest(".like-button");
-  const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
-  const messageId = inputElement.value;
-  const heartIcon = likeButton.querySelector("i");
+    const friendBtn = document.querySelector(".friend-button");
+    const postsContainer = document.querySelector(".posts-container");
 
-  if (heartIcon.classList.contains("fas")) {
-    heartIcon.classList.remove("fas");
-    await likeUnlikeMessage("unlike", messageId);
-  } else {
-    heartIcon.classList.add("fas");
-    await likeUnlikeMessage("like", messageId);
-  }
-};
+    const post = async (url, data) => {
+      try {
+        const res = await fetch(url, {
+          body: JSON.stringify(data),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        return await res.json();
+      } catch (error) {
+        console.log(error);
+        return { error: "An error occurred" };
+      }
+    };
 
-const updateScrollHeight = () => {
-  postsContainer.scrollTop = postsContainer.scrollHeight;
-};
-</script>
+    const inpFile = document.getElementById("inpFile");
+    const previewContainer = document.getElementById("imagePreview");
+    const previewImage = previewContainer.querySelector(".image-preview__image");
+    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+
+    inpFile.addEventListener("change", function () {
+      const file = this.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        previewDefaultText.style.display = "none";
+        previewImage.style.display = "block";
+
+        reader.addEventListener("load", function () {
+          previewImage.setAttribute("src", this.result);
+        });
+
+        reader.readAsDataURL(file);
+
+      } else {
+        previewDefaultText.style.display = null;
+        previewImage.style.display = null;
+      }
+    })
+
+    const likeUnlikeMessage = async (status, messageId) => {
+      try {
+        const response = await post("/feeds/likeMessage", { status, messageId });
+        if (response.message) {
+          alert(response.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const toggleLike = async (event) => {
+      const likeButton = event.target.closest(".like-button");
+      const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
+      const messageId = inputElement.value;
+      const heartIcon = likeButton.querySelector("i");
+
+      if (heartIcon.classList.contains("fas")) {
+        heartIcon.classList.remove("fas");
+        await likeUnlikeMessage("unlike", messageId);
+      } else {
+        heartIcon.classList.add("fas");
+        await likeUnlikeMessage("like", messageId);
+      }
+    };
+
+    const updateScrollHeight = () => {
+      postsContainer.scrollTop = postsContainer.scrollHeight;
+    };
+  </script>
 
 
 </body>

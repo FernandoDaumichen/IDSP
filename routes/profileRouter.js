@@ -69,8 +69,23 @@ router.post('/uploadMedia/:bucketid', upload.single('completionPhoto'), async fu
   res.redirect(`/profile/${user_id}`);
 });
 
+router.post('/uploadMessageOnly/:bucketid', async function (req, res) {
+  const { newMessage } = req.body;
+  // console.log(newMessage);
+  const bucketId = req.params.bucketid;
+  // const file = req.file;
+  const user_id = req.user.id;
 
-  // const url = cloudinary.url()
+  try {
+    // const cloud = await cloudinary.uploader.upload(file.path);
+    await addNewMessage(newMessage, bucketId);
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.redirect(`/profile/${user_id}`);
+});
+
 
 
 router.post("/friendUnfriend", async (req, res) => {
@@ -97,6 +112,13 @@ router.get("/postMessage/:bucketId", async (req, res) => {
   const bucketId = req.params.bucketId;
   const user = await getUserByUserId(userId);
   res.render("postMessage", { user, userId, bucketId });
+})
+
+router.get("/postMessageOnly/:bucketId", async (req, res) => {
+  const userId = Number(req.user.id);
+  const bucketId = req.params.bucketId;
+  const user = await getUserByUserId(userId);
+  res.render("postMessageOnly", { user, userId, bucketId });
 })
 
 router.get("/:user_id", async (req, res) => {
@@ -170,16 +192,16 @@ router.post("/edit/:userId", async (req, res) => {
   }
 });
 
-// router.get("/settings", (req, res) => {
-//   try {
-//     const user_id = req.user.id;
-//     const data = getUserFeed(user_id);
-//     res.render("settings", { data });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ success: false });
-//   }
-// });
+router.get("/settings/:userId", async (req, res) => {
+  try {
+    const user_id = Number(req.params.userId);
+    const data = await getUserByUserId(user_id);
+    res.render("settings", { data });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false });
+  }
+});
 
 router.get("/comment/:messageId", async (req, res) => {
   try {

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="../styles/style_showBucket.css" rel="stylesheet" />
   <title>Your Bucket Progress 😉</title>
+  <script src="https://unpkg.com/dom-confetti@0.0.13"></script>
 </head>
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
@@ -65,6 +66,7 @@
     margin-bottom: 0;
     text-align: center;
     font-weight: 700;
+    margin-bottom: 2vh;
   }
 
   h2{
@@ -143,39 +145,52 @@ button#completeBucketlist {
   display: block;
   margin: 2vh auto;
 }
-li {
+
+
+li{
   display: flex;
-  justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1vh 1vh;
+    /* border: 1px solid #8083ff; */
+    font-family: "Open sans", sans-serif;
+    font-size: 2vh;
+    list-style: none;
+    margin: 0;
+    padding: 1%;
+}
+label{
+  display: flex;
   align-items: center;
-  width: 46vh;
-  padding: 1.4vh;
-  list-style-type: none;
-  text-align: center;
-  font-size: 3vh;
-  border: 1px solid #8083ff;
-  border-radius: 2.5vh;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
+  justify-content: center;
+  width: 100%;
+  padding: 1vh 1vh;
+  /* border: 1px solid #8083ff; */
+  font-family: "Open sans", sans-serif;
+  font-size: 2vh;
+  list-style: none;
+  margin: 0;
+  padding: 1%;
 }
-
 input[type="checkbox"]{
-  margin-right: 1vh;
-  width: 4.5vh;
-  height: 4.5vh;
-  cursor: pointer;
-  border-radius: 50%;
-  border: 1px solid #8083ff;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  vertical-align: middle;  /* Add this line */
+    /* margin-right: 32%; */
+    width: 4.5vh;
+    height: 4.5vh;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 1px solid #8083ff;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    vertical-align: middle;
+    margin: 0%;
+  
+
 }
 
-label {
-  display: inline-block;  /* Add this line */
-  vertical-align: middle; 
-  
-{}
+
+
 
 input[type="checkbox"]:checked:before {
   content: "\2713";
@@ -231,6 +246,158 @@ progress[value]::-ms-fill {
     
 }
 
+div#completeList {
+  width: 100%;
+    height: 18%;
+
+}
+
+.return-link{
+  position: absolute;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    margin-top: 3vh;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient( 38deg, rgba(116, 209, 174, 0.75) 1.82%, rgba(116, 209, 174, 0.75) 30.9%, rgba(128, 131, 255, 0.75) 72.64% );
+    background-size: 200% 200%;
+    animation: Gradient 5s linear infinite;
+    /* color: #0000; */
+    width: 100%;
+    padding: 8vh 0px;
+    height: -29%;
+    font-size: 3vh;
+    text-align: center;
+    /* margin-right: -52px; */
+}
+
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ANIMATION */
+
+h1 {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.4vh;
+  text-align: center;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2vh;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(231, 231, 231, 0.937);
+}
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  margin: 15vh auto;
+  padding: 2vh;
+  width: 45%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.congrats {
+  text-align: center;
+  margin-bottom: 2vh;
+}
+
+.modal-content::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(185, 255, 229, 0.75) 0%,
+    rgba(128, 131, 255, 0.75)
+  );
+  border-radius: 15px;
+}
+
+.modal-content h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  font-family: "Open Sans", sans-serif;
+}
+
+.post-btn {
+  background-color: #8083ff;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  margin: 3vh 1vh;
+  cursor: pointer;
+  padding: 1.5vh 2vh;
+  border-radius: 20px;
+  transition-duration: 0.4s;
+  width: 80%;
+}
+.post-btn:hover {
+  background-color: #5a5fff;
+  color: #ffffff;
+}
+
+.modal-gifs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2vh;
+  width: 100%;
+  height: auto;
+}
+
+
+.party-popper,
+.party-popper-inverted,
+.partying-face {
+  max-width: 14vw;
+  height: auto;
+}
+
+@media screen and (max-width: 600px) {
+  .party-popper,
+  .party-popper-inverted,
+  .partying-face {
+    max-width: 16vw;
+  }
+}
+
+
 </style>
 
 <body>
@@ -252,6 +419,11 @@ progress[value]::-ms-fill {
       </div>
           <br>
           <br>
+          <!-- <div id="congratulations-message" style="display: none;">
+            <p>Congratulations! You've completed all your tasks!</p>
+          </div>
+             -->
+    
           <h2> Daily Tasks </h2>
           <p> Get started on your daily tasks!</p>
           <div class = "daily-task-summary">
@@ -269,9 +441,31 @@ progress[value]::-ms-fill {
             <button  id="completeBucketlist" class="Create-Goal">Complete Bucketlist</button>
           </div>
         
+
+          <div class="modal" id="modal">
+            <div class="modal-content">
+              <div class="modal-gifs">
+                <img class="partying-face" src="../styles/images/partying-face_1f973.png" alt="Partying Face">
+                <img class="party-popper" src="../styles/images/partying-face_1f973.png" alt="Party Popper">
+                <img class="party-popper-inverted" src="../styles/images/party-popper_1f389.png" alt="Party Popper Inverted">
+              </div>
+      
+              <h2>WooHoo!</h2>
+              <p class="congrats">Congratulations on completing a goal !</p>
+              <a id="post-picture-video" class="post-btn" href="#">Post a Picture/Video</a>
+              <!-- <button class="post-btn" id="post-picture-video"></button> -->
+              <a id="post-message" class="post-btn" href="#">Post a Message</a>
+      
+              <!-- <button class="post-btn" id="post-message">Post a Message</button> -->
+              <a id="none" class="post-btn" href="/feeds/buckets?show=completed">None</a>
+              <!-- <button class="post-btn" id="none">None</button> -->
+      
+            </div>
+          </div>
     </div>
 
 </body>
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 <script>
 
   //DOM SELECTORS:
@@ -335,6 +529,7 @@ progress[value]::-ms-fill {
 };
 
 
+
 const updateProgressBarAndSummary = () => {
   const checkboxesNodes = document.querySelectorAll('input[name="milestoneTask"]');
   const checkboxes = Array.from(checkboxesNodes);
@@ -342,7 +537,16 @@ const updateProgressBarAndSummary = () => {
   const taskLength = checkboxes.length;
   createProgressBar(numOfCompleted, taskLength);
   updateDailyTaskSummary(numOfCompleted, taskLength);
+
+  // Show the congratulations message when progress is at 100% // needs implementaion
+  const congratulationsMessage = document.querySelector('#congratulations-message');
+if (numOfCompleted == taskLength) {
+  congratulationsMessage.style.display = 'block';
+} else {
+  congratulationsMessage.style.display = 'none';
+}
 };
+
 // createTaskElement
   const createTaskElement = (task) => {
 
@@ -447,7 +651,14 @@ const updateProgressBarAndSummary = () => {
     const res = await fetch("/feeds/completeBuckets", { body: JSON.stringify({ bucket_id }), method: "POST", headers: { "Content-Type": "application/json"} });
     const { success } = await res.json();
     const completeList = document.querySelector("#completeList");
-    completeList.innerHTML = `<a href="/feeds/buckets?show=completed">Return to Bucket List</a>`
+    completeList.innerHTML = `<a href="/feeds/buckets?show=completed" class="return-link"> < Return to Bucket List</a>`
+
+        // Display the modal
+        modal.style.display = 'block';
+    
+    // Fire the confetti
+    fireConfetti();
+
   })
 
   AddTaskButton.addEventListener("click", async () => {
@@ -479,6 +690,46 @@ const updateProgressBarAndSummary = () => {
   });
 
 
+
+
+  const bucketImgs = document.querySelectorAll(".bucket-img");
+  const modal = document.getElementById("modal");
+
+  function fireConfetti() {
+    const end = Date.now() + 1000; // animation duration: 3000ms
+
+    function frame() {
+      confetti({
+        particleCount: 7,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#a568f6', '#e63d87', '#00c7e4', '#fdd67e']
+      });
+      confetti({
+        particleCount: 7,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#a568f6', '#e63d87', '#00c7e4', '#fdd67e']
+      });
+
+      if (Date.now() < end) {
+        // requestAnimationFrame(frame);
+        setTimeout(frame, 50);
+      }
+    };
+
+    frame();
+  }
+
+
+
+  window.addEventListener('click', function (event) {
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+});
 
 </script>
 

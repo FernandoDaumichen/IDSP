@@ -372,6 +372,12 @@ p.post-message {
   visibility: hidden;
 }
 
+
+svg {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+}
 /* .show {
   visibility: visible;
 } */

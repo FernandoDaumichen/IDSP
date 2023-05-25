@@ -17,7 +17,7 @@
   <div class="wrapper">
     <div class="background-container">
       <% if (loginUserId === userId) { %>
-      <form action="/profile/settings" class="settings-form" method="GET">
+      <form action="/profile/settings/<%=loginUserId%>" class="settings-form" method="GET">
         <button>
       <div class="setting">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="45px" height="40px">
@@ -32,7 +32,7 @@
     </form>
     <% } %>
       <div class="profilephoto">    
-        <img src=<%=user.profileImg%> style="z-index: 0; margin-top: 15px;    width: 12vh;
+        <img src=<%=user.profileImg%> style="z-index: 0; margin-top: 6vh;    width: 12vh;
         height: auto;" class="user-avatar">
         
       </div>

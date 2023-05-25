@@ -417,7 +417,7 @@ select {
   border: none;
   cursor: pointer;
   font-size: 20px;
-  margin: 0 5px;
+  margin: 0 10px;
   outline: none;
   transition: transform 0.3s ease;
 }
@@ -441,3 +441,6 @@ select {
   cursor: pointer;
   /* color: #8083ff; */
 }
+
+
+
