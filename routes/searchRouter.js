@@ -127,6 +127,7 @@ router.get("/tag/:tag_id", async (req, res) => {
     const user_id = req.user.id;
     const tag_id = Number(req.params.tag_id);
     const data = await messagesByTag(user_id, tag_id);
+    console.log(data);
     
     const allTags = await getAllTags();
     const tag = allTags.find((tag) => tag.id === tag_id);
