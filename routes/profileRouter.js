@@ -3,11 +3,13 @@ const multer  = require('multer');
 const path = require("path");
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+require('dotenv').config();
+
 
 cloudinary.config({
-  cloud_name: "dhw1v7zh9",
-  api_key: "963797227352463",
-  api_secret: "ncUOeop1r8YMqE8n7SZl5L0iRUQ"
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 const storage = new CloudinaryStorage({
@@ -239,6 +241,9 @@ router.get("/comment/:messageId", async (req, res) => {
     const message_id = Number(req.params.messageId);
     const comments = await getAllComments(message_id);
     const message = await getMessageByMessageId(message_id);
+
+    const user_id = parseInt(req.user.id);
+
     const bucketTitle = await getBucketTitleByMessageId(message_id);
     const message_bucket_id = message.bucketId;
     const message_creator_id = await getUserIdByBucketId(message_bucket_id);
@@ -251,7 +256,8 @@ router.get("/comment/:messageId", async (req, res) => {
       bucketid: message.bucketId,
       createdAt: message.createdAt,
       userInfo: message_creator_info,
-      photo: message.photo
+      photo: message.photo,
+      likes: message.likes
     };
 
     const modifiedComments = await Promise.all(
@@ -265,15 +271,19 @@ router.get("/comment/:messageId", async (req, res) => {
           messageId: comment.messageId,
           username: commentorName,
           userProfile: commentorProfile,
+          likes: comment.likes,
           createdAt: comment.createdAt,
         };
       })
     );
 
+    console.log(modifiedMessage);
+
     res.render("comment", {
       comments: modifiedComments,
       message: modifiedMessage,
       bucketTitle,
+      user_id
     });
   } catch (error) {
     console.log(error);

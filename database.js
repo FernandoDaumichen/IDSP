@@ -376,6 +376,7 @@ const getMessageByMessageId = async (messageId) => {
   try {
     const message = await prisma.message.findUnique({
       where: { id: messageId },
+      select: {id: true, content: true, photo: true, bucketId: true, createdAt: true, likes: true}
     });
     return message;
   } catch (error) {

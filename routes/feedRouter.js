@@ -23,6 +23,25 @@ const { ensureAuthenticated } = require("../middleware");
 //MIDDLEWARE TO ENSURE AUTHENTICATED REQUESTS
 router.use(ensureAuthenticated);
 
+//LIKE OR UNLIKE MESSAGE
+router.post("/likeMessage", async (req, res) => {
+  try {
+    const user_id = Number(req.user.id);
+    const { status, messageId } = req.body;
+    console.log(status,messageId)
+
+    if (status === "like") {
+      await likeMessage(user_id, Number(messageId));
+    } else if (status === "unlike") {
+      await UnlikeMessage(user_id, Number(messageId));
+    }
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "error" });
+  }
+});
+
 //ROUTE TO GET A SPECIFIC BUCKET BY BUCKETID
 router.post("/getBucket", async (req, res) => {
   try {
@@ -111,23 +130,7 @@ router.get("/home", async (req, res) => {
   }
 });
 
-//LIKE OR UNLIKE MESSAGE
-router.post("/likeMessage", async (req, res) => {
-  try {
-    const user_id = Number(req.user.id);
-    const { status, messageId } = req.body;
 
-    if (status === "like") {
-      await likeMessage(user_id, Number(messageId));
-    } else if (status === "unlike") {
-      await UnlikeMessage(user_id, Number(messageId));
-    }
-    res.status(200).json({ success: true });
-  } catch (error) {
-    console.log(error);
-    res.json({ message: "error" });
-  }
-});
 
 //CREATE A NEW BUCKET
 router.get("/createBucket", async (req, res) => {
