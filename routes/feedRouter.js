@@ -170,17 +170,6 @@ router.post("/createBucket", async (req, res) => {
   }
 });
 
-// //CREATE A NEW TASK
-// router.get("/createTask/:bucketid", async (req, res) => {
-//   try {
-//     const bucketId = parseInt(req.params.bucketid);
-//     res.render("createTask");
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ success: false });
-//   }
-// });
-
 //CREATE A NEW TASK
 router.post("/createTask", async (req, res) => {
   try {

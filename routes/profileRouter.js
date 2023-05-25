@@ -67,7 +67,6 @@ router.post('/deleteProfilePhoto', async (req, res)=>{
   try {
     const user_id = req.user.id;
     const updatedUser = await deleteProfilePhoto(parseInt(user_id));
-    console.log(updatedUser);
     res.status(200).json({ success: true, data: updatedUser });
   } catch (error) {
     console.log(error);

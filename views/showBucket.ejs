@@ -558,7 +558,6 @@ if (numOfCompleted == taskLength) {
       const taskId = event.target.value;
       const res = await post("/feeds/updateTask", { taskId, completed });
       updateProgressBarAndSummary();
-      // location.reload();
       window.location.href = window.location.href;
     });
 
@@ -669,8 +668,6 @@ if (numOfCompleted == taskLength) {
             completed: false,
           };
           addTaskToList(task);
-          // location.reload()
-          // window.location.href = "https://google.ca";
         }
       } catch (error) {
         console.log(error);

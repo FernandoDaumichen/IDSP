@@ -245,7 +245,6 @@ const handleDeleteProfilePhoto = async () => {
       const reader = new FileReader();
       reader.addEventListener("load", function() {
         profileImage.setAttribute("src", res.data.updatedUser.profileImage);
-        // location.reload();
       });
       reader.readAsDataURL(res); 
     }
