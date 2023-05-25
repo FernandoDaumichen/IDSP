@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/style_search.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-
-
     <title>Explore 🔎</title>
 </head>
 
@@ -17,22 +15,31 @@
         <form action="/search/" method="post">
             <div class="input-wrap">
                 <input type="search" name="searchInput" id="search-input" placeholder="Search topics or people"/>
-                <button id="search"><i class="fas fa-search"></i> Search</button>
+                <button id="search"></i>
+                  <svg width="26" height="22" viewBox="0 0 26 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.9413 20.7926H19.0023C22.313 20.7926 25 18.1056 25 14.7948V6.99775C25 3.68699 22.313 1 19.0023 1H10.9413C9.2499 1 7.64251 1.70773 6.50293 2.96726L2.26852 7.62151C0.577159 9.48082 0.577159 12.3118 2.26852 14.1711L6.50293 18.8253C7.64251 20.0848 9.2499 20.7926 10.9413 20.7926Z" stroke="#8083FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <g opacity="0.5">
+                    <path d="M17.8037 13.8595L11.8779 7.93372" stroke="#8083FF" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M11.8779 13.8595L17.8037 7.93372" stroke="#8083FF" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+                    </svg>
+                    
+                  </button>
               </div>              
         </form>
     </div>
     
 
-    <h1>Filter</h1>
+    <h1>Filters</h1>
     <div id="tag-buttons">
       <% tags.forEach(tag => { %>
-          <div class="tag-wrapper"> <!-- wrap each button and name with a div -->
+          <div class="tag-wrapper"> 
               <a href="/search/tag/<%=tag.id%>" class="button-value">
                   <div class="tag-container">  
                       <img src="<%=tag.imageUrl%>">
                   </div>
               </a>
-              <span class="tag-name"><%=tag.tagName%></span> <!-- this will now appear below the button -->
+              <span class="tag-name"><%=tag.tagName%></span>
           </div>
       <% }) %>
   </div>  
@@ -96,11 +103,8 @@
    </div>
   </div>
    <script>
-    // const searchInput = document.querySelector("#data-search");
     const searchBar = document.querySelector("#search-input");
     searchBar.innerHTML="";
-
-  
     searchBar.addEventListener("input", (e) => {
       try {
         const value = e.target.value;
@@ -109,8 +113,7 @@
         filterButtons.forEach((button) => {
           users.forEach((user) => {
             const headerDiv = user.querySelector(".header");
-            // const userName = headerDiv.textContent;
-  
+
             if (value.toUpperCase() === button.textContent.toUpperCase()) {
               button.classList.add("active");
             } else if (value.toUpperCase() === userName.toUpperCase()) {
