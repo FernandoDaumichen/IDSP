@@ -184,32 +184,32 @@
     </button>
     <h1><%=tag.tagName%></h1>
     <div class="posts-container" >
-    <% data.forEach( message => { %> 
-
-<div class="post-content" style="padding: 10px">
-        <div class="post" style="<%= message.messagePhoto ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + message.messagePhoto + ")" : ""  %>" >
-         
-          <div class="user-info">
-          <a href="/profile/<%=message.userId%>">
-          <img src="<%=message.userProfileImg %>" style="z-index: 0;  margin-top: 1vh;  width: 6.5vh; height: auto;"  class="user-picture user-avatar"></a>
-          <div class="post-content" style="padding: 10px">
-            <p class="message.bucket.user.username" id="messagebucketuserusername"><%= message.username %></p>
-            <p class="bucket-info">
-              <%= message.bucketTitle %>
-              <span class="<%= message.bucketStatus ? 'Completed': 'InProgress' %>"><%= message.bucketStatus ? 'Completed': 'In Progress' %></span>
-            </p>
+      <% data.forEach( message => { %> 
+  
+  <div class="post-content" style="padding: 10px">
+    <div class="post" style="<%= message.messagePhoto ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + message.messagePhoto + ")" : ""  %>" >
+           
+            <div class="user-info">
+            <a href="/profile/<%=message.userId%>">
+            <img src="<%=message.userProfileImg  %>" style="z-index: 0;  margin-top: 1vh;  width: 6.5vh; height: auto;"  class="user-picture user-avatar"></a>
+            <div class="post-content" style="padding: 10px">
+              <p class="message.bucket.user.username" id="messagebucketuserusername"><%= message.userName %></p>
+              <p class="bucket-info">
+                <%= message.bucketTitle  %>
+                <span class="<%= message.bucketStatus ? 'Completed': 'InProgress' %>"><%= message.bucketStatus ? 'Completed': 'In Progress' %></span>
+              </p>
+              </div>
             </div>
-          </div>
-          <p class="post-message"id="post-message"><%= message.content %></p>
-          <div class="post-actions">
-            <button type="button" class="like-button" onclick="toggleLike(event)">
-              <i class="far fa-heart"></i>
-            </button>  
-            <a href="/profile/comment/<%=message.messageId%>" class="comment-button">
-              <i class="far fa-comment-alt"></i>
-            </a>
-          </div>
+            <p class="post-message" id="post-message"><%=message.messageContent%></p>
+        <div class="post-actions">
+          <button type="button" class="like-button" onclick="toggleLike(event)">
+            <i class="far fa-heart"></i>
+          </button>  
+          <a href="/profile/comment/<%=message.messageId%>" class="comment-button">
+            <i class="far fa-comment-alt"></i>
+          </a>
         </div>
+      </div>
  <% }) %>
 </div>
       </div>

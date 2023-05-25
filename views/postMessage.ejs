@@ -7,13 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/styles/style_profile.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+  
 
   <title>Creating your post 🥳
   </title>
 
   <style>
     .image-preview {
-      width: 80%;
+      width: 30%;
+    height: 50%;
     min-height: 40vh;
       border: 2px solid #dddddd;
       margin-top: 15px;
@@ -75,7 +77,7 @@ form.user-info {
 }
 
 .cancel{
-  font-size: 2vh;
+  font-size: 3vh;
   font-family: "Open Sans", sans-serif;
   font-style: light;
   border: none;
@@ -106,7 +108,18 @@ h1 {
   display: none;
   max-width: 80%;
   max-height: 60vh;
-  object-fit: contain; /* Preserve aspect ratio and fill the box */
+  object-fit: contain; 
+}
+
+.upload-container {
+  position: relative;
+}
+
+.upload-label {
+  position: absolute;
+    bottom: 1%;
+    right: 26%;
+    transform: translateY(-50%);
 }
 
   </style>
@@ -121,16 +134,18 @@ h1 {
       <form enctype="multipart/form-data" class="user-info" action="/profile/uploadMedia/<%= bucketId %>" method="POST">
 
 
-        <input type="file" name="completionPhoto" id="inpFile" />
-        <div class="image-space">
-          <div class="image-preview" id="imagePreview">
-            <img src="" alt="Image Preview" class="image-preview__image">
-            <span class="image-preview__default-text">Image Preview</span>
+        <div class="upload-container">
+          <div class="image-space">
+            <div class="image-preview" id="imagePreview">
+              <img src="" alt="Image Preview" class="image-preview__image">
+              <span class="image-preview__default-text">Image Preview</span>
+            </div>
           </div>
+          
+          <label for="inpFile" class="upload-label">
+            <i class="fas fa-upload fa-2x" style="cursor: pointer;"></i>
+          </label>
         </div>
-
-
-        
         <img src=<%=user.profileImg%> class="user-avatar2">
         <div class="posts-container2">
           <div class="user-input-wrapper">
