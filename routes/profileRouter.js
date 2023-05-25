@@ -16,7 +16,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'bucketed',
-    format: async (req, file) => 'png', // supports promises as well
+    format: async (req, file) => 'png', 
     public_id: (req, file) => Date.now() + path.extname(file.originalname),
   },
 });

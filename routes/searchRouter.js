@@ -155,11 +155,7 @@ router.get("/tag/:tag_id", async (req, res) => {
     
     const allTags = await getAllTags();
     const tag = allTags.find((tag) => tag.id === tag_id);
-  
-    // console.log(data);
-    console.log(tag);
 
-    console.log(modifiedData);
     res.render("messageByTag", { data:modifiedData, tag });
   } catch (error) {
     console.log(error);

@@ -256,12 +256,6 @@ const getUserByUserId = async (user_id) => {
 };
 
 
-const main = async() => {
-  const result = await getUserByUserId(1);
-  console.log(result);
-}
-
-main()
 
 const createNewBucket = async (dueDate, newBucket, userId, tagId) => {
   try {
