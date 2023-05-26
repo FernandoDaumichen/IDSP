@@ -326,8 +326,8 @@ select {
 
 .user-avatar {
   transform: translateY(-50%);
-  width: 5vh;
-  height: auto;
+  width: 42px;
+  height: 40px;
   border-radius: 50%;
   background-color: #b1b1b1;
   z-index: 1;
@@ -425,7 +425,6 @@ select {
   background-color: transparent;
   cursor: pointer;
 }
-
 
 .buttons button.active {
   font-weight: bold;

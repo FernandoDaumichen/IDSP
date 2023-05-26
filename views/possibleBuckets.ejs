@@ -273,11 +273,11 @@ a[href="/feeds/buckets?show=inprogress"] img {
     <div class="posts-container">
       <% feed.forEach( message=> { %>
         <div class="post-content" style="padding: 10px">
-          <div class="post">
+          <div class="post" style="<%= message.photo ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + message.photo + ")" : ""  %>">
             <div class="user-info">
             <a href="/profile/<%=message.bucket.user.id%>">
               <img src="<%=message.bucket.user.profileImg %>"
-                style="z-index: 0;  margin-top: 1vh;  width: 6.5vh; height: auto;" class="user-picture user-avatar"></a>
+                style="z-index: 0;  margin-top: 1vh;" class="user-picture user-avatar"></a>
             <div class="post-content" style="padding: 10px">
                 <p class="message.bucket.user.username" id="messagebucketuserusername">
                   <%= message.bucket.user.username %>

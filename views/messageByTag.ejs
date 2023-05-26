@@ -1,243 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="../styles/style_tag.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" rel="stylesheet" href="../styles/style_tag.css" />
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
-  />
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    />
 
-    <title> Tags </title>
-</head>
-<style>
-    h1{
-    font-family: 'Quicksand', sans-serif;
-    font-size: 2rem;
-    font-weight: 600;
-    color: #8083ff;
-    margin-bottom: 0;
-    text-align: center;
-  }
-  
-  .post{
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #f7f7f7;
-    width: 70%;
-    margin-left: 14%;
-    margin-top: 5%;
+    <title>Tags</title>
+  </head>
+  <style>
+    h1 {
+      font-family: "Quicksand", sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #8083ff;
+      margin-bottom: 0;
+      text-align: center;
+    }
 
-  }
+    .post {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #f7f7f7;
+      width: 70%;
+      margin-left: 14%;
+      margin-top: 5%;
+    }
 
-  .arrow-left {
-  position: absolute;
-  top: 3vh;
-  left: 3vh;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-}
-.post-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-.comment-button,
-.like-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  margin: 0 20px;
-  outline: none;
-  transition: transform 0.3s ease;
-}
+    .arrow-left {
+      position: absolute;
+      top: 3vh;
+      left: 3vh;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+    }
+    .post-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .comment-button,
+    .like-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      margin: 0 20px;
+      outline: none;
+      transition: transform 0.3s ease;
+    }
 
-.comment-button, .like-button {
-  transition: transform 0.3s ease;
-}
+    .comment-button,
+    .like-button {
+      transition: transform 0.3s ease;
+    }
 
-.comment-button:hover, .like-button:hover {
-  transform: scale(1.1);
-}
+    .comment-button:hover,
+    .like-button:hover {
+      transform: scale(1.1);
+    }
 
-.user-picture {
-  width: 5vh;
-    height: 5vh;
-    border-radius: 50%;
-    margin-right: 1.33vh;
-    background-color: #b1b1b1;
-  margin-left: 2vh;
-}
+    .user-picture {
+      width: 5vh;
+      height: 5vh;
+      border-radius: 50%;
+      margin-right: 1.33vh;
+      background-color: #b1b1b1;
+      margin-left: 2vh;
+    }
 
-.InProgress {
-  background: aliceblue;
-  border: 1px solid #4883dd;
-  border-radius: 33px;
-  font-weight: 700;
-  color: #4883dd;
-  padding: 5px;
-}
+    .InProgress {
+      background: aliceblue;
+      border: 1px solid #4883dd;
+      border-radius: 33px;
+      font-weight: 700;
+      color: #4883dd;
+      padding: 5px;
+    }
 
-.Completed {
-  background: #eeffed;
-  border: 1px solid #55be36;
-  border-radius: 33px;
-  font-weight: 700;
-  color: #55be36;
-  padding: 5px;
-}
+    .Completed {
+      background: #eeffed;
+      border: 1px solid #55be36;
+      border-radius: 33px;
+      font-weight: 700;
+      color: #55be36;
+      padding: 5px;
+    }
 
+    #messagebucketuserusername {
+      font-family: "Opens Sans", sans-serif;
+      font-size: 2vh;
+      margin-bottom: 1vh;
+      font-style: normal;
+      word-wrap: break-word;
+    }
 
-#messagebucketuserusername{
-  font-family: "Opens Sans", sans-serif;
-    font-size: 2vh;
-    margin-bottom: 1vh;
-    font-style: normal;
-    word-wrap: break-word;
-}
+    .posts-container {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      width: 100%;
+      align-items: center;
+      max-height: calc(80vh - 5vh);
+      padding-bottom: 20vh;
+    }
 
-.posts-container{
-  display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    width: 100%;
-    align-items: center;
-    max-height: calc(80vh - 5vh);
-    padding-bottom: 20vh;
-}
+    .post {
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      position: relative;
+      padding: 2vh;
+      margin-bottom: 2vh;
+      margin-top: 2vh;
+      max-width: 80%;
+    }
+    .post-content {
+      margin-left: -2vh;
+      font-family: "Open Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+      width: 98%;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1vh;
+    }
+    .bucket-info {
+      display: flex;
+      align-items: center;
+      margin-left: 2vh;
+    }
 
-.post {
-    background-color: #f7f7f7;
-    border-radius: 10px;
-    position: relative;
-    padding: 2vh;
-    margin-bottom: 2vh;
-    margin-top: 2vh;
-    max-width: 80%;
-}
-.post-content {
-    margin-left: -2vh;
-    font-family: "Open Sans";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 24px;
-    width: 98%;
-}
-.user-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1vh;
-}
-.bucket-info {
-    display: flex;
-    align-items: center;
-    margin-left: 2vh;
-}
+    .post p {
+      font-family: "Opens Sans", sans-serif;
+      font-size: 2vh;
+      margin-bottom: 1vh;
+      font-style: normal;
+      word-wrap: break-word;
+    }
 
-.post p {
-    font-family: "Opens Sans", sans-serif;
-    font-size: 2vh;
-    margin-bottom: 1vh;
-    font-style: normal;
-    word-wrap: break-word;
-}
+    .post p:nth-child(2) {
+      margin-top: 5px;
+      margin-left: 0vh;
+      font-size: 12px;
+    }
 
-.post p:nth-child(2) {
-  margin-top: 5px;
-    margin-left: 0vh;
-    font-size: 12px;
-}
+    .post p:last-child {
+      margin-bottom: 0;
+    }
+    .post #post-message {
+      margin-top: -2vh;
+      font-size: 14px;
+      margin-left: 4vh;
+    }
 
-.post p:last-child {
-    margin-bottom: 0;
-}
-.post #post-message {
-    margin-top: -2vh; 
-    font-size: 14px;
-    margin-left: 4vh; 
-}
+    .nothingToShow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #9ea0e5;
+      font-family: "Open Sans", sans-serif;
+      animation: glow 2s infinite alternate;
+      border-radius: 40px;
+      margin-top: 30px;
+    }
 
-.nothingToShow{
-  display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #9ea0e5;
-    font-family: "Open Sans", sans-serif;
-    animation: glow 2s infinite alternate;
-    border-radius: 40px;
-    margin-top: 30px;
-}
-
-@keyframes glow {
-  0% {
-    background-color: #e1c7ef;
-  }
-  50% {
-    background-color: #fbdff4;
-  }
-  100% {
-    background-color: #b0b2eb;
-  }
-}
-
-</style>
-<body>
-  <div class="wrapper">
-    <button class="arrow-left" onclick="goBack()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
-        <path fill="#8083ff"
-          d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
-      </svg>
-    </button>
-    <h1><%=tag.tagName%></h1>
-    <% if (data.length == 0) { %>
+    @keyframes glow {
+      0% {
+        background-color: #e1c7ef;
+      }
+      50% {
+        background-color: #fbdff4;
+      }
+      100% {
+        background-color: #b0b2eb;
+      }
+    }
+  </style>
+  <body>
+    <div class="wrapper">
+      <button class="arrow-left" onclick="goBack()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          width="3vh"
+          height="3vh"
+        >
+          <path
+            fill="#8083ff"
+            d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z"
+          />
+        </svg>
+      </button>
+      <h1><%=tag.tagName%></h1>
+      <% if (data.length == 0) { %>
       <div class="nothingToShow">
         <p>There is no message with <strong><%=tag.tagName%></strong></p>
       </div>
-    <% } %>
-    <div class="posts-container" >
-      <% data.forEach( message => { %> 
-  
-  <div class="post-content" style="padding: 10px">
-    <div class="post" style="<%= message.messagePhoto ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + message.messagePhoto + ")" : ""  %>" >
-           
-            <div class="user-info">
+      <% } %>
+      <div class="posts-container">
+        <% data.forEach( message => { %>
+
+        <div class="post-content" style="padding: 10px">
+          <div class="post" style=<%= message.messagePhoto ? `background-size:
+          cover; background-position: center;color: white; background-image:
+          linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(` +
+          message.messagePhoto + ")" : "" %>>
+
+          <div class="user-info">
             <a href="/profile/<%=message.userId%>">
-            <img src="<%=message.userProfileImg  %>" style="z-index: 0;  margin-top: 1vh;  width: 6.5vh; height: auto;"  class="user-picture user-avatar"></a>
+              <img
+                src="<%=message.userProfileImg  %>"
+                style="z-index: 0; margin-top: 1vh; width: 42px; height: 40px"
+                class="user-picture user-avatar"
+            /></a>
             <div class="post-content" style="padding: 10px">
-              <p class="message.bucket.user.username" id="messagebucketuserusername"><%= message.userName %></p>
-              <p class="bucket-info">
-                <%= message.bucketTitle  %>
-                <span class="<%= message.bucketStatus ? 'Completed': 'InProgress' %>"><%= message.bucketStatus ? 'Completed': 'In Progress' %></span>
+              <p
+                class="message.bucket.user.username"
+                id="messagebucketuserusername"
+              >
+                <%= message.userName %>
               </p>
-              </div>
+              <p class="bucket-info">
+                <%= message.bucketTitle %>
+                <span
+                  class="<%= message.bucketStatus ? 'Completed': 'InProgress' %>"
+                  ><%= message.bucketStatus ? 'Completed': 'In Progress'
+                  %></span
+                >
+              </p>
             </div>
-            <p class="post-message" id="post-message"><%=message.messageContent%></p>
-        <div class="post-actions">
-          <button type="button" class="like-button" onclick="toggleLike(event)">
-            <i class="far fa-heart"></i>
-          </button>  
-          <a href="/profile/comment/<%=message.messageId%>" class="comment-button">
-            <i class="far fa-comment-alt"></i>
-          </a>
+          </div>
+          <p class="post-message" id="post-message">
+            <%=message.messageContent%>
+          </p>
+          <div class="post-actions">
+            <button
+              type="button"
+              class="like-button"
+              onclick="toggleLike(event)"
+            >
+              <i class="far fa-heart"></i>
+            </button>
+            <a
+              href="/profile/comment/<%=message.messageId%>"
+              class="comment-button"
+            >
+              <i class="far fa-comment-alt"></i>
+            </a>
+          </div>
         </div>
       </div>
+      <% }) %>
     </div>
- <% }) %>
-      </div>
-
-</body>
-<script>
-      function goBack() {
+  </body>
+  <script>
+    function goBack() {
       window.history.back();
     }
-
-</script>
+  </script>
 </html>

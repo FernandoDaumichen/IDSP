@@ -32,8 +32,8 @@
     </form>
     <% } %>
       <div class="profilephoto">    
-        <img src=<%=user.profileImg%> style="z-index: 0; margin-top: 6vh;    width: 12vh;
-        height: auto;" class="user-avatar">
+        <img src=<%=user.profileImg%> style="z-index: 0; margin-top: 6vh; width: 80px;
+        height: 77px;" class="user-avatar">
         
       </div>
       <p class="username">@<%= user.username %>
@@ -101,7 +101,7 @@
             <% data.forEach(post=> { %>
               <% if(!post.photo) { %>
               <div class="post" style="<%= post.photo ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + post.photo + ")" : ""  %>">
-               <img src=<%=user.profileImg%> style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;" class="user-picture user-avatar">
+               <img src=<%=user.profileImg%> style="z-index: 0;  margin-top: 3vh;" class="user-picture user-avatar">
                 <div class="post-content" style="padding: 10px;">
                   <p class="username-inside">
                     <%=user.username%>
@@ -139,7 +139,7 @@
           <% if (show == undefined) { %>
     <% data.forEach(post=> { %>
       <div class="post" style="<%= post.photo ? "background-size: cover; background-position: center;color: white; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + post.photo + ")" : ""  %>">
-       <img src=<%=user.profileImg%> style="z-index: 0;  margin-top: 3vh;  width: 6.5vh; height: auto;" class="user-picture user-avatar">
+       <img src=<%=user.profileImg%> style="z-index: 0;  margin-top: 3vh;" class="user-picture user-avatar">
         <div class="post-content" style="padding: 10px;">
           <p class="username-inside">
             <%=user.username%>
