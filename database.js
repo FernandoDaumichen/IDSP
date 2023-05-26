@@ -13,10 +13,15 @@ const getAllUsers = async () => {
 };
 
 const changeProfilePhoto = async (user_id, photoUrl) => {
-  await prisma.user.update({
-    where: { id: user_id },
-    data: { profileImg: photoUrl },
-  });
+  try {
+    
+    await prisma.user.update({
+      where: { id: user_id },
+      data: { profileImg: photoUrl },
+    });
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 const deleteProfilePhoto = async (user_id) => {
