@@ -71,6 +71,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   overflow: hidden;
+  background: linear-gradient(
+    38deg,
+    rgba(116, 209, 174, 0.75) 1.82%,
+    rgba(116, 209, 174, 0.75) 30.9%,
+    rgba(128, 131, 255, 0.75) 72.64%
+  );
+  background-size: 200% 200%;
+  animation: Gradient 5s linear infinite;
 }
 
 .navbar img {
@@ -225,14 +233,7 @@ p.post-message {
   align-items: center;
   max-height: calc(80vh - 5vh);
   padding-bottom: 20vh;
-  background: linear-gradient(
-    38deg,
-    rgba(116, 209, 174, 0.75) 1.82%,
-    rgba(116, 209, 174, 0.75) 30.9%,
-    rgba(128, 131, 255, 0.75) 72.64%
-  );
-  background-size: 200% 200%;
-  animation: Gradient 5s linear infinite;
+
 }
 
 @keyframes Gradient {
