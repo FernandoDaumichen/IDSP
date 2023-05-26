@@ -3,12 +3,10 @@
 @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
 
 .wrapper {
-  /* max-width: 375px; limit the maximum width */
   height: 100vh;
   width: 100%;
   background: #fffefe;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* border-radius: 30px; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -18,8 +16,7 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns:repeat(auto-fill, minmax(40vh, 1fr));
-  /* grid-template-columns: 1fr 1fr 1fr; */
+  grid-template-columns: repeat(auto-fill, minmax(40vh, 1fr));
   background-color: #fff;
   padding: 5vh 1vh;
   grid-gap: 5vh;
@@ -28,7 +25,6 @@
 }
 .grid-item {
   background-color: rgba(255, 255, 255, 0.8);
-  /* border: 1px solid rgba(0, 0, 0, 0.8); */
   padding: 9vh 3vh;
   font-size: 30px;
   text-align: center;
@@ -37,10 +33,9 @@
 
 @media (max-width: 1800px) {
   .grid-container {
-    grid-template-columns:repeat(auto-fill, minmax(45vh, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(45vh, 1fr));
   }
 }
-
 
 .background-container {
   background-color: #ffffff;
@@ -65,23 +60,7 @@ h1 {
   margin-bottom: 1.5vh;
 }
 
-/* .profile-photo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: url("https://media.pitchfork.com/photos/5a00b098ec4b2c2177a85205/1:1/w_800,h_800,c_limit/samsmith_thrill.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
-.profile-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 30%;
-} */
-
-.profilephoto{
+.profilephoto {
   margin-bottom: -4vh;
 }
 
@@ -102,7 +81,6 @@ button {
   width: 80%;
   margin: 0 auto;
 }
-
 
 .edit-button {
   font-family: "Open Sans", sans-serif;
@@ -241,7 +219,6 @@ a[href="/feeds/buckets?show=inprogress"] img {
 .post p {
   font-family: "Opens Sans", sans-serif;
   font-size: 2vh;
-  /* line-height: 2.5vh; */
   margin-bottom: 1vh;
   font-style: normal;
   word-wrap: break-word;
@@ -297,7 +274,6 @@ p.post-message {
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
   font-size: 2vh;
-  /* margin-bottom: 1.5vh; */
   color: #000000;
 }
 
@@ -312,9 +288,7 @@ p.post-message {
   padding-left: 8vh;
   border: none;
   position: relative;
-  /* top: 6vh; */
   padding-top: 1%;
-
 }
 
 .createInput {
@@ -416,7 +390,6 @@ select {
   padding: 5px;
 }
 
-
 .post-actions {
   display: flex;
   justify-content: flex-end;
@@ -433,14 +406,15 @@ select {
   transition: transform 0.3s ease;
 }
 
-.comment-button, .like-button {
+.comment-button,
+.like-button {
   transition: transform 0.3s ease;
 }
 
-.comment-button:hover, .like-button:hover {
+.comment-button:hover,
+.like-button:hover {
   transform: scale(1.1);
 }
-
 
 .add-friends-button {
   position: absolute;
@@ -450,8 +424,9 @@ select {
   border: none;
   background-color: transparent;
   cursor: pointer;
-  /* color: #8083ff; */
 }
 
 
-
+.buttons button.active {
+  font-weight: bold;
+}

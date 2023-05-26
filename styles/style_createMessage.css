@@ -2,7 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
 .wrapper {
-  /* max-width: 375px; limit the maximum width */
   height: 100vh;
   width: 100%;
   background: #fffefe;
@@ -14,10 +13,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center; /* This aligns items in the center horizontally */
+  align-items: center;
   justify-content: space-between;
 }
-
 
 .cancel {
   font-size: 2.75vh;
@@ -126,7 +124,6 @@ a[href="/feeds/buckets?show=inprogress"] img {
   align-items: center;
   justify-content: center;
   z-index: 1;
-  /* background-color: #b1b1b1; */
   background: url(https://media.pitchfork.com/photos/5a00b09…/1:1/w_800,h_800,c_limit/samsmith_thrill.jpg);
   background-size: cover;
   background-position: center;
@@ -167,18 +164,16 @@ input[type="text"]::placeholder {
   font-size: 1.75vh;
   font-family: "Open Sans";
   font-style: normal;
-  /* position: relative; */
-  top: 14vh; /* adjust as necessary */
+  top: 14vh;
   left: 0vh;
 }
-
 
 .createInput {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80%; /* Adjust width to your liking */
+  width: 80%;
   margin-top: 2em;
 }
 

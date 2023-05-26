@@ -8,174 +8,132 @@
   <link rel="stylesheet" href="/styles/style_profile.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
 
-  <title>Post photo message after completing: needs styl</title>
+  <title>Message</title>
 
   </title>
- 
-  <style>
-    /* .image-preview{
-      width: 300px;
-      min-height: 100px;
-      border: 2px solid #dddddd;
-      margin-top:15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #cccccc;
-    }
-
-    .image-preview__image {
-      display: none;
-      width: 100%; }*/
-  </style>
 </head>
+
 <body>
   <h1>Message only page</h1>
-  <div class="flex-container">  
-  <div class="wrapper">
-        
-            <form class="user-info" action="/profile/uploadMessageOnly/<%= bucketId %>" method="POST">
+  <div class="flex-container">
+    <div class="wrapper">
 
-              <div class="posts-container">
-                <div class="user-input-wrapper">
-                  <div class="wrapwrap" style="display: flex; align-items: flex-start">
-                    <img src= <%=user.profileImg%> class="user-avatar">
-                    <div>
-                     
-                    </div>
-                  </div>
+      <form class="user-info" action="/profile/uploadMessageOnly/<%= bucketId %>" method="POST">
+
+        <div class="posts-container">
+          <div class="user-input-wrapper">
+            <div class="wrapwrap" style="display: flex; align-items: flex-start">
+              <img src=<%=user.profileImg%> class="user-avatar">
+              <div>
+
+              </div>
+            </div>
             <div class="createInput">
               <textarea style="outline: none; resize: none" type="text" name="newMessage"
                 placeholder="Post a celebratory message!" class="create_post"></textarea>
               <button type="submit" class="add-button">
                 <img src="/styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
               </button>
-            </div>        
+            </div>
           </div>
-        </form>        
+      </form>
       <br>
       <br>
-  </div>
-  <div class="navbar">
-    <a href="/feeds/home">
-      <img
-        src="/styles/images/home_icon_noBackground2.png"
-        alt="Home"
-        width="50"
-        height="50"
-      />
-    </a>
-    <a href="/search/">
-      <img
-        src="/styles/images/search_icon_noBackground2.png"
-        alt="Search"
-        width="50"
-        height="50"
-      />
-    </a>
-    <div class="circle">
-      <a href="/feeds/buckets?show=inprogress">
-        <img
-          src="/styles/images/bucket_icon_noBackground.png"
-          alt="Bucket"
-          width="60"
-          height="60"
-        />
+    </div>
+    <div class="navbar">
+      <a href="/feeds/home">
+        <img src="/styles/images/home_icon_noBackground2.png" alt="Home" width="50" height="50" />
+      </a>
+      <a href="/search/">
+        <img src="/styles/images/search_icon_noBackground2.png" alt="Search" width="50" height="50" />
+      </a>
+      <div class="circle">
+        <a href="/feeds/buckets?show=inprogress">
+          <img src="/styles/images/bucket_icon_noBackground.png" alt="Bucket" width="60" height="60" />
+        </a>
+      </div>
+      <a href="/feeds/buckets?show=completed">
+        <img src="/styles/images/note_icon_noBackground.png" alt="Notes" width="50" height="50" />
+      </a>
+      <a href="/profile/<%=user.id%>">
+        <img src="/styles/images/profile_icon_noBackground2.png" alt="Profile" width="60" height="60" />
       </a>
     </div>
-    <a href="/feeds/buckets?show=completed">
-      <img
-        src="/styles/images/note_icon_noBackground.png"
-        alt="Notes"
-        width="50"
-        height="50"
-      />
-    </a>
-    <a href="/profile/<%=user.id%>">
-      <img
-        src="/styles/images/profile_icon_noBackground2.png"
-        alt="Profile"
-        width="60"
-        height="60"
-      />
-    </a>
   </div>
-</div>
 
-<script>
-const friendBtn = document.querySelector(".friend-button");
-const postsContainer = document.querySelector(".posts-container");
+  <script>
+    const friendBtn = document.querySelector(".friend-button");
+    const postsContainer = document.querySelector(".posts-container");
 
-const post = async (url, data) => {
-  try {
-    const res = await fetch(url, {
-      body: JSON.stringify(data),
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-    return { error: "An error occurred" };
-  }
-};
+    const post = async (url, data) => {
+      try {
+        const res = await fetch(url, {
+          body: JSON.stringify(data),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        return await res.json();
+      } catch (error) {
+        console.log(error);
+        return { error: "An error occurred" };
+      }
+    };
 
-const inpFile = document.getElementById("inpFile");
-const previewContainer = document.getElementById("imagePreview");
-const previewImage = previewContainer.querySelector(".image-preview__image");
-const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+    const inpFile = document.getElementById("inpFile");
+    const previewContainer = document.getElementById("imagePreview");
+    const previewImage = previewContainer.querySelector(".image-preview__image");
+    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
 
-inpFile.addEventListener("change", function(){
-  const file = this.files[0];
+    inpFile.addEventListener("change", function () {
+      const file = this.files[0];
 
-  if(file){
-    const reader = new FileReader();
-    previewDefaultText.style.display = "none";
-    previewImage.style.display = "block";
+      if (file) {
+        const reader = new FileReader();
+        previewDefaultText.style.display = "none";
+        previewImage.style.display = "block";
 
-    reader.addEventListener("load", function(){
-      previewImage.setAttribute("src", this.result);
-    });
+        reader.addEventListener("load", function () {
+          previewImage.setAttribute("src", this.result);
+        });
 
-    reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
 
-  } else {
-    previewDefaultText.style.display = null;
-    previewImage.style.display = null;
-  }
-})
+      } else {
+        previewDefaultText.style.display = null;
+        previewImage.style.display = null;
+      }
+    })
 
-const likeUnlikeMessage = async (status, messageId) => {
-  try {
-    const response = await post("/feeds/likeMessage", { status, messageId });
-    if (response.message) {
-      alert(response.message);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+    const likeUnlikeMessage = async (status, messageId) => {
+      try {
+        const response = await post("/feeds/likeMessage", { status, messageId });
+        if (response.message) {
+          alert(response.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-const toggleLike = async (event) => {
-  const likeButton = event.target.closest(".like-button");
-  const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
-  const messageId = inputElement.value;
-  const heartIcon = likeButton.querySelector("i");
+    const toggleLike = async (event) => {
+      const likeButton = event.target.closest(".like-button");
+      const inputElement = likeButton.parentNode.querySelector('input[name="messageId"]');
+      const messageId = inputElement.value;
+      const heartIcon = likeButton.querySelector("i");
 
-  if (heartIcon.classList.contains("fas")) {
-    heartIcon.classList.remove("fas");
-    await likeUnlikeMessage("unlike", messageId);
-  } else {
-    heartIcon.classList.add("fas");
-    await likeUnlikeMessage("like", messageId);
-  }
-};
+      if (heartIcon.classList.contains("fas")) {
+        heartIcon.classList.remove("fas");
+        await likeUnlikeMessage("unlike", messageId);
+      } else {
+        heartIcon.classList.add("fas");
+        await likeUnlikeMessage("like", messageId);
+      }
+    };
 
-const updateScrollHeight = () => {
-  postsContainer.scrollTop = postsContainer.scrollHeight;
-};
-</script>
+    const updateScrollHeight = () => {
+      postsContainer.scrollTop = postsContainer.scrollHeight;
+    };
+  </script>
 
 
 </body>

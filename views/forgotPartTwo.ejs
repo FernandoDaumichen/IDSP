@@ -10,14 +10,16 @@
 </head>
 <title>Forgot Password</title>
 </head>
+
 <body>
   <div class="wrapper">
     <h1 data-text="Forgot Password">Forgot Password</h1>
     <div class="grey_background"></div>
     <div class="inside_wrapper">
       <form method="POST" action="/auth/resetVerify">
-<input required id="username" value="<%= secretQuestion %>" name="secretQuestion" placeholder="secret question" />
-<input required id="username"  name="secretAnswer" placeholder="secret answer" />
+        <input required id="username" value="<%= secretQuestion %>" name="secretQuestion"
+          placeholder="secret question" />
+        <input required id="username" name="secretAnswer" placeholder="secret answer" />
 
         <button type="submit" class="login-button">Reset Password</button>
       </form>

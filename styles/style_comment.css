@@ -3,12 +3,10 @@
 @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
 
 .wrapper {
-  /* max-width: 375px; limit the maximum width */
   height: 100vh;
   width: 100%;
   background: #fffefe;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* border-radius: 30px; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -18,7 +16,6 @@
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
-  
 }
 
 .background-container {
@@ -48,7 +45,7 @@
 }
 
 h1 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-size: 2.5rem;
   font-weight: 600;
   color: #8083ff;
@@ -56,210 +53,195 @@ h1 {
   text-align: center;
 }
 
-
-    h2 {
-      font-family: 'Open Sans', sans-serif;
-      /* padding-top: 3vh; */
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #000000;
-      margin-top: 0;
-      text-align: center;
-    }
-      
-    h3{
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #8083ff;
-      margin-top: 0;
-      text-align: center;
-      font-weight: 600;
-    }
-    .content {
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      color: #000000;
-      margin-top: 0;
-      /* text-align: center; */
-      display: inline-block;
-    }
-
-    ;
-
-    .message {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: 3vh;
-      background-color: #f7f7f7;
-    }
-
-    #message {
-      background-color: #f7f7f7;
-      border-radius: 10px;
-      position: relative;
-      padding: 2vh;
-      margin-bottom: 4%;
-      margin-top: 2vh;
-      margin-left: 8%;
-      width: 100%;
-      max-width: 79%;
-      /* height: 15%; */
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: 3vh;
-    }
-
-    textarea {
-      width: 75%;
-    height: 10vh;
-    border: 1px solid #8083ff;
-    border-radius: 10px;
-    padding: 2vh; /* Reduce padding to adjust height */
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: #000000;
-    margin: 0 auto; /* Center the textarea */
-    text-align: center;
-    resize: none;
-    outline: none;
-    }
-
-    textarea::placeholder {
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #8083ff;
-      margin-top: 0;
-      text-align: center;
-    }
-
-    [type="submit"] {
-      width: 75%; /* Reduce width to avoid touching the screen edge */
-    height: 5vh;
-    border: none;
-    border-radius: 10px;
-    background-color: #8083ff;
-    color: #ffffff;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 3vh auto; /* Center the button */
-    cursor: pointer;
-    outline: none;
-    }
-
-    .text-area-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #000000;
+  margin-top: 0;
+  text-align: center;
 }
 
-    .post-actions {
-      /* display: inline; */
-      justify-content: flex-end;
-      align-items: center;
-      /* padding-left: 50%; */
-      position: relative;
+h3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #8083ff;
+  margin-top: 0;
+  text-align: center;
+  font-weight: 600;
+}
+.content {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #000000;
+  margin-top: 0;
+  display: inline-block;
+}
 
-    }
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3vh;
+  background-color: #f7f7f7;
+}
 
-    .comment-button,
-    .like-button {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 20px;
-      margin: 0 5px;
-      outline: none;
-      transition: transform 0.3s ease;
-    }
+#message {
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  position: relative;
+  padding: 2vh;
+  margin-bottom: 4%;
+  margin-top: 2vh;
+  margin-left: 8%;
+  width: 100%;
+  max-width: 79%;
+}
 
-    .comment-button,
-    .like-button {
-      transition: transform 0.3s ease;
-    }
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3vh;
+}
 
-    .comment-button:hover,
-    .like-button:hover {
-      transform: scale(1.1);
-    }
+textarea {
+  width: 75%;
+  height: 10vh;
+  border: 1px solid #8083ff;
+  border-radius: 10px;
+  padding: 2vh;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #000000;
+  margin: 0 auto;
+  text-align: center;
+  resize: none;
+  outline: none;
+}
 
-    .user-picture {
-    width: 5vh;
-    height: 5vh;
-    border-radius: 50%;
-    margin-right: 1.33vh;
-    background-color: #b1b1b1;
-    top: 2.4vh;
-  }
-  .comments {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    /* background-color: #f7f7f7; */
-    border-radius: 10px;
-    position: relative;
-    padding: 2vh;
-    margin-bottom: 4%;
-    margin-top: 2vh;
-    margin-left: 8%;
-    width: 100%;
-    max-width: 79%;
+textarea::placeholder {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #8083ff;
+  margin-top: 0;
+  text-align: center;
+}
+
+[type="submit"] {
+  width: 75%;
+  height: 5vh;
+  border: none;
+  border-radius: 10px;
+  background-color: #8083ff;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 3vh auto;
+  outline: none;
+}
+
+.text-area-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.post-actions {
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
+
+.comment-button,
+.like-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0 5px;
+  outline: none;
+  transition: transform 0.3s ease;
+}
+
+.comment-button,
+.like-button {
+  transition: transform 0.3s ease;
+}
+
+.comment-button:hover,
+.like-button:hover {
+  transform: scale(1.1);
+}
+
+.user-picture {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  margin-right: 1.33vh;
+  background-color: #b1b1b1;
+  top: 2.4vh;
+}
+.comments {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 10px;
+  position: relative;
+  padding: 2vh;
+  margin-bottom: 4%;
+  margin-top: 2vh;
+  margin-left: 8%;
+  width: 100%;
+  max-width: 79%;
 }
 
 .comment-container {
   display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-    padding: 1vh 1vh;
-    background-color: #f7f7f7;
-    margin-bottom: 2vh;
-    border-radius: 10px;
-    position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 1vh 1vh;
+  background-color: #f7f7f7;
+  margin-bottom: 2vh;
+  border-radius: 10px;
+  position: relative;
 }
 
-  hr{
-    border: 0;
-      height: 1px;
-      background: #8083ff;
-      background-image: linear-gradient(to right, #8083ff, #8083ff, #8083ff);
-      margin-top: 2vh;
-      margin-bottom: 2vh;
-      /* margin-left: 8%;*/
-  }
+hr {
+  border: 0;
+  height: 1px;
+  background: #8083ff;
+  background-image: linear-gradient(to right, #8083ff, #8083ff, #8083ff);
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
 
-  .username{
-    display: inline;
-      font-family: "Opens Sans", sans-serif;
-      font-size: 2vh;
-      position: absolute;
-      line-height: 0;
-      margin-bottom: 2vh;
-      font-style: normal;
-      word-wrap: break-word;
-  }
-  .user-comment{
-    /* display: inline; */
-    font-family: "Opens Sans", sans-serif;
-    font-size: 2vh;
-    /* position: absolute; */
-    /* line-height: 2.5vh; */
-    margin-bottom: 1vh;
-    font-style: normal;
-    word-wrap: break-word;
-    /* margin-left: 8vh; */
-    padding-top: 1.2vh;
+.username {
+  display: inline;
+  font-family: "Opens Sans", sans-serif;
+  font-size: 2vh;
+  position: absolute;
+  line-height: 0;
+  margin-bottom: 2vh;
+  font-style: normal;
+  word-wrap: break-word;
+}
+.user-comment {
+  font-family: "Opens Sans", sans-serif;
+  font-size: 2vh;
+  margin-bottom: 1vh;
+  font-style: normal;
+  word-wrap: break-word;
+
+  padding-top: 1.2vh;
 }

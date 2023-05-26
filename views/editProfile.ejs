@@ -1,120 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles/style_editProfile.css" />
-    <title>Editing Profile⚙️</title>
-  </head>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
-/*
-.image-preview{
-      width: 300px;
-      min-height: 100px;
-      border: 2px solid #dddddd;
-      margin-top:15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #cccccc;
-    }
 
-    */
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles/style_editProfile.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Editing Profile⚙️</title>
+</head>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
 
-    .image-preview {
-      display: none;
-      width: 100%;
-    }
+  .image-preview {
+    display: none;
+    width: 100%;
+  }
 
-    .wrapper {
-  /* max-width: 375px; limit the maximum width */
-  height: 100vh;
-  width: 100%;
-  background: #FFFEFE;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* border-radius: 30px; */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: hidden;
-}
+  .wrapper {
+    height: 100vh;
+    width: 100%;
+    background: #FFFEFE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+  }
 
-.cancel,
-.save {
-  font-size: 2vh;
-  font-family: "Open Sans", sans-serif;
-  font-style: light;
-  border: none;
-  padding: 0.4vh 0.8vh;
-  position: absolute;
-  top: 1vh;
-  cursor: pointer;
-}
+  .cancel,
+  .save {
+    font-size: 2vh;
+    font-family: "Open Sans", sans-serif;
+    font-style: light;
+    border: none;
+    padding: 0.4vh 0.8vh;
+    position: absolute;
+    top: 1vh;
+    cursor: pointer;
+  }
 
-.cancel {
-  top:2vh;
-  left: 2vh;
-  background-color: #ffffff;
-  color: #000000;
-}
+  .cancel {
+    top: 2vh;
+    left: 2vh;
+    background-color: #ffffff;
+    color: #000000;
+  }
 
-.save {
-  right: 1vh;
-  background-color: transparent;
-  color: #000000;
-  margin-bottom: 1vh;
-}
+  .save {
+    right: 1vh;
+    background-color: transparent;
+    color: #000000;
+    margin-bottom: 1vh;
+  }
 
-h1{
-  text-align: center;
-  font-size: 4vh;
-  font-family: "Open Sans", sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  margin-top: 3vh;
-  margin-bottom: 2vh;
-}
-h2 {
-  text-align: center;
-  font-size: 2vh;
-  font-family: "Open Sans", sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  margin-top: 3vh;
-  margin-bottom: 2vh;
-}
+  h1 {
+    text-align: center;
+    font-size: 4vh;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+  }
 
-.profile-photo {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  /* background: url("https://media.pitchfork.com/photos/5a00b098ec4b2c2177a85205/1:1/w_800,h_800,c_limit/samsmith_thrill.jpg"); */
-  background-size: cover;
-  background-position: center;
-}
+  h2 {
+    text-align: center;
+    font-size: 2vh;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+  }
 
-.profile-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 30%;
-}
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+  }
 
-.picture-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  .profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30%;
+  }
+
+  .picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+
+  .edit-picture {
+    margin-top: 1vh;
+    font-size: 1.4vh;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    color: #000000;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+
+  .change-username {
+    font-size: 2vh;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    color: #000000;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+  }
+
+  .changeUserName {
+    font-size: 4vh;
+    width: 60%;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    border: none;
+    position: relative;
+    top: 1vh;
+    cursor: pointer;
+    outline: none;
+    font-weight: bold;
+    text-align: center;
+    resize: none;
+    border: 1px solid #000000;
+  }
+
+  .divBtn {
+    display: inline-block;
+    padding: 1vh;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+  }
+
+  .button:hover {
+    background-color: #45a049;
+  }
+
+  .button:active {
+    background-color: #3e8e41;
+  }
+
+  #inpFile {
+  display: none;
 }
 
 .edit-picture {
+  display: flex;
+  align-items: center;
   margin-top: 1vh;
-  font-size: 1.4vh;
+  font-size: 1.75vh;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -124,95 +178,63 @@ h2 {
   background-color: transparent;
 }
 
-.change-username {
-  font-size: 2vh;
-  font-family: "Open Sans", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  color: #000000;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
-  text-align: center;
+.upload-icon {
+  margin-right: 0.5vh;
 }
 
-.changeUserName {
+.upload-icon i {
   font-size: 4vh;
-  width:100%;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
-  border: none;
-  position: relative;
-  top: 1vh;
-  cursor: pointer;
-  outline: none;
-  font-weight: bold;
-  text-align: center;
-  resize: none;
 }
 
-.divBtn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
+.centerchangeUserName {
   text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
 }
 
-.button:hover {
-  background-color: #45a049;
-}
+</style>
 
-.button:active {
-  background-color: #3e8e41;
-}
-    </style>
-  <body>
-    <div class="wrapper">
-      <button class="cancel" onclick="goBack()">Cancel</button>
-      <form enctype="multipart/form-data" class="user-profile" action="/profile/updateProfilePhoto/<%=data.id%>" method="POST">        
-        <button class="save">Save</button>
-        <h1>Edit Profile</h1>
-        <div class="picture-container">
-          <div class="profile-photo" id = "profile-photo">
-            <img src="<%=data.profileImg%>" alt="profile-photo" class = "image-preview__image">
-          </div>
-          <p>Edit your profile photo</p>
-          <div class="divBtn">Remove profile photo</div>
-          <br>
-  
-          <input type="file" name="newProfilePhoto" id="inpFile"/>
-  
-          <div class = "image-preview" id="imagePreview">
-            <img src="" alt="Image Preview" class="image-preview">
-          </div>
+<body>
+  <div class="wrapper">
+    <button class="cancel" onclick="goBack()">Cancel</button>
+    <form enctype="multipart/form-data" class="user-profile" action="/profile/updateProfilePhoto/<%=data.id%>"
+      method="POST">
+      <button class="save">Save</button>
+      <h1>Edit Profile</h1>
+      <div class="picture-container">
+        <div class="profile-photo" id="profile-photo">
+          <img src="<%=data.profileImg%>" alt="profile-photo" class="image-preview__image">
         </div>
-        
-        <p class="change-username">This could be your first name or a nickname </p>
-        <textarea
-        class="changeUserName"
-        type="text"
-        name="newUsername"
-        placeholder="<%= data.username %>"
-        ></textarea>
-      </form>
+        <p>Edit your profile photo</p>
+        <div class="divBtn">Remove profile photo</div>
+        <br>
+        <p class="edit-picture">
+          <label for="inpFile" class="upload-icon">
+            <i class="fas fa-upload"></i>
+          </label>
+          Upload a new photo
+        </p>
+        <input type="file" name="newProfilePhoto" id="inpFile" >
 
-    </div>
-  </body>
-  <script>
+        <div class="image-preview" id="imagePreview">
+          <img src="" alt="Image Preview" class="image-preview">
+        </div>
+      </div>
+
+      <p class="change-username">  Type Your New Username </p>
+      <div class="centerchangeUserName">
+      <textarea class="changeUserName" type="text" name="newUsername" placeholder="<%= data.username %>"></textarea>
+      </div>
+    </form>
+
+  </div>
+</body>
+<script>
 const inpFile = document.getElementById("inpFile");
 const previewContainer = document.getElementById("profile-photo");
 const profileImage = previewContainer.querySelector(".image-preview__image");
 const deleteBtn = document.querySelector(".divBtn");
-
 function goBack() {
   window.history.back();
 }
-
 const post = async (url, data) => {
   try {
     const res = await fetch(url, {
@@ -226,7 +248,6 @@ const post = async (url, data) => {
     return { error: "An error occurred" };
   }
 };
-
 inpFile.addEventListener("change", function() {
   const file = this.files[0];
   if (file) {
@@ -237,7 +258,6 @@ inpFile.addEventListener("change", function() {
     reader.readAsDataURL(file);
   }
 });
-
 const handleDeleteProfilePhoto = async () => {
   try {
     const res = await post("/profile/deleteProfilePhoto");
@@ -252,7 +272,7 @@ const handleDeleteProfilePhoto = async () => {
     console.log(error);
   }
 };
-
 deleteBtn.addEventListener("click", handleDeleteProfilePhoto);
-  </script>
+</script>
+
 </html>

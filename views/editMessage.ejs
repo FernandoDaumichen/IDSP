@@ -19,7 +19,6 @@
     padding-left: 8vh;
     border: none;
     position: relative;
-    /* top: 6vh; */
     padding-top: 1%;
     border-radius: 10px;
     border: 1px solid #8083ff;
@@ -104,7 +103,6 @@
       %>" method="POST">
       <div class="createInput">
         <p class="newBucketTitle">The Bucket that you are editing: <%=bucketTitle%></p>
-        <!-- <input type="text" name="newMessage" placeholder="What's your next goal?" /> -->
         <textarea
         style="outline: none; resize: none"
         type="text"
@@ -113,9 +111,6 @@
         ><%= message.content %></textarea>
       </div>
       <input type="hidden" name="bucket" value="<%= bucketTitle %>" />
-      <!-- <button type="submit" class="add-button">
-        <img src="../styles/images/send_icon_noBackground.png" alt="Add" width="24" height="24">
-      </button>               -->
       <button type="submit">Edit</button>
     </form>
       <div class="navbar">

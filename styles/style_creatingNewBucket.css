@@ -3,12 +3,10 @@
 @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
 
 .wrapper {
-  /* max-width: 375px; limit the maximum width */
   height: 100vh;
   width: 100%;
   background: #fffefe;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* border-radius: 30px; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -61,7 +59,6 @@ textarea {
   font-size: 4vh;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
-  
 }
 
 textarea::placeholder {
@@ -71,7 +68,6 @@ textarea::placeholder {
   font-size: 3vh;
   font-weight: 800;
   text-align: center;
-  /* text-decoration: underline solid #000000; */
 }
 
 textarea:focus {
@@ -95,7 +91,6 @@ textarea:focus {
   background-color: transparent;
 }
 
-
 .select-container {
   display: flex;
   justify-content: center;
@@ -116,7 +111,6 @@ select {
 }
 
 option[value="low"] {
-
   color: #00a0fa;
 }
 
@@ -140,10 +134,9 @@ h1 {
   padding-left: 4vh;
 }
 
-
 .Create-Goal {
   display: block;
-  margin:auto;
+  margin: auto;
   background: #8083ff;
   border-radius: 2.5vh;
   border: none;
@@ -162,7 +155,7 @@ h1 {
   background: #8083ff;
   color: #ffffff;
 }
-.button-container{
+.button-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -170,17 +163,17 @@ h1 {
   margin-top: 2vh;
 }
 
-.setDueDate{
+.setDueDate {
   font-size: 2.4vh;
   color: #000000;
   text-align: center;
 }
 
-#dueDate{
+#dueDate {
   text-align: center;
 }
 
-.date-container{
+.date-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -189,17 +182,17 @@ h1 {
 }
 
 textarea::placeholder {
-  font-size: 2vh; 
+  font-size: 2vh;
 }
 
 [type="date"]::-webkit-datetime-edit,
 [type="date"]::-webkit-datetime-edit-fields-wrapper,
 [type="date"]::-webkit-datetime-edit-text {
   color: #8083ff;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-[type="date"]{
+[type="date"] {
   border: none;
   background-color: transparent;
   color: #8083ff;
@@ -207,8 +200,8 @@ textarea::placeholder {
   align-items: center;
 }
 
-.newBucketTitle{
-  font-family: 'Open Sans', sans-serif;
+.newBucketTitle {
+  font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: 800;
   font-size: 2vh;
@@ -224,34 +217,23 @@ p {
 }
 
 textarea.create_post::placeholder {
-  font-size: 26px; /* Adjust the font size as desired */
+  font-size: 26px;
 }
 
 textarea.create_post {
   width: 100%;
   height: 3%;
-
 }
-
 
 .tag-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-style: normal;
   margin-top: 15%;
-  
 }
-/* 
-.tag-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 7vh; 
-  
-} */
 
 input[type="checkbox"] {
   -webkit-appearance: none;
@@ -264,10 +246,8 @@ input[type="checkbox"] {
   outline: none;
   margin-right: 10px;
   position: relative;
-  /* align-items: center; */
   background: #ffffff;
   justify-content: center;
-
 }
 
 input[type="checkbox"]:checked {
@@ -281,7 +261,7 @@ input[type="checkbox"]:before {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 3vh;
-  font-family: Arial, sans-serif;  /* this is important as not all fonts support the checkmark character */
+  font-family: Arial, sans-serif;
 }
 
 input[type="checkbox"]:checked:before {
@@ -289,8 +269,8 @@ input[type="checkbox"]:checked:before {
   color: #ffffff;
 }
 
-label{
-  font-family: 'Quicksand', sans-serif;
+label {
+  font-family: "Quicksand", sans-serif;
   font-style: normal;
   font-weight: 800;
   font-size: 2.5vh;
@@ -306,26 +286,9 @@ label{
   align-items: center;
   border: #8083ff solid 0.2vh;
   border-radius: 1vh;
-  /* padding: -1vh -1vh; */
   width: 100%;
   margin-bottom: 1vh;
 }
-
-
-/* .checkmark {
-  position: relative;
-  height: 4vh;
-  width: 4vh;
-  border: 0.2vh solid #8083ff;
-  border-radius: 50%;
-  padding: 0vh 2vh;
-  background-color: #ffffff;
-  transition: background-color 0.3s ease;
-  margin-right: 1vh;
-
-} */
-
-
 
 input[type="checkbox"]:checked:before {
   content: "\2713";
@@ -334,7 +297,6 @@ input[type="checkbox"]:checked:before {
   font-size: 3vh;
   color: #ffffff;
 }
-
 
 /* ANIMATION */
 #bucket {
@@ -359,17 +321,25 @@ input[type="checkbox"]:checked:before {
   opacity: 0;
   animation-name: plusOneAnimation;
   animation-duration: 2s;
-  animation-delay: 0.5s; /* Delay this animation a bit so it appears after the bucket */
+  animation-delay: 0.5s;
   animation-fill-mode: forwards;
   z-index: 11;
 }
 
 @keyframes bucketAnimation {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes plusOneAnimation {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

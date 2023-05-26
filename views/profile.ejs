@@ -53,9 +53,9 @@
         <%}%>
       <%}%>
       <div class="buttons">
-        <a href="/profile/<%= userId %>"><button style="width: 100px;">All</button></a>
-        <a href="/profile/<%= userId %>?show=media"><button style="width: 100px;">Media</button></a>
-        <a href="/profile/<%= userId %>?show=posts"><button style="width: 100px;">Posts</button></a>
+        <a href="/profile/<%= userId %>"><button class="<%= show === undefined ? 'active' : '' %>">All</button></a>
+        <a href="/profile/<%= userId %>?show=media"><button class="<%= show === 'media' ? 'active' : '' %>">Media</button></a>
+        <a href="/profile/<%= userId %>?show=posts"><button class="<%= show === 'posts' ? 'active' : '' %>">Posts</button></a>
        
       </div>
     </div>

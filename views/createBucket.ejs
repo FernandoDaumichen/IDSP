@@ -19,93 +19,82 @@
             d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
         </svg>
       </button>
-    
+
       <form id="createNewBucketForm" method="POST" action="/feeds/createBucket">
-      <textarea style="outline: none; resize: none" type="text" name="newBucketInput"
-      placeholder="New Goal ✏️" class="create_post" required></textarea>
-    </textarea>
+        <textarea style="outline: none; resize: none" type="text" name="newBucketInput" placeholder="New Goal ✏️"
+          class="create_post" required></textarea>
+        </textarea>
 
         <p class="setDueDate">Set Due Date</p>
         <div class="date-container">
           <input type="date" id="dueDate" name="dueDate" value=<%=today%>
           min=<%today%> max="2018-12-31">
         </div>
-        <!-- <div class="select-container">
-          <select id="priority-level">
-            <option value="" disabled selected>Set Priority Level</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-        </div> -->
-        
         <div class="input-container">
           <div class="profile-photo"></div>
           <p class="newBucketTitle">Your New Bucketlist: </p>
         </div>
-    <div class="tag-section">
-      <p>Choose your Tags</p>
-      <div class="tag-grid">
-        <% tags.forEach((tag, index) => { %>
-          <div class="tag-container">
-              <label for="tag<%=index%>">
+        <div class="tag-section">
+          <p>Choose your Tags</p>
+          <div class="tag-grid">
+            <% tags.forEach((tag, index)=> { %>
+              <div class="tag-container">
+                <label for="tag<%=index%>">
                   <input type="checkbox" id="tag<%=index%>" name="tag" value="<%=tag.id%>">
                   <%=tag.tagName%>
-              </label>
+                </label>
+              </div>
+              <% }) %>
           </div>
-      <% }) %>
-      </div>
+        </div>
+
+
+        <div class="button-container">
+          <button class="Create-Goal" id="submitBtn" type="submit">Create New Goal </button>
+        </div>
+
+
+      </form>
+
+
     </div>
+    <script>
+      const form = document.querySelector("#createNewBucketForm");
 
 
-    <div class="button-container">
-      <button class="Create-Goal" id="submitBtn" type="submit">Create New Goal </button>
-    </div>
-    
-    
-  </form>
-  <!-- <img id="bucket" src="../styles/images/balde-removebg-preview.png" alt="bucket">
-<div id="plusOne">+1</div> -->
-
-  
-  </div>
-  <script>
-   const form = document.querySelector("#createNewBucketForm");
-
-
-    function goBack() {
-      window.history.back();
-    }
+      function goBack() {
+        window.history.back();
+      }
 
 
 
-    const prioritySelect = document.getElementById('priority-level');
-     prioritySelect.addEventListener('change', () => { 
-      const selectedOption = prioritySelect.options[prioritySelect.selectedIndex]; 
-      prioritySelect.style.color = window.getComputedStyle(selectedOption).color; 
-    });
+      const prioritySelect = document.getElementById('priority-level');
+      prioritySelect.addEventListener('change', () => {
+        const selectedOption = prioritySelect.options[prioritySelect.selectedIndex];
+        prioritySelect.style.color = window.getComputedStyle(selectedOption).color;
+      });
 
 
-    document.getElementById('submitBtn').addEventListener('click', function(e) {
-  e.preventDefault(); // prevents the form from being submitted immediately, remove if not needed
+      document.getElementById('submitBtn').addEventListener('click', function (e) {
+        e.preventDefault(); 
 
-  // Show the image and text
-  document.getElementById('bucket').style.display = 'block';
-  document.getElementById('plusOne').style.display = 'block';
+        // Show the image and text
+        document.getElementById('bucket').style.display = 'block';
+        document.getElementById('plusOne').style.display = 'block';
 
-  // Start the animations
-  document.getElementById('bucket').style.animationPlayState = 'running';
-  document.getElementById('plusOne').style.animationPlayState = 'running';
+        // Start the animations
+        document.getElementById('bucket').style.animationPlayState = 'running';
+        document.getElementById('plusOne').style.animationPlayState = 'running';
 
-  // Optionally hide the image and text after the animation ends, and submit the form
-  setTimeout(function() {
-    document.getElementById('bucket').style.display = 'none';
-    document.getElementById('plusOne').style.display = 'none';
-    document.getElementById('createNewBucketForm').submit();
-  }, 2000); // adjust time according to your animation-duration
-});
 
-  </script>
+        setTimeout(function () {
+          document.getElementById('bucket').style.display = 'none';
+          document.getElementById('plusOne').style.display = 'none';
+          document.getElementById('createNewBucketForm').submit();
+        }, 2000);
+      });
+
+    </script>
 </body>
 
 </html>

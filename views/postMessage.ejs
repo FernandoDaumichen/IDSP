@@ -142,9 +142,11 @@ h1 {
             </div>
           </div>
           
+          <input type="file" id="inpFile" style="display: none;" />
           <label for="inpFile" class="upload-label">
-            <i class="fas fa-upload fa-2x" style="cursor: pointer;"></i>
+              <i class="fas fa-upload fa-2x" style="cursor: pointer;"></i>
           </label>
+          
         </div>
         <img src=<%=user.profileImg%> class="user-avatar2">
         <div class="posts-container2">
@@ -168,21 +170,21 @@ h1 {
     </div>
     <div class="navbar">
       <a href="/feeds/home">
-        <img src="/styles/images/home_icon_noBackground2.png" alt="Home" width="50" height="50" />
+        <img src="/IDSP/styles/images/home_icon_noBackground2.png" alt="Home" width="50" height="50" />
       </a>
       <a href="/search/">
-        <img src="/styles/images/search_icon_noBackground2.png" alt="Search" width="50" height="50" />
+        <img src="../styles/images/search_icon_noBackground2.png" alt="Search" width="50" height="50" />
       </a>
       <div class="circle">
         <a href="/feeds/buckets?show=inprogress">
-          <img src="/styles/images/bucket_icon_noBackground.png" alt="Bucket" width="60" height="60" />
+          <img src="../styles/images/bucket_icon_noBackground.png" alt="Bucket" width="60" height="60" />
         </a>
       </div>
       <a href="/feeds/buckets?show=completed">
-        <img src="/styles/images/note_icon_noBackground.png" alt="Notes" width="50" height="50" />
+        <img src="../styles/images/note_icon_noBackground.png" alt="Notes" width="50" height="50" />
       </a>
       <a href="/profile/<%=user.id%>">
-        <img src="/styles/images/profile_icon_noBackground2.png" alt="Profile" width="60" height="60" />
+        <img src="../styles/images/profile_icon_noBackground2.png" alt="Profile" width="60" height="60" />
       </a>
     </div>
   </div>

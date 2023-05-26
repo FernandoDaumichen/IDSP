@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-
 @keyframes profileBounce {
   0% {
     transform: translateY(0);
@@ -30,10 +29,17 @@
   0% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-1px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(1px);
   }
   100% {
@@ -55,14 +61,11 @@
   animation-delay: 0s;
 }
 
-
 .wrapper {
-  /* max-width: 375px; limit the maximum width */
   height: 100vh;
   width: 100%;
   background: #fffefe;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* border-radius: 30px; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -97,7 +100,6 @@
   padding: 0;
   border: 2vh solid var(-clr);
 }
-
 
 .circle:hover {
   background: linear-gradient(
@@ -134,8 +136,8 @@ a[href="/feeds/buckets?show=inprogress"] img {
 }
 
 .homefeedTop {
-  margin-top: 5vh; /* adjust as needed */
-  width: 90%; /* adjust as needed */
+  margin-top: 5vh;
+  width: 90%;
   height: auto;
   display: flex;
   justify-content: center;
@@ -150,7 +152,6 @@ a[href="/feeds/buckets?show=inprogress"] img {
 }
 
 .post {
-
   align-items: center;
   background-color: #f7f7f7;
   border-radius: 10px;
@@ -158,16 +159,13 @@ a[href="/feeds/buckets?show=inprogress"] img {
   padding: 2vh;
   margin-bottom: 2vh;
   margin-top: 2vh;
-  /* margin-left: 5%; */
   width: 100%;
   max-width: 80%;
-
 }
 
 .post p {
   font-family: "Opens Sans", sans-serif;
-  font-size: 2vh; /* adjust as needed */
-  /* line-height: 2.5vh;  */
+  font-size: 2vh;
   margin-bottom: 1vh;
   font-style: normal;
   word-wrap: break-word;
@@ -211,7 +209,7 @@ p.post-message {
 }
 
 .post-content {
-  margin-left: 6vh; /* adjust as needed */
+  margin-left: 6vh;
   font-family: "Open Sans";
   font-style: normal;
   font-weight: 400;
@@ -225,11 +223,8 @@ p.post-message {
   overflow-y: auto;
   width: 100%;
   align-items: center;
-  /* padding-left: 5%; */
-  /* margin-top: 10px; */
   max-height: calc(80vh - 5vh);
   padding-bottom: 20vh;
-  /* margin-left: 5vh; */
   background: linear-gradient(
     38deg,
     rgba(116, 209, 174, 0.75) 1.82%,
@@ -239,7 +234,6 @@ p.post-message {
   background-size: 200% 200%;
   animation: Gradient 5s linear infinite;
 }
-
 
 @keyframes Gradient {
   0% {
@@ -312,7 +306,6 @@ p.post-message {
   padding: 5px;
 }
 
-
 .post-actions {
   display: flex;
   justify-content: flex-end;
@@ -328,11 +321,13 @@ p.post-message {
   transition: transform 0.3s ease;
 }
 
-.comment-button, .like-button {
+.comment-button,
+.like-button {
   transition: transform 0.3s ease;
 }
 
-.comment-button:hover, .like-button:hover {
+.comment-button:hover,
+.like-button:hover {
   transform: scale(1.1);
 }
 
@@ -347,8 +342,8 @@ p.post-message {
   position: relative;
   display: flex;
   flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 #editOrDeleteModal button {
@@ -361,23 +356,19 @@ p.post-message {
 }
 
 #deleteButton {
-  background: #FD7070;
+  background: #fd7070;
 }
 
 #editForm button {
-  background: #8083FF;
+  background: #8083ff;
 }
 
 .hide {
   visibility: hidden;
 }
 
-
 svg {
   position: absolute;
   top: 20%;
   right: 5%;
 }
-/* .show {
-  visibility: visible;
-} */

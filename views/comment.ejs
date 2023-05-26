@@ -1,227 +1,112 @@
-  <!DOCTYPE html>
-  <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="../styles/style_comment.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
-    <title>Comment 💬</title>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link type="text/css" rel="stylesheet" href="../styles/style_comment.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+  <title>Comment 💬</title>
+</head>
 
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
-    @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-    @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap");
 
-    .wrapper {
-      /* max-width: 375px; limit the maximum width */
-      height: 100vh;
-      width: 100%;
-      background: #fffefe;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      /* border-radius: 30px; */
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      overflow: hidden;
-      overflow-y: auto;
-      scrollbar-width: none;
-      /* Firefox */
-      -ms-overflow-style: none;
+  .wrapper {
+    height: 100vh;
+    width: 100%;
+    background: #fffefe;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 
-    }
+  }
 
-    .background-container {
-      background-color: #ffffff;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      position: relative;
-      padding-top: 5vh;
-      padding-bottom: 5px;
-      box-sizing: border-box;
-      border-radius: 0 20px 20px;
-      /* height: 37vh; */
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }
+  .background-container {
+    background-color: #ffffff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    padding-top: 5vh;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    border-radius: 0 20px 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 
-    .arrow-left {
-      position: absolute;
-      top: 3vh;
-      left: 3vh;
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-      z-index: 10px;
-    }
+  .arrow-left {
+    position: absolute;
+    top: 3vh;
+    left: 3vh;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    z-index: 10px;
+  }
 
-    h1 {
-      font-family: 'Quicksand', sans-serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: #8083ff;
-      margin-bottom: 0;
-      text-align: center;
-    }
+  h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #8083ff;
+    margin-bottom: 0;
+    text-align: center;
+  }
 
 
-    h2 {
-      font-family: 'Open Sans', sans-serif;
-      /* padding-top: 3vh; */
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #000000;
-      margin-top: 0;
-      text-align: center;
-    }
-      
-    h3{
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #8083ff;
-      margin-top: 0;
-      text-align: center;
-      font-weight: 600;
-    }
-    .content {
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      color: #000000;
-      margin-top: 0;
-      /* text-align: center; */
-      display: inline-block;
-    }
-
-    ;
-
-    .message {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: 3vh;
-      background-color: #f7f7f7;
-    }
-
-    #message {
-      background-color: #f7f7f7;
-      border-radius: 10px;
-      position: relative;
-      padding: 2vh;
-      margin-bottom: 4%;
-      margin-top: 2vh;
-      margin-left: 8%;
-      width: 100%;
-      max-width: 79%;
-      /* height: 15%; */
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: 3vh;
-    }
-
-    textarea {
-      width: 75%;
-    height: 10vh;
-    border: 1px solid #8083ff;
-    border-radius: 10px;
-    padding: 2vh; /* Reduce padding to adjust height */
+  h2 {
     font-family: 'Open Sans', sans-serif;
     font-size: 1.2rem;
     font-weight: 400;
     color: #000000;
-    margin: 0 auto; /* Center the textarea */
+    margin-top: 0;
     text-align: center;
-    resize: none;
-    outline: none;
-    }
+  }
 
-    textarea::placeholder {
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #8083ff;
-      margin-top: 0;
-      text-align: center;
-    }
-
-    [type="submit"] {
-      width: 75%; /* Reduce width to avoid touching the screen edge */
-    height: 5vh;
-    border: none;
-    border-radius: 10px;
-    background-color: #8083ff;
-    color: #ffffff;
+  h3 {
     font-family: 'Open Sans', sans-serif;
     font-size: 1.2rem;
+    font-weight: 400;
+    color: #8083ff;
+    margin-top: 0;
+    text-align: center;
     font-weight: 600;
-    margin: 3vh auto; /* Center the button */
-    cursor: pointer;
-    outline: none;
-    }
+  }
 
-    .text-area-wrapper {
+  .content {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000000;
+    margin-top: 0;
+    display: inline-block;
+  }
+
+  ;
+
+  .message {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-}
-
-    .post-actions {
-      /* display: inline; */
-      justify-content: flex-end;
-      align-items: center;
-      /* padding-left: 50%; */
-      position: relative;
-
-    }
-
-    .comment-button,
-    .like-button {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 20px;
-      margin: 0 5px;
-      outline: none;
-      transition: transform 0.3s ease;
-    }
-
-    .comment-button,
-    .like-button {
-      transition: transform 0.3s ease;
-    }
-
-    .comment-button:hover,
-    .like-button:hover {
-      transform: scale(1.1);
-    }
-
-    .user-picture {
-    width: 5vh;
-    height: 5vh;
-    border-radius: 50%;
-    margin-right: 1.33vh;
-    background-color: #b1b1b1;
-    top: 2.4vh;
+    margin-top: 3vh;
+    background-color: #f7f7f7;
   }
-  .comments {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    /* background-color: #f7f7f7; */
+
+  #message {
+    background-color: #f7f7f7;
     border-radius: 10px;
     position: relative;
     padding: 2vh;
@@ -230,10 +115,118 @@
     margin-left: 8%;
     width: 100%;
     max-width: 79%;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+  }
+
+  textarea {
+    width: 75%;
+    height: 10vh;
+    border: 1px solid #8083ff;
+    border-radius: 10px;
+    padding: 2vh;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #000000;
+    margin: 0 auto;
+    text-align: center;
+    resize: none;
+    outline: none;
+  }
+
+  textarea::placeholder {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #8083ff;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  [type="submit"] {
+    width: 75%;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    background-color: #8083ff;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 3vh auto;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .text-area-wrapper {
+    display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .post-actions {
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    display: flex;
+    margin-right: 4%;
+  }
+
+  .comment-button, .like-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0 20px;
+    outline: none;
+    transition: transform 0.3s ease;
 }
 
-.comment-container {
-  display: flex;
+  .comment-button,
+  .like-button {
+    transition: transform 0.3s ease;
+  }
+
+  .comment-button:hover,
+  .like-button:hover {
+    transform: scale(1.1);
+  }
+
+  .user-picture {
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    margin-right: 1.33vh;
+    background-color: #b1b1b1;
+    top: 2.4vh;
+  }
+
+  .comments {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 10px;
+    position: relative;
+    padding: 2vh;
+    margin-bottom: 4%;
+    margin-top: 2vh;
+    margin-left: 8%;
+    width: 100%;
+    max-width: 79%;
+  }
+
+  .comment-container {
+    display: flex;
     align-items: center;
     justify-content: flex-start;
     width: 100%;
@@ -242,181 +235,179 @@
     margin-bottom: 2vh;
     border-radius: 10px;
     position: relative;
-}
+  }
 
-  hr{
+  hr {
     border: 0;
-      height: 1px;
-      background: #8083ff;
-      background-image: linear-gradient(to right, #8083ff, #8083ff, #8083ff);
-      margin-top: 2vh;
-      margin-bottom: 2vh;
-      /* margin-left: 8%;*/
+    height: 1px;
+    background: #8083ff;
+    background-image: linear-gradient(to right, #8083ff, #8083ff, #8083ff);
+    margin-top: 2vh;
+    margin-bottom: 2vh;
   }
 
-  .username{
+  .username {
     display: inline;
-      font-family: "Opens Sans", sans-serif;
-      font-size: 2vh;
-      position: absolute;
-      line-height: 0;
-      margin-bottom: 2vh;
-      font-style: normal;
-      word-wrap: break-word;
-  }
-  .user-comment{
-    /* display: inline; */
     font-family: "Opens Sans", sans-serif;
     font-size: 2vh;
-    /* position: absolute; */
-    /* line-height: 2.5vh; */
+    position: absolute;
+    line-height: 0;
+    margin-bottom: 2vh;
+    font-style: normal;
+    word-wrap: break-word;
+  }
+
+  .user-comment {
+    font-family: "Opens Sans", sans-serif;
+    font-size: 2vh;
     margin-bottom: 1vh;
     font-style: normal;
     word-wrap: break-word;
-    /* margin-left: 8vh; */
     padding-top: 1.2vh;
-}
-  </style>
+  }
+</style>
 
-  <body>
-    <div class="wrapper">
-      <form action="/feeds/home" method="get">
-        <button class="arrow-left" style="z-index: 10px;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
-            <path fill="#8083ff"
-              d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
-          </svg>
-        </button>
-      </form>
-  
-      <h1>Post</h1>
-      <h2>
-        <%=bucketTitle%>
-      </h2>
-  
-      <% if (message.photo) { %>
-        <img style="display: block;margin: auto;" width=200 src="<%= message.photo %>" />
+<body>
+  <div class="wrapper">
+    <form action="/feeds/home" method="get">
+      <button class="arrow-left" style="z-index: 10px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3vh" height="3vh">
+          <path fill="#8083ff"
+            d="M314.6,449.6L65.9,256l248.7-193.6c6.5-5.1,6.9-14.5,1.8-21s-14.5-6.9-21-1.8l-271.4,212c-3.7,2.9-5.7,7.4-5.7,12.1s2,9.2,5.7,12.1l271.4,212c2.8,2.2,6.2,3.3,9.6,3.3c3.4,0,6.7-1.1,9.6-3.3C321.1,464.1,321.1,454.7,314.6,449.6z" />
+        </svg>
+      </button>
+    </form>
+
+    <h1>Post</h1>
+    <h2>
+      <%=bucketTitle%>
+    </h2>
+
+    <% if (message.photo) { %>
+      <img style="display: block;margin: auto;" width=200 src="<%= message.photo %>" />
       <% } %>
-      <div class="message" id="message">  
-        <img class="user-picture"src=<%=message.userInfo.profileImg%>>
-        <p class="username"><%=message.userInfo.username%></p>
-        <p class="content">
-          <%=message.content%>
-        </p>
-        <div class="post-actions">
-          
-          <% if (message.likes.filter(like => like.userId === user_id).length > 0) { %>
-            <button type="button" class="like-button" onclick="toggleLike(event)">
-              <i class="far fa-heart fas"></i>
-            </button>
-          <% } else { %>
-            <button type="button" class="like-button" onclick="toggleLike(event)">
-              <i class="far fa-heart"></i>
-            </button>
-          <% } %>
-          <a class="comment-button" onclick="showCommentForm()">
-            <i class="far fa-comment-alt"></i>
-          </a>
-          
+        <div class="message" id="message">
+          <img class="user-picture" src=<%=message.userInfo.profileImg%>>
+          <p class="username">
+            <%=message.userInfo.username%>
+          </p>
+          <p class="content">
+            <%=message.content%>
+          </p>
+          <div class="post-actions">
+
+            <% if (message.likes.filter(like=> like.userId === user_id).length > 0) { %>
+              <button type="button" class="like-button" onclick="toggleLike(event)">
+                <i class="far fa-heart fas"></i>
+              </button>
+              <% } else { %>
+                <button type="button" class="like-button" onclick="toggleLike(event)">
+                  <i class="far fa-heart"></i>
+                </button>
+                <% } %>
+                  <a class="comment-button" onclick="showCommentForm()">
+                    <i class="far fa-comment-alt"></i>
+                  </a>
+
+          </div>
         </div>
-      </div> 
-      <hr>
-      <h3>Comments</h3>
-      <div class="comments" id="comments"> 
-        <% comments.forEach(comment=> { %>
+        <hr>
+        <h3>Comments</h3>
+        <div class="comments" id="comments">
+          <% comments.forEach(comment=> { %>
             <div class="comment-container">
-                <img class="user-picture" src=<%=comment.userProfile%>>
-                <div class="comment-texts">
-                    <p class="username"><%=comment.username%></p>
-                    <p class="user-comment"><%=comment.comment%></p>
-                </div>
+              <img class="user-picture" src=<%=comment.userProfile%>>
+              <div class="comment-texts">
+                <p class="username">
+                  <%=comment.username%>
+                </p>
+                <p class="user-comment">
+                  <%=comment.comment%>
+                </p>
+              </div>
             </div>
-        <% }) %>
-    </div>
-    
-    <form id="commentForm" action="/profile/comment/<%=message.id%>" method="POST" style="display: block;">
-      <div class="text-area-wrapper">
-          <textarea style="outline: none; resize: none" type="text" name="newComment" placeholder="Cheer your Friend!" class="create_post"></textarea>
-          <button type="submit">Add Comment</button>
-      </div>
-  </form>
-    
-        
-      </div>
-  
+            <% }) %>
+        </div>
+
+        <form id="commentForm" action="/profile/comment/<%=message.id%>" method="POST" style="display: none;">
+          <div class="text-area-wrapper">
+            <textarea style="outline: none; resize: none" type="text" name="newComment" placeholder="Cheer your Friend!"
+              class="create_post"></textarea>
+            <button type="submit">Add Comment</button>
+          </div>
+        </form>
 
 
-  </body>
-  <script>
+  </div>
 
-    const post = async (url, data) => {
-        try {
-          const res = await fetch(url, {
-            body: JSON.stringify(data),
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-          });
-          return await res.json();
-        } catch (error) {
-          console.log(error);
-          return { error: "An error occurred" };
-        }
-      };
 
-    function toggleLike(event) {
-      const likeButton = event.target.closest('.like-button');
-      const heartIcon = likeButton.querySelector('i');
-      heartIcon.classList.toggle('far');
-      heartIcon.classList.toggle('fas');
+
+</body>
+<script>
+
+  const post = async (url, data) => {
+    try {
+      const res = await fetch(url, {
+        body: JSON.stringify(data),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      return await res.json();
+    } catch (error) {
+      console.log(error);
+      return { error: "An error occurred" };
     }
+  };
 
-    function updateScrollHeight() {
-      const postsContainer = document.querySelector(".posts-container");
-      postsContainer.scrollTop = postsContainer.scrollHeight;
-    }
+  function toggleLike(event) {
+    const likeButton = event.target.closest('.like-button');
+    const heartIcon = likeButton.querySelector('i');
+    heartIcon.classList.toggle('far');
+    heartIcon.classList.toggle('fas');
+  }
+
+  function updateScrollHeight() {
+    const postsContainer = document.querySelector(".posts-container");
+    postsContainer.scrollTop = postsContainer.scrollHeight;
+  }
 
 
-    function showCommentForm() {
-      var commentForm = document.getElementById('commentForm');
-      commentForm.style.display = 'block';
-    }
-
-    function showCommentForm() {
+  function showCommentForm() {
     var commentForm = document.getElementById('commentForm');
     if (commentForm.style.display === 'none') {
       commentForm.style.display = 'block';
     } else {
       commentForm.style.display = 'none';
     }
-  }
+}
 
   async function likeUnlikeMessage(status, messageId) {
-        try {
-          const response = await post("/feeds/likeMessage", { status, messageId });
-          if (response.message) {
-            alert(response.message);
-          }
-        } catch (error) {
-          console.log(error);
-        }
+    try {
+      const response = await post("/feeds/likeMessage", { status, messageId });
+      if (response.message) {
+        alert(response.message);
       }
-    
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function toggleLike(event) {
-        const likeButton = event.target.closest(".like-button");
-        const pathArr = window.location.pathname.split("/");
-        const messageId = pathArr[pathArr.length - 1];
-        const heartIcon = likeButton.querySelector("i");
+    const likeButton = event.target.closest(".like-button");
+    const pathArr = window.location.pathname.split("/");
+    const messageId = pathArr[pathArr.length - 1];
+    const heartIcon = likeButton.querySelector("i");
 
-    
-        if (heartIcon.classList.contains("fas")) {
-          heartIcon.classList.remove("fas");
-          await likeUnlikeMessage("unlike", messageId);
-        } else {
-          heartIcon.classList.add("fas");
-          await likeUnlikeMessage("like", messageId);
-        }
-      }
 
-  </script>
+    if (heartIcon.classList.contains("fas")) {
+      heartIcon.classList.remove("fas");
+      await likeUnlikeMessage("unlike", messageId);
+    } else {
+      heartIcon.classList.add("fas");
+      await likeUnlikeMessage("like", messageId);
+    }
+  }
 
-  </html>
+</script>
+
+</html>
