@@ -191,8 +191,6 @@ router.post(
   upload.single("newProfilePhoto"),
   async function (req, res) {
     const file = req.file;
-    console.log("DEBUG: file ")
-    res.send(file);
     const user_id = req.params.userid;
     const { newUsername } = req.body;
 
@@ -200,13 +198,11 @@ router.post(
       await changeUsername(parseInt(user_id), newUsername);
       res.redirect(`/profile/${user_id}`);
     } else if (newUsername && file) {
-     res.send("hit newUser and file");
       await changeUsername(user_id, newUsername);
       const cloud = await cloudinary.uploader.upload(file.path);
       await changeProfilePhoto(parseInt(user_id), file.path);
       res.redirect(`/profile/${user_id}`);
     } else if (!newUsername && file) {
-      res.send("hit no newUsername and file")
       const cloud = await cloudinary.uploader.upload(file.path);
       await changeProfilePhoto(parseInt(user_id), file.path);
       res.redirect(`/profile/${user_id}`);
